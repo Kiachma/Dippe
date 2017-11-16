@@ -1,0 +1,16 @@
+{
+	"folders":
+	[
+		{
+			"path": "."
+		}
+	],
+	"settings" : {
+        "TEXroot": "main.tex",
+        "tex_file_exts": [".tex", ".tikz"],
+        "builder_settings": {
+            "program": "xelatex",
+            "options": "--shell-escape"
+        }
+    }
+}

@@ -1,0 +1,17 @@
+{
+	"build_systems":
+	[
+        {
+            "file_regex": "^[ ]*File \"(...*?)\", line ([0-9]*)",
+            "name": "Simulation",
+            "selector": "source.python",
+            "shell_cmd": "./run.sh"
+        }
+	],
+	"folders":
+	[
+		{
+			"path": "."
+		}
+	]
+}
