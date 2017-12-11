@@ -1,21 +1,11 @@
 from __future__ import division
 import position
-import numpy as np
 import math
 import config
 import copy
+import helpers
 
 
-def pol2cart(rho, phi):
-    x = rho * np.cos(phi)
-    y = rho * np.sin(phi)
-    return (x, y)
-
-
-def cart2pol(x, y):
-    rho = np.sqrt(x ** 2 + y ** 2)
-    phi = np.arctan2(y, x)
-    return (rho, phi)
 
 
 class ShipState:
@@ -25,7 +15,8 @@ class ShipState:
         self.heading = heading
         self.rate_of_turn = rate_of_turn
         self.snapShot = None
-
+        self.targetCourse = self.heading
+        self.targetSpeed=self.speed
     def update_position(self):
         prev = copy.deepcopy(self)
         prev.snapShot = None
@@ -67,7 +58,7 @@ class ShipState:
 
     def get_headingXY(self):
         # Remember to convert to radians!
-        x, y = pol2cart(self.speed, math.radians(self.heading + 90))
+        x, y = helpers.pol2cart(self.speed, math.radians(self.heading + 90))
         return [
             -x, y
         ]

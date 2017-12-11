@@ -1,27 +1,24 @@
 from __future__ import unicode_literals
-import vessel
-import shipstate
-import position
+from autonomous_vessel import vessel
+from autonomous_vessel.autonomous_navigation_system import shipstate, position
 import matplotlib.patches as patches
 from matplotlib import pyplot as plt
-from matplotlib import animation
 import math
-import atexit
 import numpy as np
 import config
 import helpers
 import sys
 import os
-import random
 import matplotlib
 import design
 import string
+import fuzzy
 
 # Make sure that we are using QT5
 matplotlib.use('Qt5Agg')
 from PyQt5 import QtCore, QtWidgets
 
-from numpy import arange, sin, pi
+# from numpy import arange, sin, pi
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
 
@@ -31,13 +28,13 @@ progversion = "0.1"
 vessels = []
 paths = []
 timer = None
+fis=None
 
-
-def createVessel(config):
+def createVessel(config, fis):
     return vessel.Vessel(
         config['id'],
         shipstate.ShipState(config['heading'], position.Position(config['position'][0], config['position'][1]),
-                            config['speed'], config['rate_of_turn']))
+                            config['speed'], config['rate_of_turn']), fis)
 
 
 def createKnownVessel(tmpVessel):
@@ -63,7 +60,7 @@ def init():
     vessels = []
     paths = []
     for vesselConfig in config.vessels:
-        vessels.append(createVessel(vesselConfig))
+        vessels.append(createVessel(vesselConfig, fis))
 
     for A in vessels:
         for B in vessels:
@@ -166,7 +163,7 @@ def animation_manage(ax):
         # coeff = math.sqrt(
         #     math.pow(config.visibility, 2) / (
         #         math.pow(shipstate.get_headingXY()[0], 2) + math.pow(shipstate.get_headingXY()[1], 2)))
-        coeff = 5
+        coeff = 50
         arrows.append(ax.annotate("", xy=(shipstate.position.get_x(),
                                           shipstate.position.get_y()),
                                   xytext=(
@@ -454,6 +451,8 @@ class ApplicationWindow(QtWidgets.QMainWindow, design.Ui_MainWindow):
 
 
 def main():
+    global fis
+    fis = fuzzy.init_fuzzy()
     init()
     qApp = QtWidgets.QApplication(sys.argv)
 

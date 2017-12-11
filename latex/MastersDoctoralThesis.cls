@@ -224,7 +224,8 @@
 \NewDocumentCommand{\faculty}{m}{\newcommand{\facname}{#1}}
 \NewDocumentCommand{\subject}{m}{\newcommand{\subjectname}{#1}}
 \NewDocumentCommand{\keywords}{m}{\newcommand{\keywordnames}{#1}}
-
+\newcommand\pro{\item[$+$]}
+\newcommand\con{\item[$-$]}
 \newcommand{\checktoopen}{% New command to move content to the next page which prints to the next odd page if twosided mode is active
 	\if@openright\cleardoublepage\else\clearpage\fi
 	\ifdef{\phantomsection}{\phantomsection}{}% The \phantomsection command is necessary for hyperref to jump to the correct page
@@ -232,7 +233,9 @@
 
 \NewDocumentCommand{\bhrule}{}{\typeout{--------------------}}
 \NewDocumentCommand{\tttypeout}{m}{\bhrule\typeout{\space #1}\bhrule}
-
+\newcommand{\overbar}[1]{\mkern 1.5mu\overline{\mkern-1.5mu#1\mkern-1.5mu}\mkern 1.5mu}
+\newcommand{\vec}[1]{\underaccent{\tilde}{#1}}
+\renewcommand{\vec}[1]{\ut{#1}}
 \newcommand{\HRule}{\rule{.9\linewidth}{.6pt}} % New command to make the lines in the title page
 \newcommand{\decoRule}{\rule{.8\textwidth}{.4pt}} % New command for a rule to be used under figures
 
