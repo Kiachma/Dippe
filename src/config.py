@@ -1,10 +1,9 @@
 playback = dict(
-    interval=1000,
+    interval=1,
     rate=1
 )
-opra = dict(
-    granularity=4
-)
+anim = True
+#NM *1000
 radius = dict(
     rvd=1000,
     rb=6000,
@@ -19,7 +18,7 @@ sectors = dict(
     over_take_give_way=(337.5, 22.5),
     over_take_stand_on=(112.5, 247.5)
 )
-visibility = radius['ra']/1000
+visibility = radius['ra'] / 1000
 show = dict(
     visibility=False,
     sectors=True,
@@ -74,7 +73,41 @@ show = dict(
 #
 
 # # Crossing
+vessels = [
+    dict(id='A',
+         heading=0,
+         position=(0, -7200),
+         speed=20 ,
+         rate_of_turn=3),
+    dict(id='B',
+         heading=90,
+         position=(-7200, 0),
+         speed=20 ,
+         rate_of_turn=3),
+]
+
+# Head on
 # vessels = [
+#     dict(id='A',
+#          heading=0,
+#          position=(0, -7000),
+#          speed=10,
+#          rate_of_turn=2),
+#     dict(id='B',
+#          heading=180,
+#          position=(0, 7000),
+#          speed=5,
+#          rate_of_turn=2),
+# ]
+
+# Overtake
+# vessels = [
+#     dict(id='A',
+#          heading=0,
+#          position=(0, -0),
+#          speed=5 ,
+#          rate_of_turn=2),
+#     dict(id='B',# vessels = [
 #     dict(id='A',
 #          heading=0,
 #          position=(0, -7200),
@@ -86,31 +119,8 @@ show = dict(
 #          speed=5000/60,
 #          rate_of_turn=3),
 # ]
-
-# Head on
-# vessels = [
-#     dict(id='A',
 #          heading=0,
-#          position=(0, -7000),
-#          speed=10000/60,
-#          rate_of_turn=2),
-#     dict(id='B',
-#          heading=180,
-#          position=(0, 7000),
-#          speed=5000/60,
+#          position=(0, -10000),
+#          speed=10 ,
 #          rate_of_turn=2),
 # ]
-
-# Overtake
-vessels = [
-    dict(id='A',
-         heading=0,
-         position=(0, -0),
-         speed=10,
-         rate_of_turn=2),
-    dict(id='B',
-         heading=0,
-         position=(0, -10000),
-         speed=20,
-         rate_of_turn=2),
-]

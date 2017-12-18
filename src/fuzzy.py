@@ -15,17 +15,14 @@ def generate_trapetzoid(start, end, buffer):
 
 def init_fuzzy():
     # Generate universe variables
-    #   * Quality and service on subjective ranges [0, 10]
-    #   * Tip has a range of [0, 25] in units of percentage points
 
     bear = ctrl.Antecedent(np.arange(0, 360, 1), 'bearing')
-    range = ctrl.Antecedent(np.arange(0, config.radius['ra'], 0.1), 'range')
+    range = ctrl.Antecedent(np.arange(0, config.radius['ra']/1000, 0.5), 'range')
     rel_course = ctrl.Antecedent(np.arange(0, 360, 1), 'relative_course')
-    speed_ratio = ctrl.Antecedent(np.arange(0, 5, 0.1), 'speed_ratio')
+    speed_ratio = ctrl.Antecedent(np.arange(0, 10, 0.5), 'speed_ratio')
     course_change = ctrl.Consequent(np.arange(-40, 40, 1), 'course_change')
     speed_change = ctrl.Consequent(np.arange(-10, 10, 1), 'speed_change')
-    # x_serv = np.arange(0, 11, 1)
-    # x_tip = np.arange(0, 26, 1)
+
     #
     # Generate fuzzy membership functions
 
@@ -79,8 +76,8 @@ def init_fuzzy():
                                                           ])
     speed_ratio['3'] = fuzz.trapmf(speed_ratio.universe, [1.2 - .05,
                                                           1.2 - .05,
-                                                          5,
-                                                          5
+                                                          10,
+                                                          10
                                                           ])
 
     course_change['port'] = fuzz.trapmf(course_change.universe, [-40,
@@ -390,5 +387,49 @@ def init_fuzzy():
     add_rule('10', 'e', 2, False, 'keep', 'keep')
     add_rule('10', 'e', 3, False, 'keep', 'keep')
 
+
+    #Own rules
+    add_rule('1', 'a', 1, False, 'starboard', 'keep')
+    add_rule('1', 'a', 2, False, 'keep', 'keep')
+    add_rule('1', 'a', 3, False, 'keep', 'keep')
+    add_rule('1', 'a', 1, True, 'starboard', 'keep')
+    add_rule('1', 'a', 2, True, 'keep', 'keep')
+    add_rule('1', 'a', 3, True, 'keep', 'keep')
+
+    add_rule('1b', 'a', 1, False, 'starboard', 'keep')
+    add_rule('1b', 'a', 2, False, 'keep', 'keep')
+    add_rule('1b', 'a', 3, False, 'keep', 'keep')
+    add_rule('1b', 'a', 1, True, 'starboard', 'keep')
+    add_rule('1b', 'a', 2, True, 'keep', 'keep')
+    add_rule('1b', 'a', 3, True, 'keep', 'keep')
+
+    add_rule('1', 'ab', 1, False, 'starboard', 'keep')
+    add_rule('1', 'ab', 2, False, 'keep', 'keep')
+    add_rule('1', 'ab', 3, False, 'keep', 'keep')
+    add_rule('1', 'ab', 1, True, 'starboard', 'keep')
+    add_rule('1', 'ab', 2, True, 'keep', 'keep')
+    add_rule('1', 'ab', 3, True, 'keep', 'keep')
+
+    add_rule('1b', 'ab', 1, False, 'starboard', 'keep')
+    add_rule('1b', 'ab', 2, False, 'keep', 'keep')
+    add_rule('1b', 'ab', 3, False, 'keep', 'keep')
+    add_rule('1b', 'ab', 1, True, 'starboard', 'keep')
+    add_rule('1b', 'ab', 2, True, 'keep', 'keep')
+    add_rule('1b', 'ab', 3, True, 'keep', 'keep')
+
+    add_rule('2', 'h', 1, False, 'starboard', 'keep')
+    add_rule('2', 'h', 2, False, 'keep', 'keep')
+    add_rule('2', 'h', 3, False, 'keep', 'keep')
+    add_rule('2', 'h', 1, True, 'starboard', 'keep')
+    add_rule('2', 'h', 2, True, 'keep', 'keep')
+    add_rule('2', 'h', 3, True, 'keep', 'keep')
+
+    add_rule('10', 'b', 1, False, 'port', 'keep')
+    add_rule('10', 'b', 2, False, 'keep', 'keep')
+    add_rule('10', 'b', 3, False, 'keep', 'keep')
+    add_rule('10', 'b', 1, True, 'port', 'keep')
+    add_rule('10', 'b', 2, True, 'keep', 'keep')
+    add_rule('10', 'b', 3, True, 'keep', 'keep')
+
     navigation_ctrl = ctrl.ControlSystem(rules)
-    return ctrl.ControlSystemSimulation(navigation_ctrl)
+    return ctrl.ControlSystemSimulation(navigation_ctrl, flush_after_run=3 + 1)

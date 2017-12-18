@@ -1,4 +1,4 @@
-from autonomous_navigation_system import ans
+from autonomous_vessel.autonomous_navigation_system import ans
 import math
 
 

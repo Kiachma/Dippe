@@ -28,7 +28,8 @@ progversion = "0.1"
 vessels = []
 paths = []
 timer = None
-fis=None
+fis = None
+
 
 def createVessel(config, fis):
     return vessel.Vessel(
@@ -72,7 +73,7 @@ def init():
                 )
 
 
-def animation_manage(ax):
+def animation_manage(ax, i):
     opraLines = []
     collissionSectors = []
     arrows = []
@@ -163,7 +164,7 @@ def animation_manage(ax):
         # coeff = math.sqrt(
         #     math.pow(config.visibility, 2) / (
         #         math.pow(shipstate.get_headingXY()[0], 2) + math.pow(shipstate.get_headingXY()[1], 2)))
-        coeff = 50
+        coeff = 1000
         arrows.append(ax.annotate("", xy=(shipstate.position.get_x(),
                                           shipstate.position.get_y()),
                                   xytext=(
@@ -192,12 +193,13 @@ def animation_manage(ax):
                            color='black')
             # ax.add_patch(text)
             ships.append(text)
-        text2 = ax.text(vessel.ans.shipstate.position.get_x(),
-                        vessel.ans.shipstate.position.get_y(), vessel.id,
-                        verticalalignment='bottom', horizontalalignment='center',
-                        color='black')
-        # ax.add_patch(text)
-        ships.append(text2)
+        if config.anim:
+            text2 = ax.text(vessel.ans.shipstate.position.get_x(),
+                            vessel.ans.shipstate.position.get_y(), vessel.id,
+                            verticalalignment='bottom', horizontalalignment='center',
+                            color='black')
+            # ax.add_patch(text)
+            ships.append(text2)
 
         patch = plt.Circle((vessel.ans.shipstate.position.get_x(),
                             vessel.ans.shipstate.position.get_y()),
@@ -243,20 +245,23 @@ def animation_manage(ax):
         collissionSectors.append(patch)
         ax.add_patch(patch)
 
-    reset_artists()
+    if config.anim:
+        reset_artists()
+
     for tempvessel in vessels:
-        tempvessel.ans.next_position()
-        animate_ship(ax, tempvessel)
-        if config.show['arrow']:
-            animate_arrow(ax, tempvessel)
-        if config.show['visibility']:
-            animate_range(ax, tempvessel)
-        if config.show['sectors']:
-            animate_sector(ax, tempvessel)
-        if config.show['paths']:
-            animate_path(ax, tempvessel)
-        if config.show['lights']:
-            animate_lights(ax, tempvessel)
+        tempvessel.ans.next_position
+        if i % 120 == 0 or config.anim:
+            animate_ship(ax, tempvessel)
+            if config.show['arrow'] and config.anim:
+                animate_arrow(ax, tempvessel)
+            # if config.show['visibility'] and config.anim:
+            #     animate_range(ax, tempvessel)
+            # if config.show['sectors'] and config.anim:
+            #     animate_sector(ax, tempvessel)
+            # if config.show['paths'] and config.anim:
+            #     animate_path(ax, tempvessel)
+            # if config.show['lights'] and config.anim:
+            #     animate_lights(ax, tempvessel)
 
     return []
 
@@ -287,31 +292,36 @@ class MyDynamicMplCanvas(MyMplCanvas):
 
     def __init__(self, *args, **kwargs):
         MyMplCanvas.__init__(self, *args, **kwargs)
-        global timer
-        timer = QtCore.QTimer(self)
-        timer.timeout.connect(self.update_figure)
-        timer.start(1000)
+        self.index = 1
+        if config.anim:
+            global timer
+            timer = QtCore.QTimer(self)
+            timer.timeout.connect(self.update_figure)
+            timer.start(config.playback['interval'])
 
     def compute_initial_figure(self):
-        animation_manage(self.axes)
+        animation_manage(self.axes, 0)
         self.axes.plot()
 
     def update_figure(self):
         # Build a list of 4 random integers between 0 and 10 (both inclusive)
-
-        self.axes.cla()
-        self.axes.set_xlim([config.dimensions[0], config.dimensions[1]])
-        self.axes.set_ylim([config.dimensions[2], config.dimensions[3]])
-        animation_manage(self.axes)
-        self.draw()
+        print(self.index)
+        if config.anim:
+            self.axes.cla()
+            self.axes.set_xlim([config.dimensions[0], config.dimensions[1]])
+            self.axes.set_ylim([config.dimensions[2], config.dimensions[3]])
+        animation_manage(self.axes, self.index)
+        if config.anim:
+            self.draw()
+        self.index = self.index + 1
 
 
 class ApplicationWindow(QtWidgets.QMainWindow, design.Ui_MainWindow):
     def __init__(self):
         super(self.__class__, self).__init__()
         self.setupUi(self)
-        dc = MyDynamicMplCanvas(self.centralwidget, width=5, height=4, dpi=100)
-        self.verticalLayout.addWidget(dc)
+        self.dc = MyDynamicMplCanvas(self.centralwidget, width=5, height=4, dpi=100)
+        self.verticalLayout.addWidget(self.dc)
 
         self.btnPause.clicked.connect(self.pause)
         self.btnPlay.clicked.connect(self.play)
@@ -319,7 +329,7 @@ class ApplicationWindow(QtWidgets.QMainWindow, design.Ui_MainWindow):
         self.btnAddVessel.clicked.connect(self.add_vessel)
         self.slider.setTickInterval(2)
         self.slider.setMinimum(-2)
-        self.slider.setMaximum(2)
+        self.slider.setMaximum(10)
         self.slider.setValue(config.playback['rate'])
         self.slider.valueChanged.connect(self.set_rate)
 
@@ -341,7 +351,11 @@ class ApplicationWindow(QtWidgets.QMainWindow, design.Ui_MainWindow):
         self.numVisibility.valueChanged.connect(self.setVisibility)
 
     def set_rate(self, value):
-        config.playback['rate'] = math.pow(2, value)
+        config.playback['interval'] = math.pow(2, -1) * 1000
+        global timer
+        timer.stop()
+        timer.setInterval(config.playback['interval'])
+        timer.start()
 
     def add_vessel(self):
         d = dict(enumerate(string.ascii_lowercase, 1))
@@ -410,7 +424,7 @@ class ApplicationWindow(QtWidgets.QMainWindow, design.Ui_MainWindow):
         if remaining > 0:
             timer.setInterval(remaining)
         else:
-            timer.setInterval(1000)
+            timer.setInterval(config.playback['interval'])
 
     def play(self):
         global timer
@@ -459,7 +473,13 @@ def main():
     aw = ApplicationWindow()
     aw.setWindowTitle("%s" % progname)
     aw.show()
+    if not config.anim:
+        for i in range(0, 8000):
+            aw.dc.update_figure()
+
+        aw.dc.draw()
     sys.exit(qApp.exec_())
+
     # plot()
 
 

@@ -10,7 +10,7 @@ class SituationalAwareness:
     def get_visible_vessels(self, shipstate):
 
         tmp = []
-        for id, vessel in self.knownVessels.iteritems():
+        for id, vessel in self.knownVessels.items():
             if helpers.distance(vessel.ans.shipstate.position,
                                 shipstate.position) < config.visibility:
                 tmp.append(vessel)
