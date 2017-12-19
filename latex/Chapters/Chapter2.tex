@@ -35,13 +35,19 @@ It is therefore crucial for the USVs to follow the Convention on the Internation
 %\subsection{Current state}
 %------------------------------------------------------------------------------------
 \subsection{Challenges}
-limited autonomy due to the challenges in automated and reliable guidance, navigation and control (GNC) functions for all different operating conditions in face of sophisticated and hazardous environments, and sensor, actuator and communication failures \cite{liu2016unmanned}.
+USVs operate in a highly variable environment, both regarding climate and traffic density. Algorithms and systems developed should, therefore, be usable bot in severe weather conditions and in densely trafficated ports and fairways.
+
+
+The Convention on the International Regulations for Preventing Collisions at Sea, 1972 (COLREGs), presented in section \ref{sec_colreg} aims to ensure collision avoidance among vessels, although they are written to be interpreted by humans. Furthermore, situations where multiple rules are in effect are quite common . These aspects pose challenges when translating the COLREG rules into computer understandable code \cite{benjamin2006method}.
+
+The fact that USVs often operate on open seas where reliable communication channels can be limited and weather conditions harsh, pose additional challenges regarding guidance and sensor failures \cite{liu2016unmanned}.
+
 %------------------------------------------------------------------------------------
 \section{COLREG}
 \label{sec_colreg}
 Convention on the International Regulations for Preventing Collisions at Sea, 1972 (COLREGs) consist of 38 rules, grouped into five different sections, designed by the International Maritime Organization (IMO).
 The rules were adopted 1972 and entered into force 1977.
-COLREGs was designed to ensure traffic separation between vessels in an increasingly populated environment back in 1972, and it is, therefore, sometimes referred to as the Rules of the Road for maritime vessels.
+COLREGs was designed to ensure traffic separation between vessels in an increasingly populated environment back in 1972 and it is, therefore, sometimes referred to as the Rules of the Road for maritime vessels.
 COLREGs has since been in use and mandatory to adhere to on international waters, although it has received amended several times \cite{colreg_about_imo}.
 
 National regulations might differ from the COLREGs to some extent. However, COLREG mention that ‘Nothing in these Rules shall interfere with the operation of special rules made by an appropriate authority for
@@ -54,7 +60,7 @@ Such special rules shall conform as closely as possible to these Rules.’ \cite
 This subsection will present the different parts of the COLREGs regulations, with emphasis on the parts related to manoeuvring an USV in international waters. Information in this subsection is taken from the official COLREG regulations  \cite{colreg} if not otherwise specified.
 %------------------------------------------------------------------------------------
 \subsubsection{Part A General}
-\textbf{Rule 1} cover which vessels that are affected by the COLREGs regulations. This includes all vessels navigation on high seas and all waters connected therewith.
+\textbf{Rule 1} covers which vessels that are affected by the COLREGs regulations. This includes all vessels navigation on high seas and all waters connected therewith.
 Additionally, it specifies that special rules regarding roadsteads, harbours, rivers, lakes or inland waterways connected with the high seas and navigable by seagoing, shall conform as closely as possible to these Rules.
 \\
 \textbf{Rule 2} states that the COLREG rules does not in any way free the vessel, owner, master or crew from responsibility to follow the rules and act according to ordinary practice of seamen.
@@ -62,13 +68,13 @@ Additionally, it specifies that special rules regarding roadsteads, harbours, ri
 \textbf{Rule 3} Defines the meaning of words used in the regulations, such as: vessel, power-driven vessel, sailing vessel, length, and breadth.
 %------------------------------------------------------------------------------------
 \subsubsection{Part B Steering and Sailing}
-\textbf{Rule 4} simply states that all rsimply states that all Rules in Part B Section I (rules 4-10) apply in any condition of visibilitysimply states that all Rules in Part B Section I (rules 4-10) apply in any condition of visibilityules in Part B Section I (rules 4-10) apply in any condition of visibility
+\textbf{Rule 4} simply states that all rules in Part B Section I (rules 4-10) apply in any condition of visibility
 \\
 \textbf{Rule 5} states that all vessels shall at all times maintain proper look-out by sight and hearing and all other available means to ensure the best possible situation awareness.
 \\
 \textbf{Rule 6} states that vessels shall maintain a speed so that they can take proper and effective action to avoid collision and stop within distance appropriate to the prevailing circumstances and conditions.
 \\
-\textbf{Rule 7} state that all vessels shall use all means possible to determine if there is a risk of collision.
+\textbf{Rule 7} states that all vessels shall use all means possible to determine if a risk of collision exists.
 This includes the use of radar equipment, however, caution should be exercised not to trust insufficient data.
 Moreover, Rule 7 states that any doubt whether a risk of collision exists, shall be treated as if a risk exists.
 Finally it specifies that a constant compass bearing between two vessels, means that the two vessels are on collision course with each other.
@@ -116,57 +122,13 @@ Is not of interest for the scope of this thesis.
 %------------------------------------------------------------------------------------
 
 \section{Previous research Collision Avoidance Algorithms}
-Compiled from from \cite{liu2016unmanned}
-Protocol-free collision avoidance:
+USVs have been in development since at least 1993 when MIT started its Sea Grant College Program, Autonomous Surface Craft (ASCs) \cite{manley2008unmanned}. Different approaches have been tried over the years, most of which have not taken COLREG into account. This section will look into some of these approaches as well as their pros and cons.
 
-%------------------------------------------------------------------------------------
-\subsection{obstacles are assumed to be enclosed by elliptical shapes, differential equations } \cite{soltan2009trajectory}
-\begin{itemize}
-    \con obstacles approximated as elliptic shapes
-    \con Focuses mostly on under-actuated unmanned surface vessels
-    \con Does not mention COLREG
-    \pro  only the current information about the obstacles and the target are required for real-time trajectory planning
-    \item ellipses represent stable limit cycle solution
-    \item planned trajectories are tracked by the vessel through a sliding mode control law which is robust to environmental  disturbances  and  modeling uncertainties and can be computed in real time
-\end{itemize}
-%------------------------------------------------------------------------------------
-\subsection{path re-planning approach based on the level set methods }\cite{xu2013fast}
-\begin{itemize}
-    \con environment is static
-    \con method can be slow for very large areas
-\end{itemize}
-%------------------------------------------------------------------------------------
-\subsection{angular rate-constrained  Theta* ( ARC - Theta* )  }\cite{kim2014angular}
-\begin{itemize}
-    \con Does not consider colreg atm (future work)
-    \pro  considering both angular rate (yaw rate) and heading angle of unmanned surface vehicles (USVs)
-    \item Based on Theta*
-    \item  proposed to create paths in real-time with considerations of vehicle performance on the SE(2) weighted occupancy grid map
-\end{itemize}
-%------------------------------------------------------------------------------------
-\subsection{optical-flow based approach }\cite{el2013visual}
-\begin{itemize}
-    \pro low computational cost
-    \con made for low cost low-cost autonomous watercraft in riverine environments, such as lakes and rivers
-    \con uses only a mobile phone
-    \con assuming that the water surface consists of a horizontal plane
-    \con static objects
-\end{itemize}
-%------------------------------------------------------------------------------------
-\subsection{lattice-based path planning method }\cite{bertaska2013experimental}
-\begin{itemize}
-    \con Can not find a free copy
-\end{itemize}
-%------------------------------------------------------------------------------------
-\subsection{underwater collision avoidance}\cite{heidarsson2011obstacle,onunka2013probabilistic}
-
-%------------------------------------------------------------------------------------
-\subsection{direct method based on inverse dynamics in the virtual domain (IDVD) }\cite{yakimenko2011real}
-
-
-Protocol-based collision avoidance:
-\subsection{modified virtual force field (MVFF) }\cite{lee2004fuzzy}
-
+\textcite{soltan2009trajectory} developed a system for under-actuated unmanned surface vehicles where obstacles are approximated as elliptic shapes. These ellipses represent stable limit cycle solutions and planned trajectories are tracked by the vessel through a sliding mode control law. However, their research does not mention COLREG.
+\textcite{xu2013fast} have done a formal analysis of path planning algorithms based on level set method, with the focus on making the process more efficient for large areas. This is done by reducing the number of level set function updates needed as well as the size of the updates. The approach might, however, still be slow for large areas and it does not respect COLREG.
+\textcite{kim2014angular} uses an approach based ion Theta* called \textit{angular rate-constrained  Theta* ( ARC - Theta* )}. COLREG is not yet considered but mentioned as future work. The algorithm does great in comparison with algorithms using SE(2) grid map-based path planning or 3D A*, even though the algorithm considers the performance of the vessel.
+\textcite{el2013visual} have made experiments with a low-cost model using a smartphone as the only sensor. The model is made for low-cost autonomous watercraft in riverine environments and assumes that all objects are static. Its computational cost is, therefore, low but use cases limited.
+\textcite{lee2004fuzzy} combines fuzzy logic with modified virtual force fields to  create an COLREG compliant algorithm. The fuzzy logic rule-set used consists of about two hundred rules, which might be computational challenging. The authors does, however, mention that the rules-set might be streamlined.
 %------------------------------------------------------------------------------------
 \subsection{behavior-based control and multi-objective action selection} \cite{benjamin2004colregs,benjamin2006method}
 
