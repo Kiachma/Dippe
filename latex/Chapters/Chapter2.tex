@@ -187,7 +187,7 @@ Fuzzy sets and set theory can in the same manner as classical boolean sets be us
     T:u\in U\rightarrow (0,1)
     \label{eq:fuzzy-logic-mapping}
 \end{equation}
-The truth value of proposition P $(T(P))$ is therefore given by the membership grade $\mu_{\fuzzyset{A}}(x)$ of $x$ in $\fuzzyset{A}$
+The truth value of proposition P is therefore given by the membership grade $\mu_{\fuzzyset{A}}(x)$ of $x$ in $\fuzzyset{A}$
 
 Many of the same operators and connectives used in classical logic, does also apply to fuzzy logic. This thesis will only present the rules necessary for the scope of the thesis, which are the following \cite{ross2009fuzzy}:\\
 \noindent Negation
@@ -200,7 +200,7 @@ Disjunction
 \end{equation}
 Conjunction
 \begin{equation}
-    \fuzzyset{P}\land \fuzzyset{Q}:x \text{ is } \fuzzyset{A} \text{ or } \fuzzyset{B}\quad T(\fuzzyset{P} \land \fuzzyset{Q})=min(T(\fuzzyset{P}),T(\fuzzyset{Q}))\label{eq:conjunction}
+    \fuzzyset{P}\land \fuzzyset{Q}:x \text{ is } \fuzzyset{A} \text{ and } \fuzzyset{B}\quad T(\fuzzyset{P} \land \fuzzyset{Q})=min(T(\fuzzyset{P}),T(\fuzzyset{Q}))\label{eq:conjunction}
 \end{equation}
 Implication
 \begin{equation}
@@ -210,7 +210,7 @@ Implication
 \[ T(\fuzzyset{P}\to \fuzzyset{Q})=T(\fuzzyset{\overline{P}}\lor\fuzzyset{Q})=max(T(\fuzzyset{\overline{P}}),T(\fuzzyset{Q}))  \]
 
 \noindent Implication can also be written in rule based form
-\[ \fuzzyset{P} \to \fuzzyset{Q} \text{ is  IF } x \text{ is } \fuzzyset{A} \text{ , THEN } t \text{ is } \fuzzyset{B}\]
+\[ \fuzzyset{P} \to \fuzzyset{Q} \text{ is,  IF } x \text{ is } \fuzzyset{A} \text{ , THEN } t \text{ is } \fuzzyset{B}\]
 \[ \Leftrightarrow \]
 \[  R=(\fuzzyset{A}\times\fuzzyset{B})\cup (\overline{\fuzzyset{A}}\times \fuzzyset{Y})\]
 \noindent With the membership function:
@@ -218,7 +218,7 @@ Implication
     \mu_{\fuzzyset{R}}(x,y)=max[\mu_{\fuzzyset{A}}(x)\land\mu_{\fuzzyset{B}}(y),(1-\mu_{\fuzzyset{A}}(x))]
     \label{eq:implication-orig}
 \end{equation}
-Equation \ref{eq:implication-orig} is equivalent to the material implication used in traditional boolean logic \cite{ying2002implication}. However, fuzzy logic has multiple implication operators \cite{ross2009fuzzy}. The work in this thesis will use Mamdani's impication , see equation \ref{eq:mamdani}.
+Equation \ref{eq:implication-orig} is equivalent to the material implication used in traditional boolean logic \cite{ying2002implication}. However, fuzzy logic has multiple implication operators \cite{ross2009fuzzy}. The work in this thesis will use Mamdani's implication , see equation \ref{eq:mamdani}.
 \begin{equation}
     \mu_{\fuzzyset{R}}(x,y)=min[\mu_{\fuzzyset{A}}(x),\mu_{\fuzzyset{B}}(x))]
     \label{eq:mamdani}

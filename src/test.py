@@ -35,7 +35,7 @@ def createVessel(config, fis):
     return vessel.Vessel(
         config['id'],
         shipstate.ShipState(config['heading'], position.Position(config['position'][0], config['position'][1]),
-                            config['speed'], config['rate_of_turn']), fis)
+                            config['speed'], config['rate_of_turn']), fis, config['ap'])
 
 
 def createKnownVessel(tmpVessel):
@@ -164,7 +164,7 @@ def animation_manage(ax, i):
         # coeff = math.sqrt(
         #     math.pow(config.visibility, 2) / (
         #         math.pow(shipstate.get_headingXY()[0], 2) + math.pow(shipstate.get_headingXY()[1], 2)))
-        coeff = 1000
+        coeff = 1000 / config.scale
         arrows.append(ax.annotate("", xy=(shipstate.position.get_x(),
                                           shipstate.position.get_y()),
                                   xytext=(
@@ -179,6 +179,8 @@ def animation_manage(ax, i):
     def animate_ship(ax, vessel):
         color = 'green'
         risk_string = ""
+        text_string = str(vessel.id) + "\n" + "Heading: " + str(vessel.ans.shipstate.heading) + "\n" + "Speed: " + str(
+            vessel.ans.shipstate.speed)
         if vessel.ans.ca.risks['crossing']:
             risk_string = risk_string + "C"
         if vessel.ans.ca.risks['overtaking']:
@@ -195,7 +197,7 @@ def animation_manage(ax, i):
             ships.append(text)
         if config.anim:
             text2 = ax.text(vessel.ans.shipstate.position.get_x(),
-                            vessel.ans.shipstate.position.get_y(), vessel.id,
+                            vessel.ans.shipstate.position.get_y(), text_string,
                             verticalalignment='bottom', horizontalalignment='center',
                             color='black')
             # ax.add_patch(text)
@@ -377,29 +379,29 @@ class ApplicationWindow(QtWidgets.QMainWindow, design.Ui_MainWindow):
         lblVessel.setText(_translate("MainWindow", tmpVessel.id))
         self.vessels.addWidget(lblVessel)
 
-        numHeading = QtWidgets.QSpinBox(self.verticalLayoutWidget_2)
-        numHeading.setMaximum(360)
-        numHeading.setMinimum(0)
-        numHeading.setValue(tmpVessel.ans.shipstate.heading)
-        numHeading.setObjectName("numHeading_" + tmpVessel.id)
-        numHeading.valueChanged.connect(lambda value: self.setHeading(value, tmpVessel))
-        self.vessels.addWidget(numHeading)
-
-        numPosX_ = QtWidgets.QSpinBox(self.verticalLayoutWidget_2)
-        numPosX_.setMaximum(config.dimensions[1])
-        numPosX_.setMinimum(config.dimensions[0])
-        numPosX_.setValue(tmpVessel.ans.shipstate.position.x)
-        numPosX_.setObjectName("numPosX_" + tmpVessel.id)
-        numPosX_.valueChanged.connect(lambda value: self.setX(value, tmpVessel))
-        self.vessels.addWidget(numPosX_)
-
-        numPosY_ = QtWidgets.QSpinBox(self.verticalLayoutWidget_2)
-        numPosY_.setMaximum(config.dimensions[3])
-        numPosY_.setMinimum(config.dimensions[2])
-        numPosY_.setValue(tmpVessel.ans.shipstate.position.y)
-        numPosY_.setObjectName("numPosY_" + tmpVessel.id)
-        numPosY_.valueChanged.connect(lambda value: self.setY(value, tmpVessel))
-        self.vessels.addWidget(numPosY_)
+        # numHeading = QtWidgets.QSpinBox(self.verticalLayoutWidget_2)
+        # numHeading.setMaximum(360)
+        # numHeading.setMinimum(0)
+        # numHeading.setValue(tmpVessel.ans.shipstate.heading)
+        # numHeading.setObjectName("numHeading_" + tmpVessel.id)
+        # numHeading.valueChanged.connect(lambda value: self.setHeading(value, tmpVessel))
+        # self.vessels.addWidget(numHeading)
+        #
+        # numPosX_ = QtWidgets.QSpinBox(self.verticalLayoutWidget_2)
+        # numPosX_.setMaximum(config.dimensions[1])
+        # numPosX_.setMinimum(config.dimensions[0])
+        # numPosX_.setValue(tmpVessel.ans.shipstate.position.x)
+        # numPosX_.setObjectName("numPosX_" + tmpVessel.id)
+        # numPosX_.valueChanged.connect(lambda value: self.setX(value, tmpVessel))
+        # self.vessels.addWidget(numPosX_)
+        #
+        # numPosY_ = QtWidgets.QSpinBox(self.verticalLayoutWidget_2)
+        # numPosY_.setMaximum(config.dimensions[3])
+        # numPosY_.setMinimum(config.dimensions[2])
+        # numPosY_.setValue(tmpVessel.ans.shipstate.position.y)
+        # numPosY_.setObjectName("numPosY_" + tmpVessel.id)
+        # numPosY_.valueChanged.connect(lambda value: self.setY(value, tmpVessel))
+        # self.vessels.addWidget(numPosY_)
 
         numSpeed_ = QtWidgets.QSpinBox(self.verticalLayoutWidget_2)
         numSpeed_.setMaximum(100)
@@ -409,13 +411,13 @@ class ApplicationWindow(QtWidgets.QMainWindow, design.Ui_MainWindow):
         numSpeed_.valueChanged.connect(lambda value: self.setSpeed(value, tmpVessel))
         self.vessels.addWidget(numSpeed_)
 
-        numRoT = QtWidgets.QSpinBox(self.verticalLayoutWidget_2)
-        numRoT.setMaximum(180)
-        numRoT.setMinimum(0)
-        numRoT.setValue(tmpVessel.ans.shipstate.rate_of_turn)
-        numRoT.setObjectName("numRoT_" + tmpVessel.id)
-        numRoT.valueChanged.connect(lambda value: self.setRoT(value, tmpVessel))
-        self.vessels.addWidget(numRoT)
+        ap = QtWidgets.QCheckBox(self.verticalLayoutWidget_2)
+        ap.setChecked(tmpVessel.ans.ap)
+        ap.setObjectName("ap_" + tmpVessel.id)
+        ap.stateChanged.connect(lambda value: self.toggleAP(tmpVessel))
+        self.vessels.addWidget(ap)
+
+        self.cbShowArrow.setChecked(config.show['arrow'])
 
     def pause(self):
         global timer
@@ -462,6 +464,9 @@ class ApplicationWindow(QtWidgets.QMainWindow, design.Ui_MainWindow):
 
     def setVisibility(self, visibility):
         config.visibility = visibility
+
+    def toggleAP(self, tmpVessel):
+        tmpVessel.ans.ap = not tmpVessel.ans.ap
 
 
 def main():
