@@ -17,7 +17,7 @@ def init_fuzzy():
     # Generate universe variables
 
     bear = ctrl.Antecedent(np.arange(0, 360, 1), 'bearing')
-    range = ctrl.Antecedent(np.arange(0, config.radius['ra']/1000, 0.5), 'range')
+    range = ctrl.Antecedent(np.arange(0, config.radius['ra'] / 1000, 0.5), 'range')
     rel_course = ctrl.Antecedent(np.arange(0, 360, 1), 'relative_course')
     speed_ratio = ctrl.Antecedent(np.arange(0, 10, 0.5), 'speed_ratio')
     course_change = ctrl.Consequent(np.arange(-40, 40, 1), 'course_change')
@@ -40,16 +40,16 @@ def init_fuzzy():
 
     range['rvd'] = fuzz.trapmf(range.universe, [0,
                                                 0,
-                                                config.radius['rvd'] / 1000 - .05,
-                                                config.radius['rvd'] / 1000 + .05
+                                                config.radius['rvd'] / 1000 - .05 / config.scale,
+                                                config.radius['rvd'] / 1000 + .05 / config.scale
                                                 ])
-    range['ra'] = fuzz.trapmf(range.universe, [config.radius['rvd'] / 1000 - .05,
-                                               config.radius['rvd'] / 1000 + .05,
-                                               config.radius['rb'] / 1000 - .05,
-                                               config.radius['rb'] / 1000 + .05
+    range['rb'] = fuzz.trapmf(range.universe, [config.radius['rvd'] / 1000 - .05 / config.scale,
+                                               config.radius['rvd'] / 1000 + .05 / config.scale,
+                                               config.radius['rb'] / 1000 - .05 / config.scale,
+                                               config.radius['rb'] / 1000 + .05 / config.scale
                                                ])
-    range['rb'] = fuzz.trapmf(range.universe, [config.radius['rb'] / 1000 - .05,
-                                               config.radius['rb'] / 1000 + .05,
+    range['ra'] = fuzz.trapmf(range.universe, [config.radius['rb'] / 1000 - .05 / config.scale,
+                                               config.radius['rb'] / 1000 + .05 / config.scale,
                                                config.radius['ra'] / 1000,
                                                config.radius['ra'] / 1000
                                                ])
@@ -113,6 +113,12 @@ def init_fuzzy():
                                                                    ])
     rules = []
 
+    # bear.view()
+    # rel_course.view()
+    # range.view()
+    # speed_ratio.view()
+    # course_change.view()
+    # speed_change.view()
     def add_rule(bearings, course, speed, include_rvd, course_chg, speed_chg):
 
         if include_rvd:
@@ -135,6 +141,7 @@ def init_fuzzy():
                 [course_change[course_chg], speed_change[speed_chg]])
             )
 
+    # add_rule(bearing, rel_course, speed_ratio, include_rvd, course_change, speed_change)
     add_rule('1', 'd', 1, True, 'keep', 'keep')
     add_rule('1b', 'd', 1, True, 'keep', 'keep')
     add_rule('1', 'd', 1, False, 'keep', 'keep')
@@ -233,21 +240,21 @@ def init_fuzzy():
     add_rule('4', 'h', 2, True, 'port', 'decrease')
     add_rule('4', 'h', 3, True, 'port', 'decrease')
     add_rule('4', 'h', 1, False, 'keep', 'keep')
-    add_rule('4', 'h', 2, False, 'port', 'decrease')
-    add_rule('4', 'h', 3, False, 'port', 'decrease')
+    add_rule('4', 'h', 2, False, 'keep', 'keep')
+    add_rule('4', 'h', 3, False, 'keep', 'keep')
 
     add_rule('4', 'a', 1, True, 'keep', 'keep')
     add_rule('4', 'a', 2, True, 'port', 'decrease')
     add_rule('4', 'a', 3, True, 'port', 'decrease')
     add_rule('4', 'a', 1, False, 'keep', 'keep')
-    add_rule('4', 'a', 2, False, 'port', 'decrease')
-    add_rule('4', 'a', 3, False, 'port', 'decrease')
+    add_rule('4', 'a', 2, False, 'keep', 'keep')
+    add_rule('4', 'a', 3, False, 'keep', 'keep')
     add_rule('4', 'ab', 1, True, 'keep', 'keep')
     add_rule('4', 'ab', 2, True, 'port', 'decrease')
     add_rule('4', 'ab', 3, True, 'port', 'decrease')
     add_rule('4', 'ab', 1, False, 'keep', 'keep')
-    add_rule('4', 'ab', 2, False, 'port', 'decrease')
-    add_rule('4', 'ab', 3, False, 'port', 'decrease')
+    add_rule('4', 'ab', 2, False, 'keep', 'keep')
+    add_rule('4', 'ab', 3, False, 'keep', 'keep')
 
     add_rule('5', 'h', 1, True, 'keep', 'keep')
     add_rule('5', 'h', 2, True, 'keep', 'keep')
@@ -387,8 +394,7 @@ def init_fuzzy():
     add_rule('10', 'e', 2, False, 'keep', 'keep')
     add_rule('10', 'e', 3, False, 'keep', 'keep')
 
-
-    #Own rules
+    # Own rules
     add_rule('1', 'a', 1, False, 'starboard', 'keep')
     add_rule('1', 'a', 2, False, 'keep', 'keep')
     add_rule('1', 'a', 3, False, 'keep', 'keep')
@@ -417,19 +423,69 @@ def init_fuzzy():
     add_rule('1b', 'ab', 2, True, 'keep', 'keep')
     add_rule('1b', 'ab', 3, True, 'keep', 'keep')
 
-    add_rule('2', 'h', 1, False, 'starboard', 'keep')
-    add_rule('2', 'h', 2, False, 'keep', 'keep')
-    add_rule('2', 'h', 3, False, 'keep', 'keep')
-    add_rule('2', 'h', 1, True, 'starboard', 'keep')
-    add_rule('2', 'h', 2, True, 'keep', 'keep')
-    add_rule('2', 'h', 3, True, 'keep', 'keep')
+    add_rule('1', 'h', 1, False, 'starboard', 'keep')
 
-    add_rule('10', 'b', 1, False, 'port', 'keep')
-    add_rule('10', 'b', 2, False, 'keep', 'keep')
-    add_rule('10', 'b', 3, False, 'keep', 'keep')
-    add_rule('10', 'b', 1, True, 'port', 'keep')
-    add_rule('10', 'b', 2, True, 'keep', 'keep')
-    add_rule('10', 'b', 3, True, 'keep', 'keep')
+    add_rule('1', 'h', 1, True, 'starboard', 'keep')
+
+    add_rule('1b', 'h', 1, False, 'starboard', 'keep')
+
+    add_rule('1b', 'h', 1, True, 'starboard', 'keep')
+
+    add_rule('1', 'b', 1, False, 'starboard', 'keep')
+
+    add_rule('1', 'b', 1, True, 'starboard', 'keep')
+
+    add_rule('1b', 'b', 1, False, 'starboard', 'keep')
+
+    add_rule('1b', 'b', 1, True, 'starboard', 'keep')
+
+    add_rule('9', 'a', 1, False, 'keep', 'keep')
+
+    add_rule('9', 'a', 1, True, 'keep', 'keep')
+
+    add_rule('9', 'ab', 1, False, 'keep', 'keep')
+
+    add_rule('9', 'ab', 1, True, 'keep', 'keep')
+
+    add_rule('10', 'a', 1, False, 'keep', 'keep')
+
+    add_rule('10', 'a', 1, True, 'keep', 'keep')
+
+    add_rule('10', 'ab', 1, False, 'keep', 'keep')
+
+    add_rule('10', 'ab', 1, True, 'keep', 'keep')
+
+    add_rule('10', 'h', 1, False, 'keep', 'keep')
+
+    add_rule('10', 'h', 1, True, 'keep', 'keep')
+
+    # add_rule('2', 'a', 1, False, 'port', 'keep')
+    # add_rule('2', 'a', 2, False, 'keep', 'keep')
+    # add_rule('2', 'a', 3, False, 'keep', 'keep')
+    # add_rule('2', 'a', 1, True, 'port', 'keep')
+    # add_rule('2', 'a', 2, True, 'keep', 'keep')
+    # add_rule('2', 'a', 3, True, 'keep', 'keep')
+    #
+    # add_rule('10', 'a', 1, False, 'starboard', 'keep')
+    # add_rule('10', 'a', 2, False, 'keep', 'keep')
+    # add_rule('10', 'a', 3, False, 'keep', 'keep')
+    # add_rule('10', 'a', 1, True, 'starboard', 'keep')
+    # add_rule('10', 'a', 2, True, 'keep', 'keep')
+    # add_rule('10', 'a', 3, True, 'keep', 'keep')
+    #
+    # add_rule('2', 'ab', 1, False, 'port', 'keep')
+    # add_rule('2', 'ab', 2, False, 'keep', 'keep')
+    # add_rule('2', 'ab', 3, False, 'keep', 'keep')
+    # add_rule('2', 'ab', 1, True, 'port', 'keep')
+    # add_rule('2', 'ab', 2, True, 'keep', 'keep')
+    # add_rule('2', 'ab', 3, True, 'keep', 'keep')
+    #
+    # add_rule('10', 'ab', 1, False, 'starboard', 'keep')
+    # add_rule('10', 'ab', 2, False, 'keep', 'keep')
+    # add_rule('10', 'ab', 3, False, 'keep', 'keep')
+    # add_rule('10', 'ab', 1, True, 'starboard', 'keep')
+    # add_rule('10', 'ab', 2, True, 'keep', 'keep')
+    # add_rule('10', 'ab', 3, True, 'keep', 'keep')
 
     navigation_ctrl = ctrl.ControlSystem(rules)
-    return ctrl.ControlSystemSimulation(navigation_ctrl, flush_after_run=3 + 1)
+    return ctrl.ControlSystemSimulation(navigation_ctrl)

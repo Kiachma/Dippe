@@ -3,14 +3,14 @@ import math
 
 
 class Vessel:
-    def __init__(self, id, shipState, fis):
+    def __init__(self, id, shipState, fis, ap):
         self.id = id
-        self.ans = ans.AutonomousNavigationSystem(shipState, self.id, fis)
+        self.ans = ans.AutonomousNavigationSystem(shipState, self.id, fis, ap)
         self.artists = dict()
 
 
 class KnownVessel(Vessel):
     def __init__(self, id, shipState):
-        Vessel.__init__(self, id, shipState, False)
+        Vessel.__init__(self, id, shipState, False, False)
         self.sector_to = None
         self.sector_from = None
