@@ -1,6 +1,5 @@
 from __future__ import unicode_literals
 from autonomous_vessel import vessel
-from autonomous_vessel.autonomous_navigation_system import shipstate, position
 import matplotlib.patches as patches
 from matplotlib import pyplot as plt
 import math
@@ -13,7 +12,8 @@ import matplotlib
 import design
 import string
 import fuzzy
-
+import os, shutil
+import vesselService
 # Make sure that we are using QT5
 matplotlib.use('Qt5Agg')
 from PyQt5 import QtCore, QtWidgets
@@ -25,7 +25,6 @@ from matplotlib.figure import Figure
 progname = os.path.basename(sys.argv[0])
 progversion = "0.1"
 
-vessels = []
 paths = []
 timer = None
 fis = None
@@ -34,14 +33,12 @@ fis = None
 def createVessel(config, fis):
     return vessel.Vessel(
         config['id'],
-        shipstate.ShipState(config['heading'], position.Position(config['position'][0], config['position'][1]),
-                            config['speed'], config['rate_of_turn']), fis, config['ap'])
+        config['heading'], config['position'][0], config['position'][1],
+        config['speed'], config['max_speed'], config['rate_of_turn']
+        , fis, config['ap'])
 
 
-def createKnownVessel(tmpVessel):
-    return vessel.KnownVessel(
-        tmpVessel.id,
-        tmpVessel.ans.shipstate)
+
 
 
 def cart2pol(x, y):
@@ -57,31 +54,27 @@ def pol2cart(rho, phi):
 
 
 def init():
-    global vessels, paths
-    vessels = []
-    paths = []
+    vesselService.vessels = []
     for vesselConfig in config.vessels:
-        vessels.append(createVessel(vesselConfig, fis))
+        vesselService.vessels.append(createVessel(vesselConfig, fis))
 
-    for A in vessels:
-        for B in vessels:
-            if A == B:
-                continue
-            else:
-                A.ans.sa.add_observed_vessel(
-                    createKnownVessel(B)
-                )
+    # for A in vessels:
+    #     for B in vessels:
+    #         if A == B:
+    #             continue
+    #         else:
+    #             A.ans.sa.add_target_vessel(
+    #                 createTargetVessel(B)
+    #             )
 
 
 def animation_manage(ax, i):
-    opraLines = []
     collissionSectors = []
     arrows = []
     ships = []
 
     def reset_artists():
-        for line in opraLines:
-            line.remove()
+
         for arrow in arrows:
             arrow.remove()
         for sector in collissionSectors:
@@ -89,7 +82,6 @@ def animation_manage(ax, i):
         for ship in ships:
             ship.remove()
         del ships[:]
-        del opraLines[:]
         del arrows[:]
         del collissionSectors[:]
 
@@ -108,68 +100,49 @@ def animation_manage(ax, i):
         for arrow in ax.patches:
             if plt.getp(arrow, 'gid') == vessel.id + '_circle':
                 ax.patches.remove(arrow)
-        patch = plt.Circle((vessel.ans.shipstate.position.get_x(),
-                            vessel.ans.shipstate.position.get_y()),
-                           radius=config.visibility, gid=vessel.id + '_circle', fill=False)
+        patch = plt.Circle((vessel.shipstate.position.x,
+                            vessel.shipstate.position.y),
+                           radius=config.radius['ra'], gid=vessel.id + '_circle1', fill=False)
+        ax.add_patch(patch)
+        patch = plt.Circle((vessel.shipstate.position.x,
+                            vessel.shipstate.position.y),
+                           radius=config.radius['rb'], gid=vessel.id + '_circle2', fill=False)
+        ax.add_patch(patch)
+        patch = plt.Circle((vessel.shipstate.position.x,
+                            vessel.shipstate.position.y),
+                           radius=config.radius['rvd'], gid=vessel.id + '_circle', fill=False)
+
         ax.add_patch(patch)
 
-        return patch,
-
     def animate_sector(ax, currentVessel):
-        for head_on in currentVessel.ans.ca.risks['head_on']:
+        current = 0
+        for i in range(10):
+            next = current + config.sectors[i]
             patch = patches.Wedge((
-                currentVessel.ans.shipstate.position.get_x(),
-                currentVessel.ans.shipstate.position.get_y()),
-                config.visibility,
-                helpers.nav_to_theta(currentVessel.ans.shipstate.heading + config.sectors['headOn'][1]),
-                helpers.nav_to_theta(currentVessel.ans.shipstate.heading + config.sectors['headOn'][0]),
-                color='red',
-                alpha=0.4,
+                currentVessel.shipstate.position.x,
+                currentVessel.shipstate.position.y),
+                config.radius['ra'],
+                helpers.nav_to_theta(currentVessel.shipstate.heading + current),
+                helpers.nav_to_theta(currentVessel.shipstate.heading + next),
                 ls='solid',
-                linewidth=4)
+                linewidth=1,
+                fill=False)
 
             collissionSectors.append(patch)
             ax.add_patch(patch)
-        for head_on in currentVessel.ans.ca.risks['overtaking']:
-            patch = patches.Wedge((
-                currentVessel.ans.shipstate.position.get_x(),
-                currentVessel.ans.shipstate.position.get_y()),
-                config.visibility,
-                helpers.nav_to_theta(currentVessel.ans.shipstate.heading + config.sectors['over_take_give_way'][1]),
-                helpers.nav_to_theta(currentVessel.ans.shipstate.heading + config.sectors['over_take_give_way'][0]),
-                color='red',
-                alpha=0.4,
-                ls='solid',
-                linewidth=4)
-
-            collissionSectors.append(patch)
-            ax.add_patch(patch)
-        for head_on in currentVessel.ans.ca.risks['crossing']:
-            patch = patches.Wedge((
-                currentVessel.ans.shipstate.position.get_x(),
-                currentVessel.ans.shipstate.position.get_y()),
-                config.visibility,
-                helpers.nav_to_theta(currentVessel.ans.shipstate.heading + config.sectors['crossing_give_way'][1]),
-                helpers.nav_to_theta(currentVessel.ans.shipstate.heading + config.sectors['crossing_give_way'][0]),
-                color='red',
-                alpha=0.4,
-                ls='solid',
-                linewidth=4)
-
-            collissionSectors.append(patch)
-            ax.add_patch(patch)
+            current = next
 
     def animate_arrow(ax, vessel):
-        shipstate = vessel.ans.shipstate
+        shipstate = vessel.shipstate
         # coeff = math.sqrt(
         #     math.pow(config.visibility, 2) / (
         #         math.pow(shipstate.get_headingXY()[0], 2) + math.pow(shipstate.get_headingXY()[1], 2)))
         coeff = 1000 / config.scale
-        arrows.append(ax.annotate("", xy=(shipstate.position.get_x(),
-                                          shipstate.position.get_y()),
+        arrows.append(ax.annotate("", xy=(shipstate.position.x,
+                                          shipstate.position.y),
                                   xytext=(
-                                      shipstate.position.get_x() + shipstate.get_headingXY()[0] * coeff,
-                                      shipstate.position.get_y() + shipstate.get_headingXY()[1] * coeff),
+                                      shipstate.position.x + shipstate.get_headingXY()[0] * coeff,
+                                      shipstate.position.y + shipstate.get_headingXY()[1] * coeff),
                                   arrowprops=dict(
                                       arrowstyle='<-',
                                       facecolor='blue'),
@@ -178,33 +151,17 @@ def animation_manage(ax, i):
 
     def animate_ship(ax, vessel):
         color = 'green'
-        risk_string = ""
-        text_string = str(vessel.id) + "\n" + "Heading: " + str(vessel.ans.shipstate.heading) + "\n" + "Speed: " + str(
-            vessel.ans.shipstate.speed)
-        if vessel.ans.ca.risks['crossing']:
-            risk_string = risk_string + "C"
-        if vessel.ans.ca.risks['overtaking']:
-            risk_string = risk_string + "O"
-        if vessel.ans.ca.risks['head_on']:
-            risk_string = risk_string + "H"
-        if vessel.ans.ca.risks['crossing'] or vessel.ans.ca.risks['overtaking'] or vessel.ans.ca.risks['head_on']:
-            color = 'red'
-            text = ax.text(vessel.ans.shipstate.position.get_x(),
-                           vessel.ans.shipstate.position.get_y(), risk_string,
-                           verticalalignment='top', horizontalalignment='center',
-                           color='black')
-            # ax.add_patch(text)
-            ships.append(text)
-        if config.anim:
-            text2 = ax.text(vessel.ans.shipstate.position.get_x(),
-                            vessel.ans.shipstate.position.get_y(), text_string,
-                            verticalalignment='bottom', horizontalalignment='center',
-                            color='black')
-            # ax.add_patch(text)
-            ships.append(text2)
+        text_string = str(vessel.id) + "\n" + "Heading: " + str(vessel.shipstate.heading) + "\n" + "Speed: " + str(
+            vessel.shipstate.speed)
 
-        patch = plt.Circle((vessel.ans.shipstate.position.get_x(),
-                            vessel.ans.shipstate.position.get_y()),
+        text = ax.text(vessel.shipstate.position.x,
+                       vessel.shipstate.position.y, text_string,
+                       verticalalignment='bottom', horizontalalignment='center',
+                       color='black')
+        ships.append(text)
+
+        patch = plt.Circle((vessel.shipstate.position.x,
+                            vessel.shipstate.position.y),
                            radius=10,
                            label=vessel.id,
                            color=color)
@@ -212,35 +169,24 @@ def animation_manage(ax, i):
         ships.append(patch)
         ax.add_patch(patch)
 
-    def animate_path(ax, vessel):
-        patch = patches.ConnectionPatch(
-            (vessel.ans.shipstate.position.x, vessel.ans.shipstate.position.y),
-            (vessel.ans.shipstate.snapShotself.positionx, vessel.ans.shipstate.snapShot.position.y),
-            "data",
-            arrowstyle="-")
-
-        paths.append(patch)
-        for tempPatch in paths:
-            ax.add_patch(tempPatch)
-
     def animate_lights(ax, currentVessel):
         patch = patches.Wedge((
-            currentVessel.ans.shipstate.position.get_x(),
-            currentVessel.ans.shipstate.position.get_y()),
+            currentVessel.shipstate.position.x,
+            currentVessel.shipstate.position.y),
             config.visibility,
-            helpers.nav_to_theta(currentVessel.ans.shipstate.heading),
-            helpers.nav_to_theta(currentVessel.ans.shipstate.heading - 112.5),
+            helpers.nav_to_theta(currentVessel.shipstate.heading),
+            helpers.nav_to_theta(currentVessel.shipstate.heading - 112.5),
             color='red',
             alpha=0.4)
 
         collissionSectors.append(patch)
         ax.add_patch(patch)
         patch = patches.Wedge((
-            currentVessel.ans.shipstate.position.get_x(),
-            currentVessel.ans.shipstate.position.get_y()),
+            currentVessel.shipstate.position.x,
+            currentVessel.shipstate.position.y),
             config.visibility,
-            helpers.nav_to_theta(currentVessel.ans.shipstate.heading + 112.5),
-            helpers.nav_to_theta(currentVessel.ans.shipstate.heading),
+            helpers.nav_to_theta(currentVessel.shipstate.heading + 112.5),
+            helpers.nav_to_theta(currentVessel.shipstate.heading),
             color='green',
             alpha=0.4)
 
@@ -250,16 +196,17 @@ def animation_manage(ax, i):
     if config.anim:
         reset_artists()
 
-    for tempvessel in vessels:
-        tempvessel.ans.next_position
-        if i % 120 == 0 or config.anim:
+    for idx, tempvessel in enumerate(vesselService.vessels):
+        tempvessel.next_position()
+        if i % 10 == 0 or config.anim:
             animate_ship(ax, tempvessel)
-            if config.show['arrow'] and config.anim:
+            if config.show['arrow']:
                 animate_arrow(ax, tempvessel)
-            # if config.show['visibility'] and config.anim:
-            #     animate_range(ax, tempvessel)
-            # if config.show['sectors'] and config.anim:
-            #     animate_sector(ax, tempvessel)
+
+            if config.show['sectors'] and idx == 0:
+                animate_sector(ax, tempvessel)
+            if config.show['visibility'] and idx == 0:
+                animate_range(ax, tempvessel)
             # if config.show['paths'] and config.anim:
             #     animate_path(ax, tempvessel)
             # if config.show['lights'] and config.anim:
@@ -277,7 +224,8 @@ class MyMplCanvas(FigureCanvas):
         self.compute_initial_figure()
         self.axes.set_xlim([config.dimensions[0], config.dimensions[1]])
         self.axes.set_ylim([config.dimensions[2], config.dimensions[3]])
-
+        self.axes.set_xlabel('NM* ' + str(1000 / config.scale))
+        self.axes.set_ylabel('NM* ' + str(1000 / config.scale))
         FigureCanvas.__init__(self, fig)
         self.setParent(parent)
         FigureCanvas.setSizePolicy(self,
@@ -341,8 +289,7 @@ class ApplicationWindow(QtWidgets.QMainWindow, design.Ui_MainWindow):
         self.cbShowPath.setChecked(config.show['paths'])
         self.cbShowLights.setChecked(config.show['lights'])
         self.numVisibility.setValue(config.visibility)
-        global vessels
-        for tmpVessel in vessels:
+        for tmpVessel in vesselService.vessels:
             self.add_vessel_to_GUI(tmpVessel)
 
         self.cbShowArrow.stateChanged.connect(self.toggleHeadings)
@@ -361,15 +308,13 @@ class ApplicationWindow(QtWidgets.QMainWindow, design.Ui_MainWindow):
 
     def add_vessel(self):
         d = dict(enumerate(string.ascii_lowercase, 1))
-        newVessel = createVessel(dict(id=d[len(vessels) + 1].upper(),
+        newVessel = createVessel(dict(id=d[len(vesselService.vessels) + 1].upper(),
                                       heading=0,
                                       position=(0, 0),
                                       speed=0,
                                       rate_of_turn=2))
-        for vessel in vessels:
-            newVessel.ans.sa.add_observed_vessel(vessel)
-            vessel.ans.sa.add_observed_vessel(newVessel)
-        vessels.append(newVessel)
+
+        vesselService.vessels.append(newVessel)
         self.add_vessel_to_GUI(newVessel)
 
     def add_vessel_to_GUI(self, tmpVessel):
@@ -382,7 +327,7 @@ class ApplicationWindow(QtWidgets.QMainWindow, design.Ui_MainWindow):
         # numHeading = QtWidgets.QSpinBox(self.verticalLayoutWidget_2)
         # numHeading.setMaximum(360)
         # numHeading.setMinimum(0)
-        # numHeading.setValue(tmpVessel.ans.shipstate.heading)
+        # numHeading.setValue(tmpVessel.shipstate.heading)
         # numHeading.setObjectName("numHeading_" + tmpVessel.id)
         # numHeading.valueChanged.connect(lambda value: self.setHeading(value, tmpVessel))
         # self.vessels.addWidget(numHeading)
@@ -390,7 +335,7 @@ class ApplicationWindow(QtWidgets.QMainWindow, design.Ui_MainWindow):
         # numPosX_ = QtWidgets.QSpinBox(self.verticalLayoutWidget_2)
         # numPosX_.setMaximum(config.dimensions[1])
         # numPosX_.setMinimum(config.dimensions[0])
-        # numPosX_.setValue(tmpVessel.ans.shipstate.position.x)
+        # numPosX_.setValue(tmpVessel.shipstate.position.x)
         # numPosX_.setObjectName("numPosX_" + tmpVessel.id)
         # numPosX_.valueChanged.connect(lambda value: self.setX(value, tmpVessel))
         # self.vessels.addWidget(numPosX_)
@@ -398,7 +343,7 @@ class ApplicationWindow(QtWidgets.QMainWindow, design.Ui_MainWindow):
         # numPosY_ = QtWidgets.QSpinBox(self.verticalLayoutWidget_2)
         # numPosY_.setMaximum(config.dimensions[3])
         # numPosY_.setMinimum(config.dimensions[2])
-        # numPosY_.setValue(tmpVessel.ans.shipstate.position.y)
+        # numPosY_.setValue(tmpVessel.shipstate.position.y)
         # numPosY_.setObjectName("numPosY_" + tmpVessel.id)
         # numPosY_.valueChanged.connect(lambda value: self.setY(value, tmpVessel))
         # self.vessels.addWidget(numPosY_)
@@ -406,7 +351,7 @@ class ApplicationWindow(QtWidgets.QMainWindow, design.Ui_MainWindow):
         numSpeed_ = QtWidgets.QSpinBox(self.verticalLayoutWidget_2)
         numSpeed_.setMaximum(100)
         numSpeed_.setMinimum(0)
-        numSpeed_.setValue(tmpVessel.ans.shipstate.speed)
+        numSpeed_.setValue(tmpVessel.shipstate.speed)
         numSpeed_.setObjectName("numSpeed_" + tmpVessel.id)
         numSpeed_.valueChanged.connect(lambda value: self.setSpeed(value, tmpVessel))
         self.vessels.addWidget(numSpeed_)
@@ -442,19 +387,19 @@ class ApplicationWindow(QtWidgets.QMainWindow, design.Ui_MainWindow):
         config.show['visibility'] = not config.show['visibility']
 
     def setX(self, value, tmpVessel):
-        tmpVessel.ans.shipstate.position.x = value
+        tmpVessel.shipstate.position.x = value
 
     def setY(self, value, tmpVessel):
-        tmpVessel.ans.shipstate.position.y = value
+        tmpVessel.shipstate.position.y = value
 
     def setSpeed(self, value, tmpVessel):
-        tmpVessel.ans.shipstate.speed = value
+        tmpVessel.shipstate.speed = value
 
     def setRoT(self, value, tmpVessel):
-        tmpVessel.ans.shipstate.rate_of_turn = value
+        tmpVessel.shipstate.rate_of_turn = value
 
     def setHeading(self, value, tmpVessel):
-        tmpVessel.ans.shipstate.heading = value
+        tmpVessel.shipstate.heading = value
 
     def togglePaths(self, state):
         config.show['paths'] = not config.show['paths']
@@ -469,8 +414,23 @@ class ApplicationWindow(QtWidgets.QMainWindow, design.Ui_MainWindow):
         tmpVessel.ans.ap = not tmpVessel.ans.ap
 
 
+def clear_folder(folder):
+    for the_file in os.listdir(folder):
+        file_path = os.path.join(folder, the_file)
+        try:
+            if os.path.isfile(file_path):
+                os.unlink(file_path)
+            # elif os.path.isdir(file_path): shutil.rmtree(file_path)
+        except Exception as e:
+            print(e)
+
+
 def main():
     global fis
+    folder = '/home/eaura/Google Drive/Skola/Dippe/git/src/img'
+    if not os.path.exists(folder):
+        os.makedirs(folder)
+    clear_folder(folder)
     fis = fuzzy.init_fuzzy()
     init()
     qApp = QtWidgets.QApplication(sys.argv)
@@ -481,8 +441,11 @@ def main():
     if not config.anim:
         for i in range(0, 8000):
             aw.dc.update_figure()
-
-        aw.dc.draw()
+            if i % 10 == 0:
+                aw.dc.print_figure('img/foo_' + str(i) + '.png')
+                aw.dc.axes.cla()
+                aw.dc.axes.set_xlim([config.dimensions[0], config.dimensions[1]])
+                aw.dc.axes.set_ylim([config.dimensions[2], config.dimensions[3]])
     sys.exit(qApp.exec_())
 
     # plot()

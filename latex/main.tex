@@ -24,7 +24,7 @@
 %----------------------------------------------------------------------------------------
 
 \documentclass[
-21pt, % The default document font size, options: 10pt, 11pt, 12pt
+12pt, % The default document font size, options: 10pt, 11pt, 12pt
 oneside, % Two side (alternating margins) for binding by default, uncomment to switch to one side
 english, % ngerman for German
 onehalfspacing, % Single line spacing, alternatives: onehalfspacing or doublespacing
@@ -55,6 +55,13 @@ chapterinoneline, % Uncomment to place the chapter title next to the number on o
 \usepackage{graphicx}
 \usepackage{amsmath}
 \usepackage{amsfonts}
+\usepackage{todonotes}
+\usepackage{subfig}
+\usepackage{minted}
+\usemintedstyle{pastie}
+\usepackage{enumitem}
+\setcounter{tocdepth}{2}
+\reversemarginpar
 \graphicspath{ {Figures/} }
 \graphicspath{ {../matlab/} }
 %----------------------------------------------------------------------------------------
@@ -75,7 +82,9 @@ chapterinoneline, % Uncomment to place the chapter title next to the number on o
 %   THESIS INFORMATION
 %----------------------------------------------------------------------------------------
 
-\thesistitle{Thesis Title} % Your thesis title, this is used in the title and abstract, print it elsewhere with \ttitle
+\thesistitle{Fuzzy logic and unmanned Surface Vehicles} % Your thesis title, this is used in the title and abstract, print it elsewhere with \ttitle
+\thesissubtitle{Implementing collission avoidance in Python}
+
 \supervisor{Prof. Johan \textsc{Lilius} \\ Adj. Prof. Marina \textsc{Waldén} } % Your supervisor's name, this is used in the title page, print it elsewhere with \supname
 \examiner{} % Your examiner's name, this is not currently used anywhere in the template, print it elsewhere with \examname
 \degree{Master of Science (Technology)} % Your degree name, this is used in the title page and abstract, print it elsewhere with \degreename
@@ -83,14 +92,14 @@ chapterinoneline, % Uncomment to place the chapter title next to the number on o
 \addresses{} % Your address, this is not currently used anywhere in the template, print it elsewhere with \addressname
 
 \subject{Biological Sciences} % Your subject area, this is not currently used anywhere in the template, print it elsewhere with \subjectname
-\keywords{} % Keywords for your thesis, this is not currently used anywhere in the template, print it elsewhere with \keywordnames
+\keywords{COLREGS, Unmanned Surface Vessels, Fuzzy Logic} % Keywords for your thesis, this is not currently used anywhere in the template, print it elsewhere with \keywordnames
 \university{\href{http://www.abo.no}{Åbo Akademi University}} % Your university's name and URL, this is used in the title page and abstract, print it elsewhere with \univname
 \department{\href{https://research.it.abo.fi/}{Department of Information Technologies}} % Your department's name and URL, this is used in the title page and abstract, print it elsewhere with \deptname
 \group{\href{https://uit.no/utdanning/program?p_document_id=275406}{University of Tromsø School of Aviation}} % Your research group's name and URL, this is used in the title page, print it elsewhere with \groupname
 \faculty{\href{http://www.abo.fi/fakultet/en/fnt}{Faculty of Science and Engineering}} % Your faculty's name and URL, this is used in the title page and abstract, print it elsewhere with \facname
 
 \AtBeginDocument{
-\hypersetup{pdftitle=\ttitle} % Set the PDF's title to your title
+\hypersetup{pdftitle=\ttitle - \tsubtitle} % Set the PDF's title to your title
 \hypersetup{pdfauthor=\authorname} % Set the PDF's author to your name
 \hypersetup{pdfkeywords=\keywordnames} % Set the PDF's keywords to your keywords
 }
@@ -116,7 +125,7 @@ chapterinoneline, % Uncomment to place the chapter title next to the number on o
     % thesis title centered and in big bold fonts
     \begin{center}
         \LARGE\textbf{\ttitle} \\
-        % \textit{\tsubtitle}
+        \textit{\tsubtitle}
         \par
 
         % thesis author name and matriculation number below in normal text
@@ -204,6 +213,8 @@ chapterinoneline, % Uncomment to place the chapter title next to the number on o
 \begin{abstract}
     \addchaptertocentry{\abstractname} % Add the abstract to the table of contents
     The Thesis Abstract is written here (and usually kept to just this page). The page is kept centered vertically so can expand into the blank space above the title too\ldots
+    \\\\
+    \textit{Keywords:} \textit{\keywordnames}
 \end{abstract}
 
 %----------------------------------------------------------------------------------------
@@ -225,14 +236,16 @@ chapterinoneline, % Uncomment to place the chapter title next to the number on o
 
 \listoftables % Prints the list of tables
 
+\listoftodos
+
 %----------------------------------------------------------------------------------------
 %   ABBREVIATIONS
 %----------------------------------------------------------------------------------------
 
-\begin{abbreviations}{ll} % Include a list of abbreviations (a table of two columns)
+\begin{abbreviations}{l p{10cm}} % Include a list of abbreviations (a table of two columns)
     \textbf{COLREGs}  & Convention on the International Regulations for Preventing Collisions at Sea, 1972\\
     \textbf{FMF} & \textbf{F}uzzy \textbf{M}embership \textbf{F}unction\\
-    %\textbf{WSF} & \textbf{W}hat (it) \textbf{S}tands \textbf{F}or\\
+    \textbf{OPRA} & \textbf{O}riented \textbf{P}oint \textbf{R}easoning \textbf{A}lgebra\\
 
 \end{abbreviations}
 
@@ -282,10 +295,10 @@ chapterinoneline, % Uncomment to place the chapter title next to the number on o
 % Include the chapters of the thesis as separate files from the Chapters folder
 % Uncomment the lines as you write the chapters
 
-\include{Chapters/Chapter1}
-\include{Chapters/Chapter2}
-\include{Chapters/Chapter3}
-%\include{Chapters/Chapter4} 
+\include{Chapters/1_Intro}
+\include{Chapters/2_Theory}
+\include{Chapters/3_Method}
+\include{Chapters/4_Results}
 %\include{Chapters/Chapter5} 
 
 %----------------------------------------------------------------------------------------
@@ -298,7 +311,7 @@ chapterinoneline, % Uncomment to place the chapter title next to the number on o
 % Uncomment the lines as you write the Appendices
 
 \include{Appendices/AppendixA}
-%\include{Appendices/AppendixB}
+\include{Appendices/AppendixB}
 %\include{Appendices/AppendixC}
 
 %----------------------------------------------------------------------------------------

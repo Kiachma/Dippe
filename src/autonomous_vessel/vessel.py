@@ -1,16 +1,16 @@
 from autonomous_vessel.autonomous_navigation_system import ans
+from autonomous_vessel import shipstate
 import math
 
 
 class Vessel:
-    def __init__(self, id, shipState, fis, ap):
+    def __init__(self, id, heading, position_x, position_y,
+                 speed, max_speed, rate_of_turn, fis, ap):
         self.id = id
-        self.ans = ans.AutonomousNavigationSystem(shipState, self.id, fis, ap)
-        self.artists = dict()
+        self.shipstate = shipstate.ShipState(heading, position_x, position_y,
+                                             speed, max_speed, rate_of_turn)
 
+        self.ans = ans.AutonomousNavigationSystem(self.id, fis, ap)
 
-class KnownVessel(Vessel):
-    def __init__(self, id, shipState):
-        Vessel.__init__(self, id, shipState, False, False)
-        self.sector_to = None
-        self.sector_from = None
+    def next_position(self):
+        return self.ans.next_position(self.shipstate)

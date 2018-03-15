@@ -18,8 +18,8 @@ def knots_to_nm_per_s(knots):
 
 
 def distance(a, b):
-    return sqrt((pow(a.get_x() / 1000 - b.get_x() / 1000, 2) +
-                 pow(a.get_y() / 1000 - b.get_y() / 1000, 2)))
+    return sqrt((pow(a.x / 1000 - b.x / 1000, 2) +
+                 pow(a.y / 1000 - b.y / 1000, 2)))
 
 
 def calculate_initial_compass_bearing(pointA, pointB):

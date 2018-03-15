@@ -1,5 +1,5 @@
 from __future__ import division
-from autonomous_vessel.autonomous_navigation_system import position
+from autonomous_vessel import position
 import math
 import config
 import copy
@@ -7,22 +7,16 @@ import helpers
 
 
 class ShipState:
-    def __init__(self, heading, position, speed, rate_of_turn):
-        self.position = position
+    def __init__(self, heading, position_x, position_y, speed, max_speed, rate_of_turn):
+        self.position = position.Position(position_x, position_y)
         self.speed = speed
+        self.max_speed = max_speed
         self.heading = heading
         self.rate_of_turn = rate_of_turn
-        self.snapShot = None
-        self.targetCourse = self.heading
-        self.targetSpeed = self.speed
 
     def update_position(self):
-        self.position = position.Position(self.position.get_x()
-                                          + self.get_headingXY()[0]
-                                          * config.playback['rate'],
-                                          self.position.get_y()
-                                          + self.get_headingXY()[1]
-                                          * config.playback['rate'])
+        self.position.x = self.position.x + self.get_headingXY()[0] * config.playback['rate']
+        self.position.y = self.position.y + self.get_headingXY()[1] * config.playback['rate']
         return self.position
 
     def standard_rate_turn(self, direction):
@@ -38,7 +32,7 @@ class ShipState:
     def slow_down(self):
         correction = - 1 * config.playback[
             'rate']
-        if self.speed + correction >= 0:
+        if self.speed + correction > 0:
 
             self.speed = self.speed + correction
 
@@ -49,8 +43,12 @@ class ShipState:
     def speed_up(self):
         correction = 1 * config.playback[
             'rate']
-        self.speed = self.speed + correction
-        return correction
+        if correction + self.speed < self.max_speed:
+            self.speed = self.speed + correction
+            return correction
+        else:
+            self.speed = self.max_speed
+            return self.max_speed - self.speed
 
     def get_headingXY(self):
         # Remember to convert to radians!
