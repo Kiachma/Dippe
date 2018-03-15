@@ -213,6 +213,13 @@
  \def\@title{#2}%
  \def\ttitle{#2}%
 }
+
+\NewDocumentCommand{\thesissubtitle} { o m }{
+\IfValueTF{#1}{\def\shortsubtitle{#1}}{\def\shortsubtitle{#2}}%
+ \def\@subtitle{#2}%
+ \def\tsubtitle{#2}%
+}
+
 \DeclareDocumentCommand{\author}{m}{\newcommand{\authorname}{#1}\renewcommand{\@author}{#1}}
 \NewDocumentCommand{\supervisor}{m}{\newcommand{\supname}{#1}}
 \NewDocumentCommand{\examiner}{m}{\newcommand{\examname}{#1}}
@@ -224,7 +231,8 @@
 \NewDocumentCommand{\faculty}{m}{\newcommand{\facname}{#1}}
 \NewDocumentCommand{\subject}{m}{\newcommand{\subjectname}{#1}}
 \NewDocumentCommand{\keywords}{m}{\newcommand{\keywordnames}{#1}}
-
+\newcommand\pro{\item[$+$]}
+\newcommand\con{\item[$-$]}
 \newcommand{\checktoopen}{% New command to move content to the next page which prints to the next odd page if twosided mode is active
 	\if@openright\cleardoublepage\else\clearpage\fi
 	\ifdef{\phantomsection}{\phantomsection}{}% The \phantomsection command is necessary for hyperref to jump to the correct page
@@ -232,15 +240,17 @@
 
 \NewDocumentCommand{\bhrule}{}{\typeout{--------------------}}
 \NewDocumentCommand{\tttypeout}{m}{\bhrule\typeout{\space #1}\bhrule}
-
+\newcommand{\overbar}[1]{\mkern 1.5mu\overline{\mkern-1.5mu#1\mkern-1.5mu}\mkern 1.5mu}
+\newcommand{\fuzzyset}[1]{\underset{\sim}{#1}}
+\newcommand\nameeq[2]{\phantom{\text{#2}}&&#1&&\text{#2}}
 \newcommand{\HRule}{\rule{.9\linewidth}{.6pt}} % New command to make the lines in the title page
 \newcommand{\decoRule}{\rule{.8\textwidth}{.4pt}} % New command for a rule to be used under figures
-
 \setcounter{tocdepth}{3} % The depth to which the document sections are printed to the table of contents
 \ProvideDocumentCommand{\addchaptertocentry}{ m }{%
 	\addcontentsline{toc}{chapter}{#1}%
 }
-
+\newcommand{\starboard}{\textcolor{green}{SB}}
+\newcommand{\port}{\textcolor{red}{P}}
 %----------------------------------------------------------------------------------------
 %	COLOURS
 %----------------------------------------------------------------------------------------
@@ -290,7 +300,7 @@
 	\automark*[section]{}%
 }
 \providepairofpagestyles[thesisSimple]{review}{%
-	\ofoot[\shorttitle/\authorname]{\shorttitle/\authorname}
+	\ofoot[\shorttitle/\shortsubtitle/\authorname]]{\shorttitle/\shortsubtitle/\authorname]}
 	\ifoot[\today]{\today}
 }
 \pagestyle{thesis}
@@ -349,7 +359,7 @@ KOMA-script documentation for details.}]{fancyhdr}
 		\addchap*{\abstractname}%
 		{\chapteralign\normalsize\abstractauthorfont \authorname \par}% Author name
 		\vspace{\baselineskip}
-		{\chapteralign\parbox{.7\linewidth}{\chapteralign\normalsize\itshape\abstracttitlefont\@title}\par}% Thesis title
+		{\chapteralign\parbox{.7\linewidth}{\chapteralign\normalsize\itshape\abstracttitlefont\@title\@subtitle}\par}% Thesis title
 		\bigskip\noindent\ignorespaces
 	}%
 	{}%end alt-abstract
@@ -370,6 +380,7 @@ KOMA-script documentation for details.}]{fancyhdr}
 			{\normalsize \degreename\par}% Degree name
 			\bigskip
 			{\normalsize\bfseries \@title \par}% Thesis title
+            {\normalsize\itshape \@subtitle \par} % Thesis sub title
 			\medskip
 			{\normalsize \byname{} \authorname \par}% Author name
 			\bigskip
@@ -396,6 +407,7 @@ KOMA-script documentation for details.}]{fancyhdr}
 		{\normalsize \degreename\par}% Degree name
 		\bigskip
 		{\normalsize\bfseries \@title \par}% Thesis title
+        {\normalsize\itshape \@subtitle \par} % Thesis sub title
 		\medskip
 		{\normalsize \byname{} \authorname \par}% Author name
 		\bigskip

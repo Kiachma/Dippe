@@ -1,0 +1,151 @@
+%!TEX root = ../main.tex
+% !TeX spellcheck = en_GB 
+\begin{longtable}[H]{l l l l l l}
+  \caption[FIS Rule set 1/2]{Rule set for a COLREGs compliant fuzzy inference system \cite{perera2012intelligent}}
+  \label{tab:rules}                                                                                                                                                                                           \\
+
+  \toprule
+  Bearing                                    & Course                               & \multicolumn{2}{c}{Range($R_{VD}-R_A$)}        & \multicolumn{2}{c}{ Range($R_{A}-R_B$)}                                \\
+  \multicolumn{2}{c}{}                       & Speed ratio                          & Decision                                       & Speed ratio                             & Decision                     \\
+  \midrule
+  \endfirsthead
+  \toprule
+  Bearing                                    & Course                               & \multicolumn{2}{c}{Range($R_{VD}-R_A$)}        & \multicolumn{2}{c}{ Range($R_{A}-R_B$)}                                \\
+  \multicolumn{2}{c}{}                       & Speed ratio                          & Decision                                       & Speed ratio                             & Decision                     \\
+  \midrule
+  \endhead
+  \bottomrule
+
+  \multicolumn{2}{c}{\starboard = Starboard} & \multicolumn{2}{c}{\port = Port}     & \multicolumn{2}{c}{Empty decision = No change}                                                                          \\
+  \multicolumn{3}{c}{Acc = Accelerate}       & \multicolumn{3}{c}{Dec = Decelerate}
+
+  \endfoot
+  I                                          & d                                    & <1                                             &                                         & <1         &                 \\
+                                             &                                      & $\approx1$                                     &                                         & $\approx1$ &                 \\
+                                             &                                      & >1                                             &                                         & >1         &                 \\
+                                             & e                                    & <1                                             & \starboard                              & <1         & \starboard      \\
+                                             &                                      & $\approx1$                                     & \starboard                              & $\approx1$ & \starboard      \\
+                                             &                                      & >1                                             & \starboard                              & >1         & \starboard      \\
+                                             & f                                    & <1                                             &                                         & <1         &                 \\
+                                             &                                      & $\approx1$                                     &                                         & $\approx1$ &                 \\
+                                             &                                      & >1                                             &                                         & >1         &                 \\
+  II                                         & e                                    & <1                                             &                                         & <1         &                 \\
+                                             &                                      & $\approx1$                                     & Acc                                     & $\approx1$ & Acc             \\
+                                             &                                      & >1                                             & Acc                                     & >1         & Acc             \\
+                                             & f                                    & <1                                             &                                         & <1         &                 \\
+                                             &                                      & $\approx1$                                     & \starboard, Dec                         & $\approx1$ & \starboard, Dec \\
+                                             &                                      & >1                                             & \starboard, Dec                         & >1         & \starboard, Dec \\
+                                             & g                                    & <1                                             &                                         & <1         &                 \\
+                                             &                                      & $\approx1$                                     & \starboard                              & $\approx1$ & \starboard      \\
+                                             &                                      & >1                                             & \starboard                              & >1         & \starboard      \\
+  III                                        & f                                    & <1                                             &                                         & <1         &                 \\
+                                             &                                      & $\approx1$                                     & Acc                                     & $\approx1$ & Acc             \\
+                                             &                                      & >1                                             & Acc                                     & >1         & Acc             \\
+                                             & g                                    & <1                                             &                                         & <1         &                 \\
+                                             &                                      & $\approx1$                                     & Dec                                     & $\approx1$ & Dec             \\
+                                             &                                      & >1                                             & Dec                                     & >1         & Dec             \\
+                                             & h                                    & <1                                             &                                         & <1         &                 \\
+                                             &                                      & $\approx1$                                     & Dec                                     & $\approx1$ & Dec             \\
+                                             &                                      & >1                                             & Dec                                     & >1         & Dec             \\
+  IV                                         & g                                    & <1                                             &                                         & <1         &                 \\
+                                             &                                      & $\approx1$                                     & Acc                                     & $\approx1$ & Acc             \\
+                                             &                                      & >1                                             & Acc                                     & >1         & Acc             \\
+                                             & h                                    & <1                                             &                                         & <1         &                 \\
+                                             &                                      & $\approx1$                                     & \port, Dec                              & $\approx1$ & \port, Dec      \\
+                                             &                                      & >1                                             & \port, Dec                              & >1         & \port, Dec      \\
+                                             & a                                    & <1                                             &                                         & <1         &                 \\
+                                             &                                      & $\approx1$                                     & \port, Dec                              & $\approx1$ & \port, Dec      \\
+                                             &                                      & >1                                             & \port, Dec                              & >1         & \port, Dec      \\
+  V                                          & h                                    & <1                                             &                                         & <1         &                 \\
+                                             &                                      & $\approx1$                                     &                                         & $\approx1$ &                 \\
+                                             &                                      & >1                                             &                                         & >1         &                 \\
+                                             & a                                    & <1                                             &                                         & <1         &                 \\
+                                             &                                      & $\approx1$                                     & \port                                   & $\approx1$ & \port           \\
+                                             &                                      & >1                                             & \port                                   & >1         & \port           \\
+                                             & b                                    & <1                                             &                                         & <1         &                 \\
+                                             &                                      & $\approx1$                                     &                                         & $\approx1$ &                 \\
+                                             &                                      & >1                                             &                                         & >1         &                 \\
+
+  VI                                         & a                                    & <1                                             &                                         & <1         &                 \\
+                                             &                                      & $\approx1$                                     & Dec                                     & $\approx1$ &                 \\
+                                             &                                      & >1                                             & Dec                                     & >1         &                 \\
+                                             & b                                    & <1                                             &                                         & <1         &                 \\
+                                             &                                      & $\approx1$                                     & Dec                                     & $\approx1$ &                 \\
+                                             &                                      & >1                                             & Dec                                     & >1         &                 \\
+                                             & c                                    & <1                                             &                                         & <1         &                 \\
+                                             &                                      & $\approx1$                                     & Acc                                     & $\approx1$ &                 \\
+                                             &                                      & >1                                             & Acc                                     & >1         &                 \\
+  VII                                        & a                                    & <1                                             &                                         & <1         &                 \\
+                                             &                                      & $\approx1$                                     & \starboard                              & $\approx1$ &                 \\
+                                             &                                      & >1                                             & \starboard                              & >1         &                 \\
+                                             & b                                    & <1                                             &                                         & <1         &                 \\
+                                             &                                      & $\approx1$                                     & \starboard, Dec                         & $\approx1$ &                 \\
+                                             &                                      & >1                                             & \starboard, Dec                         & >1         &                 \\
+                                             & c                                    & <1                                             &                                         & <1         &                 \\
+                                             &                                      & $\approx1$                                     & Dec                                     & $\approx1$ &                 \\
+                                             &                                      & >1                                             & Dec                                     & >1         &                 \\
+  VIII                                       & b                                    & <1                                             &                                         & <1         &                 \\
+                                             &                                      & $\approx1$                                     & Dec                                     & $\approx1$ &                 \\
+                                             &                                      & >1                                             & Dec                                     & >1         &                 \\
+                                             & c                                    & <1                                             &                                         & <1         &                 \\
+                                             &                                      & $\approx1$                                     & Dec                                     & $\approx1$ &                 \\
+                                             &                                      & >1                                             & Dec                                     & >1         &                 \\
+                                             & d                                    & <1                                             &                                         & <1         &                 \\
+                                             &                                      & $\approx1$                                     & Acc                                     & $\approx1$ &                 \\
+                                             &                                      & >1                                             & Acc                                     & >1         &                 \\
+  IX                                         & c                                    & <1                                             &                                         & <1         &                 \\
+                                             &                                      & $\approx1$                                     & \port                                   & $\approx1$ &                 \\
+                                             &                                      & >1                                             & \port                                   & >1         &                 \\
+                                             & d                                    & <1                                             &                                         & <1         &                 \\
+                                             &                                      & $\approx1$                                     & \port, Dec                              & $\approx1$ &                 \\
+                                             &                                      & >1                                             & \port, Dec                              & >1         &                 \\
+                                             & e                                    & <1                                             &                                         & <1         &                 \\
+                                             &                                      & $\approx1$                                     & Acc                                     & $\approx1$ &                 \\
+                                             &                                      & >1                                             & Acc                                     & >1         &                 \\
+  X                                          & c                                    & <1                                             &                                         & <1         &                 \\
+                                             &                                      & $\approx1$                                     & Dec                                     & $\approx1$ &                 \\
+                                             &                                      & >1                                             & Dec                                     & >1         &                 \\
+                                             & d                                    & <1                                             &                                         & <1         &                 \\
+                                             &                                      & $\approx1$                                     & Dec                                     & $\approx1$ &                 \\
+                                             &                                      & >1                                             & Dec                                     & >1         &                 \\
+                                             & e                                    & <1                                             &                                         & <1         &                 \\
+                                             &                                      & $\approx1$                                     & Acc                                     & $\approx1$ &                 \\
+                                             &                                      & >1                                             & Acc                                     & >1         &                 \\
+\end{longtable}
+
+\begin{longtable}[H]{l l l l l l}
+  \caption[FIS Rule set 2/2]{Rules regarding COLREG rule 15 added to the rule set developed by \textcite{perera2012intelligent}}
+  \label{tab:rules_own}                                                                                                                                                                                  \\
+
+  \toprule
+  Bearing                                    & Course                               & \multicolumn{2}{c}{Range($R_{VD}-R_A$)}        & \multicolumn{2}{c}{ Range($R_{A}-R_B$)}                           \\
+  \multicolumn{2}{c}{}                       & Speed ratio                          & Decision                                       & Speed ratio                             & Decision                \\
+  \midrule
+  \endfirsthead
+  \toprule
+  Bearing                                    & Course                               & \multicolumn{2}{c}{Range($R_{VD}-R_A$)}        & \multicolumn{2}{c}{ Range($R_{A}-R_B$)}                           \\
+  \multicolumn{2}{c}{}                       & Speed ratio                          & Decision                                       & Speed ratio                             & Decision                \\
+  \midrule
+  \endhead
+  \bottomrule
+
+  \multicolumn{2}{c}{\starboard = Starboard} & \multicolumn{2}{c}{\port = Port}     & \multicolumn{2}{c}{Empty decision = No change}                                                                     \\
+  \multicolumn{3}{c}{Acc = Accelerate}       & \multicolumn{3}{c}{Dec = Decelerate}
+
+  \endfoot
+  I                                          & a                                    & <1                                             & \starboard                              & <1         & \starboard \\
+                                             &                                      & $\approx1$                                     &                                         & $\approx1$ &            \\
+                                             &                                      & >1                                             &                                         & >1         &            \\
+                                             & h                                    & <1                                             & \starboard                              & <1         & \starboard \\
+                                             &                                      & $\approx1$                                     &                                         & $\approx1$ &            \\
+                                             &                                      & >1                                             &                                         & >1         &            \\
+                                             & b                                    & <1                                             & \starboard                              & <1         & \starboard \\
+                                             &                                      & $\approx1$                                     &                                         & $\approx1$ &            \\
+                                             &                                      & >1                                             &                                         & >1         &            \\
+  II                                         & a                                    & <1                                             & \port                                   & <1         & \port      \\
+                                             &                                      & $\approx1$                                     &                                         & $\approx1$ &            \\
+                                             &                                      & >1                                             &                                         & >1         &            \\
+  X                                          & a                                    & <1                                             & \starboard                              & <1         & \starboard \\
+                                             &                                      & $\approx1$                                     &                                         & $\approx1$ &            \\
+                                             &                                      & >1                                             &                                         & >1         &            \\
+\end{longtable}

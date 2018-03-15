@@ -1,5 +1,6 @@
 from math import sqrt
 import math
+import numpy as np
 
 
 def nav_to_theta(heading):
@@ -17,8 +18,8 @@ def knots_to_nm_per_s(knots):
 
 
 def distance(a, b):
-    return sqrt((pow(a.get_x() - b.get_x(), 2) +
-                 pow(a.get_y() - b.get_y(), 2)))
+    return sqrt((pow(a.x / 1000 - b.x / 1000, 2) +
+                 pow(a.y / 1000 - b.y / 1000, 2)))
 
 
 def calculate_initial_compass_bearing(pointA, pointB):
@@ -62,13 +63,30 @@ def theta_to_nav(theta):
 
 
 def cartesian_coords_to_relative(main_vessel, observed_vessel):
+    main_observed, observed_main = cartesian_coords_to_compass(main_vessel, observed_vessel)
+
+    main_observed = compass_to_relative(main_observed, main_vessel.heading)
+    observed_main = compass_to_relative(observed_main, observed_vessel.heading)
+    return main_observed, observed_main
+
+
+def cartesian_coords_to_compass(main_vessel, observed_vessel):
     main_observed = calculate_initial_compass_bearing((main_vessel.position.x, main_vessel.position.y),
                                                       (observed_vessel.position.x,
                                                        observed_vessel.position.y))
     observed_main = calculate_initial_compass_bearing(
         (observed_vessel.position.x, observed_vessel.position.y),
         (main_vessel.position.x, main_vessel.position.y))
-
-    main_observed = compass_to_relative(main_observed, main_vessel.heading)
-    observed_main = compass_to_relative(observed_main, observed_vessel.heading)
     return main_observed, observed_main
+
+
+def pol2cart(rho, phi):
+    x = rho * np.cos(phi)
+    y = rho * np.sin(phi)
+    return (x, y)
+
+
+def cart2pol(x, y):
+    rho = np.sqrt(x ** 2 + y ** 2)
+    phi = np.arctan2(y, x)
+    return (rho, phi)

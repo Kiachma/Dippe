@@ -20,11 +20,11 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %----------------------------------------------------------------------------------------
-%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%   PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
 %----------------------------------------------------------------------------------------
 
 \documentclass[
-21pt, % The default document font size, options: 10pt, 11pt, 12pt
+12pt, % The default document font size, options: 10pt, 11pt, 12pt
 oneside, % Two side (alternating margins) for binding by default, uncomment to switch to one side
 english, % ngerman for German
 onehalfspacing, % Single line spacing, alternatives: onehalfspacing or doublespacing
@@ -51,13 +51,25 @@ chapterinoneline, % Uncomment to place the chapter title next to the number on o
 \addbibresource{references.bib} % The filename of the bibliography
 
 \usepackage[autostyle=true]{csquotes} % Required to generate language-dependent quotes in the bibliography
-
+\usepackage[outdir=./]{epstopdf}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{todonotes}
+\usepackage{subfig}
+\usepackage{minted}
+\usemintedstyle{pastie}
+\usepackage{enumitem}
+\setcounter{tocdepth}{2}
+\reversemarginpar
+\graphicspath{ {Figures/} }
+\graphicspath{ {../matlab/} }
 %----------------------------------------------------------------------------------------
-%	MARGIN SETTINGS
+%   MARGIN SETTINGS
 %----------------------------------------------------------------------------------------
 
 \geometry{
-	paper=a4paper, % Change to letterpaper for US letter
+    paper=a4paper, % Change to letterpaper for US letter
     inner=4.5cm, % Inner margin
     outer=2cm, % Outer margin
     bindingoffset=.5cm, % Binding offset
@@ -67,10 +79,12 @@ chapterinoneline, % Uncomment to place the chapter title next to the number on o
 }
 
 %----------------------------------------------------------------------------------------
-%	THESIS INFORMATION
+%   THESIS INFORMATION
 %----------------------------------------------------------------------------------------
 
-\thesistitle{Thesis Title} % Your thesis title, this is used in the title and abstract, print it elsewhere with \ttitle
+\thesistitle{Fuzzy logic and unmanned Surface Vehicles} % Your thesis title, this is used in the title and abstract, print it elsewhere with \ttitle
+\thesissubtitle{Implementing collission avoidance in Python}
+
 \supervisor{Prof. Johan \textsc{Lilius} \\ Adj. Prof. Marina \textsc{Waldén} } % Your supervisor's name, this is used in the title page, print it elsewhere with \supname
 \examiner{} % Your examiner's name, this is not currently used anywhere in the template, print it elsewhere with \examname
 \degree{Master of Science (Technology)} % Your degree name, this is used in the title page and abstract, print it elsewhere with \degreename
@@ -78,14 +92,14 @@ chapterinoneline, % Uncomment to place the chapter title next to the number on o
 \addresses{} % Your address, this is not currently used anywhere in the template, print it elsewhere with \addressname
 
 \subject{Biological Sciences} % Your subject area, this is not currently used anywhere in the template, print it elsewhere with \subjectname
-\keywords{} % Keywords for your thesis, this is not currently used anywhere in the template, print it elsewhere with \keywordnames
+\keywords{COLREGS, Unmanned Surface Vessels, Fuzzy Logic} % Keywords for your thesis, this is not currently used anywhere in the template, print it elsewhere with \keywordnames
 \university{\href{http://www.abo.no}{Åbo Akademi University}} % Your university's name and URL, this is used in the title page and abstract, print it elsewhere with \univname
 \department{\href{https://research.it.abo.fi/}{Department of Information Technologies}} % Your department's name and URL, this is used in the title page and abstract, print it elsewhere with \deptname
 \group{\href{https://uit.no/utdanning/program?p_document_id=275406}{University of Tromsø School of Aviation}} % Your research group's name and URL, this is used in the title page, print it elsewhere with \groupname
 \faculty{\href{http://www.abo.fi/fakultet/en/fnt}{Faculty of Science and Engineering}} % Your faculty's name and URL, this is used in the title page and abstract, print it elsewhere with \facname
 
 \AtBeginDocument{
-\hypersetup{pdftitle=\ttitle} % Set the PDF's title to your title
+\hypersetup{pdftitle=\ttitle - \tsubtitle} % Set the PDF's title to your title
 \hypersetup{pdfauthor=\authorname} % Set the PDF's author to your name
 \hypersetup{pdfkeywords=\keywordnames} % Set the PDF's keywords to your keywords
 }
@@ -97,67 +111,67 @@ chapterinoneline, % Uncomment to place the chapter title next to the number on o
 \pagestyle{plain} % Default to the plain heading style until the thesis style is called for the body content
 
 %----------------------------------------------------------------------------------------
-%	TITLE PAGE
+%   TITLE PAGE
 %----------------------------------------------------------------------------------------
 \newgeometry{ inner=2cm, % Inner margin
     outer=2cm, % Outer margin
     top=2cm, % Top margin
     bottom=2cm, % Bottom margin} 
-    }
+}
 \begin{titlepage}
-           % \begin{adjustwidth}{-2.0cm}{-2.0cm}
-                \includegraphics[width=40mm]{Figures/Logo_eng_pos.pdf}
-         %   \end{adjustwidth} 
-            % thesis title centered and in big bold fonts
-            \begin{center}
-                \LARGE\textbf{\ttitle} \\
-               % \textit{\tsubtitle}
-                \par
-                
-                % thesis author name and matriculation number below in normal text
-                {\large
-            
-                    \vspace{5mm}
-                    \begin{tabular}[t]{c}
-                        \authorname 
-                        %\thesisauthormatrnr
-                    \end{tabular}}
-                    \par
-                    
-                \end{center}
-                        \vfill
-                \begin{bottompar}
-                    
-                    %\begin{adjustwidth}{-2.0cm}{-2.0cm}
-                        \begin{flushright}
-                        \ifdefined\swedishthesis
-                    Bachelor's thesis  \\
-                    %Handledare: \thesissupervisor \\
-                    %\ifdefined\examinerspecified
-                    %�vervakare: \thesisexaminer
-                    %\fi
-                    \else
-                    Masters's thesis (30 ECTS)  \\
-                    Supervisors: \supname \\
-                    \fi
-                    \deptname \\
-                    \facname \\
-                    \univname \\
-                    \today\\% Date
-                                        \vspace{5 mm}
-                            {\fontsize{8pt}{1em}\selectfont Åbo Akademi University, Tuomiokirkontori 3 , FI-20500 TURKU  ~/ +358 2 215 31 / information@abo.fi  / \href{http://abo.fi}{abo.fi}
-                           % \includegraphics[width=15mm]{Figures/Logo_eng_pos.pdf}
-                            }
-                        \end{flushright}
-                   % \end{adjustwidth} 
-                \end{bottompar}
-                
-            \end{titlepage}
-            \restoregeometry
+    % \begin{adjustwidth}{-2.0cm}{-2.0cm}
+    \includegraphics[width=40mm]{Figures/Logo_eng_pos.pdf}
+    %   \end{adjustwidth} 
+    % thesis title centered and in big bold fonts
+    \begin{center}
+        \LARGE\textbf{\ttitle} \\
+        \textit{\tsubtitle}
+        \par
+
+        % thesis author name and matriculation number below in normal text
+        {\large
+
+            \vspace{5mm}
+            \begin{tabular}[t]{c}
+                \authorname
+                %\thesisauthormatrnr         
+            \end{tabular}}
+        \par
+
+    \end{center}
+    \vfill
+    \begin{bottompar}
+
+        %\begin{adjustwidth}{-2.0cm}{-2.0cm}
+        \begin{flushright}
+            \ifdefined\swedishthesis
+                Bachelor's thesis  \\
+                %Handledare: \thesissupervisor \\
+                %\ifdefined\examinerspecified
+                %�vervakare: \thesisexaminer
+                %\fi
+            \else
+                Masters's thesis (30 ECTS)  \\
+                Supervisors: \supname \\
+            \fi
+            \deptname \\
+            \facname \\
+            \univname \\
+            \today\\% Date
+            \vspace{5 mm}
+            {\fontsize{8pt}{1em}\selectfont Åbo Akademi University, Tuomiokirkontori 3 , FI-20500 TURKU  ~/ +358 2 215 31 / information@abo.fi  / \href{http://abo.fi}{abo.fi}
+                % \includegraphics[width=15mm]{Figures/Logo_eng_pos.pdf}
+            }
+        \end{flushright}
+        % \end{adjustwidth} 
+    \end{bottompar}
+
+\end{titlepage}
+\restoregeometry
 
 
 %----------------------------------------------------------------------------------------
-%	DECLARATION PAGE
+%   DECLARATION PAGE
 %----------------------------------------------------------------------------------------
 
 %\begin{declaration}
@@ -172,10 +186,10 @@ chapterinoneline, % Uncomment to place the chapter title next to the number on o
 % \item I have acknowledged all main sources of help.
 % \item Where the thesis is based on work done by myself jointly with others, I have made clear exactly what was done by others and what I have contributed myself.\\
 % \end{itemize}
- 
+
 % \noindent Signed:\\
 % \rule[0.5em]{25em}{0.5pt} % This prints a line for the signature
- 
+
 % \noindent Date:\\
 % \rule[0.5em]{25em}{0.5pt} % This prints a line to write the date
 %\end{declaration}
@@ -183,7 +197,7 @@ chapterinoneline, % Uncomment to place the chapter title next to the number on o
 \cleardoublepage
 
 %----------------------------------------------------------------------------------------
-%	QUOTATION PAGE
+%   QUOTATION PAGE
 %----------------------------------------------------------------------------------------
 
 %\vspace*{0.2\textheight}
@@ -193,25 +207,27 @@ chapterinoneline, % Uncomment to place the chapter title next to the number on o
 %\hfill Dave Barry
 
 %----------------------------------------------------------------------------------------
-%	ABSTRACT PAGE
+%   ABSTRACT PAGE
 %----------------------------------------------------------------------------------------
 
 \begin{abstract}
-\addchaptertocentry{\abstractname} % Add the abstract to the table of contents
-The Thesis Abstract is written here (and usually kept to just this page). The page is kept centered vertically so can expand into the blank space above the title too\ldots
+    \addchaptertocentry{\abstractname} % Add the abstract to the table of contents
+    The Thesis Abstract is written here (and usually kept to just this page). The page is kept centered vertically so can expand into the blank space above the title too\ldots
+    \\\\
+    \textit{Keywords:} \textit{\keywordnames}
 \end{abstract}
 
 %----------------------------------------------------------------------------------------
-%	ACKNOWLEDGEMENTS
+%   ACKNOWLEDGEMENTS
 %----------------------------------------------------------------------------------------
 
 \begin{acknowledgements}
-\addchaptertocentry{\acknowledgementname} % Add the acknowledgements to the table of contents
-The acknowledgments and the people to thank go here, don't forget to include your project advisor\ldots
+    \addchaptertocentry{\acknowledgementname} % Add the acknowledgements to the table of contents
+    The acknowledgments and the people to thank go here, don't forget to include your project advisor\ldots
 \end{acknowledgements}
 
 %----------------------------------------------------------------------------------------
-%	LIST OF CONTENTS/FIGURES/TABLES PAGES
+%   LIST OF CONTENTS/FIGURES/TABLES PAGES
 %----------------------------------------------------------------------------------------
 
 \tableofcontents % Prints the main table of contents
@@ -220,19 +236,21 @@ The acknowledgments and the people to thank go here, don't forget to include you
 
 \listoftables % Prints the list of tables
 
+\listoftodos
+
 %----------------------------------------------------------------------------------------
-%	ABBREVIATIONS
+%   ABBREVIATIONS
 %----------------------------------------------------------------------------------------
 
-\begin{abbreviations}{ll} % Include a list of abbreviations (a table of two columns)
-\textbf{COLREGs}  & Convention on the International Regulations for Preventing Collisions at Sea, 1972\\
-%\textbf{LAH} & \textbf{L}ist \textbf{A}bbreviations \textbf{H}ere\\
-%\textbf{WSF} & \textbf{W}hat (it) \textbf{S}tands \textbf{F}or\\
+\begin{abbreviations}{l p{10cm}} % Include a list of abbreviations (a table of two columns)
+    \textbf{COLREGs}  & Convention on the International Regulations for Preventing Collisions at Sea, 1972\\
+    \textbf{FMF} & \textbf{F}uzzy \textbf{M}embership \textbf{F}unction\\
+    \textbf{OPRA} & \textbf{O}riented \textbf{P}oint \textbf{R}easoning \textbf{A}lgebra\\
 
 \end{abbreviations}
 
 %----------------------------------------------------------------------------------------
-%	PHYSICAL CONSTANTS/OTHER DEFINITIONS
+%   PHYSICAL CONSTANTS/OTHER DEFINITIONS
 %----------------------------------------------------------------------------------------
 
 % \begin{constants}{lr@{${}={}$}l} % The list of physical constants is a three column table
@@ -245,7 +263,7 @@ The acknowledgments and the people to thank go here, don't forget to include you
 % \end{constants}
 
 %----------------------------------------------------------------------------------------
-%	SYMBOLS
+%   SYMBOLS
 %----------------------------------------------------------------------------------------
 
 % \begin{symbols}{lll} % Include a list of Symbols (a three column table)
@@ -261,13 +279,13 @@ The acknowledgments and the people to thank go here, don't forget to include you
 % \end{symbols}
 
 %----------------------------------------------------------------------------------------
-%	DEDICATION
+%   DEDICATION
 %----------------------------------------------------------------------------------------
 
 % \dedicatory{For/Dedicated to/To my\ldots} 
 
 %----------------------------------------------------------------------------------------
-%	THESIS CONTENT - CHAPTERS
+%   THESIS CONTENT - CHAPTERS
 %----------------------------------------------------------------------------------------
 
 \mainmatter % Begin numeric (1,2,3...) page numbering
@@ -277,14 +295,14 @@ The acknowledgments and the people to thank go here, don't forget to include you
 % Include the chapters of the thesis as separate files from the Chapters folder
 % Uncomment the lines as you write the chapters
 
-\include{Chapters/Chapter1}
-\include{Chapters/Chapter2} 
-%\include{Chapters/Chapter3}
-%\include{Chapters/Chapter4} 
+\include{Chapters/1_Intro}
+\include{Chapters/2_Theory}
+\include{Chapters/3_Method}
+\include{Chapters/4_Results}
 %\include{Chapters/Chapter5} 
 
 %----------------------------------------------------------------------------------------
-%	THESIS CONTENT - APPENDICES
+%   THESIS CONTENT - APPENDICES
 %----------------------------------------------------------------------------------------
 
 \appendix % Cue to tell LaTeX that the following "chapters" are Appendices
@@ -293,15 +311,15 @@ The acknowledgments and the people to thank go here, don't forget to include you
 % Uncomment the lines as you write the Appendices
 
 \include{Appendices/AppendixA}
-%\include{Appendices/AppendixB}
+\include{Appendices/AppendixB}
 %\include{Appendices/AppendixC}
 
 %----------------------------------------------------------------------------------------
-%	BIBLIOGRAPHY
+%   BIBLIOGRAPHY
 %----------------------------------------------------------------------------------------
 
 \printbibliography[heading=bibintoc]
 
 %----------------------------------------------------------------------------------------
 
-\end{document}  
+\end{document}
