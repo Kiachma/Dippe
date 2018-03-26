@@ -17,7 +17,7 @@ import vesselService
 # Make sure that we are using QT5
 matplotlib.use('Qt5Agg')
 from PyQt5 import QtCore, QtWidgets
-
+import copy
 # from numpy import arange, sin, pi
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
@@ -56,7 +56,7 @@ def pol2cart(rho, phi):
 def init():
     vesselService.vessels = []
     for vesselConfig in config.vessels:
-        vesselService.vessels.append(createVessel(vesselConfig, fis))
+        vesselService.vessels.append(createVessel(vesselConfig, copy.deepcopy(fis)))
 
     # for A in vessels:
     #     for B in vessels:
@@ -151,8 +151,8 @@ def animation_manage(ax, i):
 
     def animate_ship(ax, vessel):
         color = 'green'
-        text_string = str(vessel.id) + "\n" + "Heading: " + str(vessel.shipstate.heading) + "\n" + "Speed: " + str(
-            vessel.shipstate.speed)
+        text_string = str(vessel.id) + "\n" + "Heading: " + str(round(vessel.shipstate.heading)) + "\n" + "Speed: " + str(round(
+            vessel.shipstate.speed))
 
         text = ax.text(vessel.shipstate.position.x,
                        vessel.shipstate.position.y, text_string,
@@ -198,7 +198,7 @@ def animation_manage(ax, i):
 
     for idx, tempvessel in enumerate(vesselService.vessels):
         tempvessel.next_position()
-        if i % 10 == 0 or config.anim:
+        if i % 1 == 0 or config.anim:
             animate_ship(ax, tempvessel)
             if config.show['arrow']:
                 animate_arrow(ax, tempvessel)
@@ -357,7 +357,7 @@ class ApplicationWindow(QtWidgets.QMainWindow, design.Ui_MainWindow):
         self.vessels.addWidget(numSpeed_)
 
         ap = QtWidgets.QCheckBox(self.verticalLayoutWidget_2)
-        ap.setChecked(tmpVessel.ans.ap)
+        ap.setChecked(tmpVessel.ans.auto_pilot)
         ap.setObjectName("ap_" + tmpVessel.id)
         ap.stateChanged.connect(lambda value: self.toggleAP(tmpVessel))
         self.vessels.addWidget(ap)
@@ -441,7 +441,7 @@ def main():
     if not config.anim:
         for i in range(0, 8000):
             aw.dc.update_figure()
-            if i % 10 == 0:
+            if i % 1 == 0:
                 aw.dc.print_figure('img/foo_' + str(i) + '.png')
                 aw.dc.axes.cla()
                 aw.dc.axes.set_xlim([config.dimensions[0], config.dimensions[1]])

@@ -8,7 +8,7 @@ anim = True
 # NM *1000
 radius = dict(
     rvd=1000 / scale,
-    rb=6000 / scale,
+    rb=4000 / scale,
     ra=10000 / scale
 )
 
@@ -28,8 +28,8 @@ sectors = [5, 80, 10, 80, 10, 26, 54, 10, 54, 26, 5]
 # bear['1b'] = fuzz.trapmf(bear.universe, generate_trapetzoid(355, 360, 5))
 visibility = radius['ra'] / 1000
 show = dict(
-    visibility=False,
-    sectors=False,
+    visibility=True,
+    sectors=True,
     arrow=True,
     paths=False,
     lights=False
@@ -100,23 +100,24 @@ show = dict(
 #
 
 # Crossing
-# vessels = [
-#     dict(id='B',
-#          heading=270,
-#          position=(7200 / scale, 0),
-#          speed=10,
-#          max_speed=12,
-#          rate_of_turn=3,
-#          ap=True),
-#     dict(id='A',
-#          heading=0,
-#          position=(0, -7200 / scale),
-#          speed=10,
-#          max_speed=12,
-#          rate_of_turn=3,
-#          ap=True),
-#
-# ]
+vessels = [
+
+    dict(id='A',
+         heading=0,
+         position=(0, -7200 / scale),
+         speed=10,
+         max_speed=12,
+         rate_of_turn=3,
+         ap=True),
+    dict(id='B',
+         heading=270,
+         position=(7200 / scale, 0),
+         speed=10,
+         max_speed=12,
+         rate_of_turn=3,
+         ap=True),
+
+]
 
 # Head on
 # vessels = [
@@ -154,19 +155,75 @@ show = dict(
 #          ap=True),
 # ]
 # DIP
-vessels = [
-    dict(id='A',
-         heading=0,
-         position=(0, -4500 / scale),
-         speed=5,
-         max_speed=7,
-         rate_of_turn=5,
-         ap=True),
-    dict(id='B',
-         heading=203,
-         position=(4500 / scale, 4500 / scale),
-         speed=10,
-         max_speed=13,
-         rate_of_turn=5,
-         ap=True),
-]
+# vessels = [
+#     dict(id='A',
+#          heading=0,
+#          position=(0, -4500 / scale),
+#          speed=5,
+#          max_speed=7,
+#          rate_of_turn=5,
+#          ap=True),
+#     dict(id='B',
+#          heading=203,
+#          position=(4500 / scale, 4500 / scale),
+#          speed=10,
+#          max_speed=13,
+#          rate_of_turn=5,
+#          ap=True),
+# ]
+
+
+# Overtaking and crossing situation on the high seas
+# http://advanced.ecolregs.com/index.php?option=com_k2&view=item&id=172:overtaking-and-crossing-situation-on-the-high-seas&Itemid=359&lang=en
+# vessels = [
+#
+#     dict(id='A',
+#          heading=0,
+#          position=(-6900 / scale, -7200 / scale),
+#          speed=2,
+#          max_speed=10,
+#          rate_of_turn=3,
+#          ap=True),
+#     dict(id='B',
+#          heading=0,
+#          position=(-5900 / scale, -8100 / scale),
+#          speed=4,
+#          max_speed=15,
+#          rate_of_turn=3,
+#          ap=True),
+#     dict(id='C',
+#          heading=235,
+#          position=(0 / scale, -0 / scale),
+#          speed=7.6,
+#          max_speed=20,
+#          rate_of_turn=3,
+#          ap=True),
+# ]
+
+
+# Overtaking and head-on situation on the high seas
+# http://advanced.ecolregs.com/index.php?option=com_k2&view=item&id=370:overtaking-and-head-on-situation-on-the-high-seas&Itemid=359&lang=en
+# vessels = [
+#
+#     dict(id='A',
+#          heading=180,
+#          position=(0 / scale, 4000 / scale),
+#          speed=12,
+#          max_speed=15,
+#          rate_of_turn=3,
+#          ap=True),
+#     dict(id='B',
+#          heading=0,
+#          position=(0 / scale, -4000 / scale),
+#          speed=12,
+#          max_speed=15,
+#          rate_of_turn=3,
+#          ap=True),
+#     dict(id='C',
+#          heading=00,
+#          position=(-2000 / scale, -3000 / scale),
+#          speed=7,
+#          max_speed=15,
+#          rate_of_turn=3,
+#          ap=True),
+# ]

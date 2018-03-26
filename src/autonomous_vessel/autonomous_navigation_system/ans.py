@@ -3,13 +3,12 @@ import math
 from sortedcontainers import SortedDict
 import config
 import vesselService
+import collections
 
 
 class AutonomousNavigationSystem:
     def __init__(self, id, fis, ap):
         self.id = id
-        self.heading_correction = 0
-        self.speed_correction = 0
         self.fuzzy_inference_system = fis
         self.corrections = SortedDict()
         self.auto_pilot = ap
@@ -33,21 +32,35 @@ class AutonomousNavigationSystem:
         return shipstate.update_position()
 
     def back_to_course(self, shipstate):
-        if self.heading_correction != 0:
-            if -shipstate.rate_of_turn >= self.heading_correction:
-                self.heading_correction = self.heading_correction + shipstate.standard_rate_turn('right')
+        diff = shipstate.target_heading - shipstate.heading
+        heading_correction = (diff + 180) % 360 - 180
+        if heading_correction < -shipstate.rate_of_turn:
+            shipstate.standard_rate_turn('left')
+        elif heading_correction > shipstate.rate_of_turn:
+            shipstate.standard_rate_turn('right')
+        elif heading_correction != 0:
+            shipstate.heading = (shipstate.heading + heading_correction) % 360
 
-            elif self.heading_correction >= shipstate.rate_of_turn:
-                self.heading_correction = self.heading_correction + shipstate.standard_rate_turn('left')
-            elif self.heading_correction != 0:
-                shipstate.heading = shipstate.heading + self.heading_correction
-                self.heading_correction = 0
+        elif self.prev_min_col_time < self.min_col_time:
+            diff = shipstate.orig_heading - shipstate.heading
+            heading_correction = (diff + 180) % 360 - 180
+            if heading_correction < 0:
+                shipstate.target_heading = (shipstate.target_heading - shipstate.rate_of_turn / 2) % 360
+            elif heading_correction > 0:
+                shipstate.target_heading = (shipstate.target_heading + shipstate.rate_of_turn / 2) % 360
 
     def back_to_speed(self, shipstate):
-        if self.speed_correction <= -1:
-            self.speed_correction = self.speed_correction + shipstate.speed_up()
-        elif self.speed_correction >= 1:
-            self.speed_correction = self.speed_correction + shipstate.slow_down()
+        speed_correction = shipstate.target_speed - shipstate.speed
+        if speed_correction <= -1:
+            shipstate.slow_down()
+        elif speed_correction >= 1:
+            shipstate.speed_up()
+        # elif self.prev_min_col_time < self.min_col_time:
+        speed_correction = shipstate.orig_speed - shipstate.speed
+        if speed_correction < 0:
+            shipstate.target_speed = shipstate.target_speed - .5
+        elif speed_correction > 0:
+            shipstate.target_speed = shipstate.target_speed + .5
 
     def calculate_corrections(self, shipstate):
         self.corrections = SortedDict()
@@ -64,7 +77,9 @@ class AutonomousNavigationSystem:
 
             vr = math.sqrt(pow(vm, 2) + pow(vt, 2) - 2 * vm * vt * math.cos(cm - ct))
             distance = helpers.distance(shipstate.position, observed_vessel.shipstate.position)
-            time_until_collision = distance / vr
+            time_until_collision = math.inf
+            if vr != 0:
+                time_until_collision = distance / vr
             if not self.min_col_time:
                 self.min_col_time = time_until_collision
             else:
@@ -82,58 +97,74 @@ class AutonomousNavigationSystem:
             self.fuzzy_inference_system.input['relative_course'] = relative_course
             self.fuzzy_inference_system.input['range'] = distance
             self.fuzzy_inference_system.input['speed_ratio'] = speed_ratio
-
+            self.fuzzy_inference_system.output = collections.OrderedDict()
             try:
                 self.fuzzy_inference_system.compute()
-                # self.fis.print_state()
-                course_change = round(self.fuzzy_inference_system.output['course_change'])
-                speed_change = round(self.fuzzy_inference_system.output['speed_change'])
-
-                self.corrections[time_until_collision] = {'course_change': course_change,
-                                                          "speed_change": speed_change,
-                                                          "Target": observed_vessel.id}
-
+                # self.fuzzy_inference_system.print_state()
             except ValueError as e:
-                # pass
-                # self.fis.print_state()
-                print(e)
+                pass
+                # print(e)
+            if 'course_change' in self.fuzzy_inference_system.output or 'speed_change' in self.fuzzy_inference_system.output:
+                self.corrections[time_until_collision] = {}
+                self.corrections[time_until_collision]['target'] = observed_vessel.id
+                if 'course_change' in self.fuzzy_inference_system.output:
+                    course_change = round(self.fuzzy_inference_system.output['course_change'])
+                    self.corrections[time_until_collision]['course_change'] = course_change
+                if 'speed_change' in self.fuzzy_inference_system.output:
+                    speed_change = round(self.fuzzy_inference_system.output['speed_change'])
+                    self.corrections[time_until_collision]['speed_change'] = speed_change
+
         if len(self.corrections) != 0:
-            tot_weight = 0
+            course_tot_weight = 0
+            speed_tot_weight = 0
             course_change = 0
             speed_change = 0
             for idx, correction in self.corrections.items():
-                weight = 1 / idx
-                tot_weight = tot_weight + weight
-                course_change = correction['course_change'] * weight
-                speed_change = correction['speed_change'] * weight
-            course_change = course_change / tot_weight
-            speed_change = speed_change / tot_weight
+
+                if 'course_change' in correction:
+                    course_weight = 1 / idx
+                    course_tot_weight = course_tot_weight + course_weight
+                    course_change = course_change + correction['course_change'] * course_weight
+                if 'speed_change' in correction:
+                    speed_weight = 1 / idx
+                    speed_tot_weight = speed_tot_weight + speed_weight
+                    speed_change = speed_change + correction['speed_change'] * speed_weight
+            if course_tot_weight != 0:
+                course_change = course_change / course_tot_weight
+                shipstate.target_heading = shipstate.heading + course_change
+            if speed_tot_weight != 0:
+                speed_change = speed_change / speed_tot_weight
+                shipstate.target_speed = shipstate.speed + speed_change
+
             print(self.id)
             print("Course change" + str(course_change))
             print("Speed change" + str(speed_change))
             if course_change >= shipstate.rate_of_turn:
-                self.heading_correction = self.heading_correction + shipstate.standard_rate_turn('right')
+                shipstate.standard_rate_turn('right')
 
             elif course_change <= -shipstate.rate_of_turn:
-                self.heading_correction = self.heading_correction + shipstate.standard_rate_turn('left')
+                shipstate.standard_rate_turn('left')
             elif course_change != 0:
-                shipstate.heading = shipstate.heading + course_change
-                self.heading_correction = self.heading_correction + course_change
-
+                if (shipstate.heading + course_change) % 360 >= 0:
+                    shipstate.heading = (shipstate.heading + course_change) % 360
+                else:
+                    shipstate.heading = (shipstate.heading + 360 + course_change) % 360
+            else:
+                self.back_to_course(shipstate)
             if speed_change > 1 * config.playback[
                 'rate']:
-                self.speed_correction = self.speed_correction + shipstate.speed_up()
+                shipstate.speed_up()
 
             elif speed_change < -1 * config.playback[
                 'rate']:
-                self.speed_correction = self.speed_correction + shipstate.slow_down()
+                shipstate.slow_down()
             elif speed_change != 0:
-                shipstate.speed = shipstate.speed + speed_change
-                self.speed_correction = self.speed_correction + speed_change
-
-        else:
-            if self.prev_min_col_time < self.min_col_time:
-                self.back_to_course(shipstate)
+                if shipstate.speed + speed_change >= 0:
+                    shipstate.speed = shipstate.speed + speed_change
+                else:
+                    shipstate.speed = 0
+            else:
                 self.back_to_speed(shipstate)
-
-            pass
+        else:
+            self.back_to_speed(shipstate)
+            self.back_to_course(shipstate)

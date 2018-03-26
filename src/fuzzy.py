@@ -124,11 +124,11 @@ def init_fuzzy():
         if course_chg and speed_chg:
             consequents = (course_change[course_chg], speed_change[speed_chg])
         elif speed_chg:
-            consequents = (course_change['keep'], speed_change[speed_chg])
+            consequents = ( course_change['keep'],speed_change[speed_chg])
         elif course_chg:
-            consequents = (course_change[course_chg], speed_change['keep'])
+            consequents = (course_change[course_chg],speed_change['keep'])
         else:
-            []
+            return
 
         if include_rvd:
             rules.append(ctrl.Rule(

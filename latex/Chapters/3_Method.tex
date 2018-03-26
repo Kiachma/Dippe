@@ -5,8 +5,11 @@
 \chapter{Implementation}
 The objective of this thesis was to implement and evaluate a  collision avoidance  algorithm for USVs. Several related approaches where analysed before the fuzzy logic approach presented by \textcite{perera2012intelligent}, was chosen to be implemented.
 The solution presented in the original paper is implemented in MATLAB, while the solution presented here is implemented in Python. Python was chosen due to the writers previous knowledge of the language as well as the availability of fuzzy logic python libraries. The library used in this implementation is called SciKit-Fuzzy \cite{josh_warner_2017_1002946}.
+
 \section{The fuzzy inference system}
-The fuzzy logic framework SciKit-Fuzzy is used to implement the model described in section \ref{section:model}. The framework provides a simple API which enables one to define Antecedents, Consequents, their corresponding FMFs as well as the rules that unite them. First antecedents are initialized as shown in listing \ref{listing:ant}
+The fuzzy logic framework SciKit-Fuzzy is used to implement the model described in section \ref{section:model}. The framework provides a simple API which enables one to define Antecedents, Consequents, their corresponding FMFs as well as the rules that unite them.
+
+First antecedents are initialized as shown in listing \ref{listing:ant}.
 \begin{listing}[ht]
     \begin{minted}{python}
 bear = ctrl.Antecedent(np.arange(0, 360, 1), 'bearing')
@@ -14,7 +17,7 @@ bear = ctrl.Antecedent(np.arange(0, 360, 1), 'bearing')
     \caption{Antecedent initialization}
     \label{listing:ant}
 \end{listing}
-This creates the antecedent \textit{bearing} with a universe spanning from 0 to 360 with steps of 1. FMFs are then added to the antecedent. Listing \ref{listing:fmf} shows the FMF for sector II of the model. It starts at 5\textdegree relative bearing and ends at 85\textdegree, with a 5 \textdegree  fuzziness on both sides.
+This example creates the antecedent \textit{bearing} with a universe spanning from 0 to 360 with steps of 1. FMFs are then added to the antecedent. Listing \ref{listing:fmf} shows the FMF for sector II of the model. It starts at 5\textdegree relative bearing and ends at 85\textdegree, with a 5 \textdegree  fuzziness on both sides.
 \begin{listing}[ht]
     \begin{minted}{python}
 bear['2'] = fuzz.trapmf(bear.universe, generate_trapetzoid(5, 85, 5))
@@ -70,7 +73,7 @@ This constructor call specifies the ID for the vessel as well as its initial pos
 The position class simply holds the vessels current coordinates in the Cartesian coordinate system used.
 \subsubsection{ShipState}
 ShipState holds information about the state of the vessel in the current time frame. This includes the vessels current position, heading and speed. The simulation does not distinguish between course and heading since no drift is simulated.
-Furthermore, limits such as maximum allowed speed and standard rate of turn is specified in this class. Finally, the class holds methods to change the ships heading by the specified standard rate of turn or speed by 1, for the next time frame.
+Furthermore, limits such as maximum allowed speed and standard rate of turn is specified in this class. Finally, the class holds methods to change the ships heading by the specified standard rate of turn or speed by 1 kt, for the next time frame.
 
 
 \subsubsection{AutonomousNavigationSystem}
@@ -87,6 +90,8 @@ if rel_course < 0:
     \caption{Relative course calculation}
     \label{listing:rel_course_calc}
 \end{listing}
+
+These inputs are fed into the FIS system, for each target vessels, and the recommended corrections are stored in an array. The recommendations might however contradict each other and a way to prioritize the recommendations is therefore needed.
 
 Furthermore the expected time until collision needs to be calculated for each target vessel to prioritize the recommended corrections. Knowing the distance between the vessels, their relative velocity is needed to calculate the time. Equation \ref{eq:rel_vel_calc} shows the relative velocity calculation, based on the law of Cosines. \textit{V} stands for velocity, $\theta$ for heading, the subscript \textit{m} for own vessel and \textit{t} for target vessel.
 
@@ -126,8 +131,9 @@ Furthermore the expected time until collision needs to be calculated for each ta
 
 
 \subsection{Simulation}
-The goal of the implementation is to simulate a real word situation with respect to time, speed, acceleration, and rate of turn, while neglecting  environmental factors such as weather. The simulation is therefore limited to two dimensions in a Cartesian coordinate system, in which the scenario is updated with one second intervals.
-
-
-
+The goal of the implementation is to simulate a real word situation with respect to time, speed, acceleration, and rate of turn, while neglecting  environmental factors such as weather. 
+The simulation is therefore limited to two dimensions in a Cartesian coordinate system. 
+The interval between time frames in the simulation is set to correspond to 1 second in the real world. 
+This is handled by a for loop, that calls the vessels \textit{next\_position} method.
 \chapter{Scenarios}
+Use scenarios from \url{http://advanced.ecolregs.com/index.php?option=com_k2&view=item&layout=item&id=109&Itemid=359&lang=en}

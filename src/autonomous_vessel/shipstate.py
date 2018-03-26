@@ -10,8 +10,12 @@ class ShipState:
     def __init__(self, heading, position_x, position_y, speed, max_speed, rate_of_turn):
         self.position = position.Position(position_x, position_y)
         self.speed = speed
+        self.target_speed = speed
+        self.orig_speed = speed
         self.max_speed = max_speed
         self.heading = heading
+        self.target_heading = heading
+        self.orig_heading = heading
         self.rate_of_turn = rate_of_turn
 
     def update_position(self):
@@ -23,16 +27,16 @@ class ShipState:
         correction = self.rate_of_turn * config.playback[
             'rate']
         if direction == 'left':
-            self.heading = self.heading - correction
+            self.heading = (self.heading - correction) % 360
             return -correction
         elif direction == 'right':
-            self.heading = self.heading + correction
+            self.heading = (self.heading + correction) % 360
             return correction
 
     def slow_down(self):
         correction = - 1 * config.playback[
             'rate']
-        if self.speed + correction > 0:
+        if self.speed + correction > 1:
 
             self.speed = self.speed + correction
 
