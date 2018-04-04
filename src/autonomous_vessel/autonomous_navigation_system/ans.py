@@ -114,57 +114,57 @@ class AutonomousNavigationSystem:
                     speed_change = round(self.fuzzy_inference_system.output['speed_change'])
                     self.corrections[time_until_collision]['speed_change'] = speed_change
 
-        if len(self.corrections) != 0:
-            course_tot_weight = 0
-            speed_tot_weight = 0
-            course_change = 0
-            speed_change = 0
-            for idx, correction in self.corrections.items():
+        course_tot_weight = 0
+        speed_tot_weight = 0
+        course_change = 0
+        speed_change = 0
+        course_change_proposed=False
+        speed_change_proposed = False
+        for idx, correction in self.corrections.items():
 
-                if 'course_change' in correction:
-                    course_weight = 1 / idx
-                    course_tot_weight = course_tot_weight + course_weight
-                    course_change = course_change + correction['course_change'] * course_weight
-                if 'speed_change' in correction:
-                    speed_weight = 1 / idx
-                    speed_tot_weight = speed_tot_weight + speed_weight
-                    speed_change = speed_change + correction['speed_change'] * speed_weight
-            if course_tot_weight != 0:
-                course_change = course_change / course_tot_weight
-                shipstate.target_heading = shipstate.heading + course_change
-            if speed_tot_weight != 0:
-                speed_change = speed_change / speed_tot_weight
-                shipstate.target_speed = shipstate.speed + speed_change
+            if 'course_change' in correction:
+                course_weight = 1 / idx
+                course_tot_weight = course_tot_weight + course_weight
+                course_change = course_change + correction['course_change'] * course_weight
+                course_change_proposed=True
+            if 'speed_change' in correction:
+                speed_weight = 1 / idx
+                speed_tot_weight = speed_tot_weight + speed_weight
+                speed_change = speed_change + correction['speed_change'] * speed_weight
+                speed_change_proposed = True
+        if course_tot_weight != 0:
+            course_change = course_change / course_tot_weight
+            shipstate.target_heading = shipstate.heading + course_change
+        if speed_tot_weight != 0:
+            speed_change = speed_change / speed_tot_weight
+            shipstate.target_speed = shipstate.speed + speed_change
 
-            print(self.id)
-            print("Course change" + str(course_change))
-            print("Speed change" + str(speed_change))
-            if course_change >= shipstate.rate_of_turn:
-                shipstate.standard_rate_turn('right')
+        print(self.id)
+        print("Course change" + str(course_change))
+        print("Speed change" + str(speed_change))
+        if course_change >= shipstate.rate_of_turn:
+            shipstate.standard_rate_turn('right')
 
-            elif course_change <= -shipstate.rate_of_turn:
-                shipstate.standard_rate_turn('left')
-            elif course_change != 0:
-                if (shipstate.heading + course_change) % 360 >= 0:
-                    shipstate.heading = (shipstate.heading + course_change) % 360
-                else:
-                    shipstate.heading = (shipstate.heading + 360 + course_change) % 360
+        elif course_change <= -shipstate.rate_of_turn:
+            shipstate.standard_rate_turn('left')
+        elif course_change != 0:
+            if (shipstate.heading + course_change) % 360 >= 0:
+                shipstate.heading = (shipstate.heading + course_change) % 360
             else:
-                self.back_to_course(shipstate)
-            if speed_change > 1 * config.playback[
-                'rate']:
-                shipstate.speed_up()
-
-            elif speed_change < -1 * config.playback[
-                'rate']:
-                shipstate.slow_down()
-            elif speed_change != 0:
-                if shipstate.speed + speed_change >= 0:
-                    shipstate.speed = shipstate.speed + speed_change
-                else:
-                    shipstate.speed = 0
-            else:
-                self.back_to_speed(shipstate)
-        else:
-            self.back_to_speed(shipstate)
+                shipstate.heading = (shipstate.heading + 360 + course_change) % 360
+        elif not course_change_proposed:
             self.back_to_course(shipstate)
+        if speed_change > 1 * config.playback[
+            'rate']:
+            shipstate.speed_up()
+
+        elif speed_change < -1 * config.playback[
+            'rate']:
+            shipstate.slow_down()
+        elif speed_change != 0:
+            if shipstate.speed + speed_change >= 0:
+                shipstate.speed = shipstate.speed + speed_change
+            else:
+                shipstate.speed = 0
+        elif not speed_change_proposed:
+            self.back_to_speed(shipstate)

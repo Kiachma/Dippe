@@ -68,7 +68,7 @@ A new vessel object in created with the following call:
 Vessel(id, heading, position_x, position_y, speed, max_speed, 
     rate_of_turn, fuzzy_inference_system, auto_pilot)
 \end{minted}
-This constructor call specifies the ID for the vessel as well as its initial position, speed and heading. Furthermore it defines the vessels maximum speed and rate of turn. The two final parameters specify the fuzzy inference system to use and whether the vessel shall use the navigation system. Setting the final boolean to false creates a rogue vessel that will just keep its initial speed and heading, thereby not complying to the COLREG rules. The \textit{Vessel} class has one just one method, which calculates the vessels position in the next time frame after applying possible corrections to heading ans speed.
+This constructor call specifies the ID for the vessel as well as its initial position, speed and heading. Furthermore it defines the vessels maximum speed and rate of turn. The two final parameters specify the fuzzy inference system to use and whether the vessel shall use the navigation system. Setting the final boolean to false creates a rogue vessel that will just keep its initial speed and heading, thereby not complying to the COLREG rules. The \textit{Vessel} class has only one method, which calculates the vessels position in the next time frame after applying possible corrections to heading ans speed.
 \subsubsection{Position}
 The position class simply holds the vessels current coordinates in the Cartesian coordinate system used.
 \subsubsection{ShipState}
@@ -77,6 +77,7 @@ Furthermore, limits such as maximum allowed speed and standard rate of turn is s
 
 
 \subsubsection{AutonomousNavigationSystem}
+\label{sec:ANS}
 The AutonomousNavigationSystem class from now on referred to as ANS is what separates an autonomous vessel from an ordinary vessel. The ANS combines the information from the ShipState class with situational awareness information provided by a separate Situational Awareness (SA) module, in order to calculate needed corrections to speed and course.
 
 The SA is in this simulation case represented by a service that holds all information regarding the current scenario. A real system would have a SA module that reads and processes information from different sensors, such as LiDAR, cameras, on board the vessel. Information needed about a target vessel is its heading, speed, and position. These are used to calculate the four different inputs to the FIS system. Listing \ref{listing:rel_bear_calc} shows the method used to calculate the relative bearing fed into the FIS system. Compass bearing is first calculated from the two provided coordinate pairs after which the result is converted into a relative bearing. Relative course is then calculated as the observed vessels heading - the own vessels heading, as shown in listing \ref{listing:rel_course_calc}. Distance can be obtained by using the Pythagorean theorem on the differences between the vessels in the X and Y axis. Finally speed ratio is defined as $\frac{\text{Speed of the observed vessel}}{\text{Speed of the own vessel}}$.
@@ -100,40 +101,40 @@ Furthermore the expected time until collision needs to be calculated for each ta
     \label{eq:rel_vel_calc}
 \end{equation}
 
+The previous calculations results in speed and heading correction suggestions, as well as an expected time until collision, for each target vessel. However, these recommendations might contradict each other and a way to prioritize the corrections in order of urgency is therefore needed. This is in this implementation solved in a simple matter by calculating the weighted arithmetic mean of the corrections using the expected time until collision as weight. The resulting corrections are then stored in ShipState as target heading.
 
-% \begin{listing}
+Finally the heading and speed of the vessel is updated in the following manner. The vessels is steered towards the proposed heading change by a maximum of the vessels defined maximum rate of turn. The speed is similarly changed towards the proposed speed by a maximum of one knot. No proposed correction by the FIS means that the vessel is currently not in a scenario satisfies a rule in the rule set. However, a previous correction suggestion might still not be completed due to the vessels limited rate of turn, acceleration or deceleration.  The vessel will therefore continue to change its heading and speed towards the saved target speed until they are the same.  The target heading is then gradually changed towards the original heading until the vessel is back on its original heading. The process is visualized in Figure \ref{fig:flow_chart}.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{Figures/flow.png}
+    \caption{Flow chart explaining application of heading and speed corrections}
+    \label{fig:flow_chart}
+\end{figure}
 
-%     \begin{minted}[linenos, breaklines=true,fontsize=\scriptsize, numberblanklines=false]{python}
-% vm = shipstate.speed
-% vt = observed_vessel.shipstate.speed
-% cm = math.radians(shipstate.heading)
-% ct = math.radians(observed_vessel.shipstate.heading)
-% vr = math.sqrt(pow(vm, 2) + pow(vt, 2) - 
-%     2 * vm * vt * math.cos(cm - ct))
-% distance = helpers.distance(shipstate.position, observed_vessel.shipstate.position)
-
-% time_until_collision = distance / vr
-%     \end{minted}
-%     \caption{Expected time until collision calculation}
-%     \label{listing:colt_time_calc}
-% \end{listing}
-
-
-
-
-
-
-
-
-
-
-
-
-
-\subsection{Simulation}
-The goal of the implementation is to simulate a real word situation with respect to time, speed, acceleration, and rate of turn, while neglecting  environmental factors such as weather. 
-The simulation is therefore limited to two dimensions in a Cartesian coordinate system. 
-The interval between time frames in the simulation is set to correspond to 1 second in the real world. 
-This is handled by a for loop, that calls the vessels \textit{next\_position} method.
+\section{Simulation}
+The goal of the implementation is to  simulate a real world situation with respect to time, speed, acceleration, and rate of turn, while neglecting  environmental factors such as weather.
+The simulation is therefore limited to two dimensions in a Cartesian coordinate system.
+The interval between time frames in the simulation is set to correspond to one second in the real world.
+Each iteration of the main simulation loop must, therefore, update the vessels SA by scanning the environment for target vessels. The information gained is then fed into the FIS which generates course and speed corrections which is used to update heading and speed as explained in section \ref{sec:ANS}.
 \chapter{Scenarios}
-Use scenarios from \url{http://advanced.ecolregs.com/index.php?option=com_k2&view=item&layout=item&id=109&Itemid=359&lang=en}
+
+\section{Overtaking and head-on situation on the high seas}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{Figures/Scenario/overtaking-and-head-on.pdf}
+    \caption{Overtaking and head-on situation on the high seas  \cite{ecolreg_overtaking-and-head-on}}
+    \label{fig:overtaking-and-head-on}
+\end{figure}
+\section{Overtaking and crossing situation on the high seas}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{Figures/Scenario/overtaking-and-crossing.pdf}
+    \caption{Overtaking and crossing situation on the high seas \cite{ecolreg_overtaking-and-crossing}}
+    \label{fig:overtaking-and-crossing}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{Figures/Scenario/overtaking-and-crossing-2.pdf}
+    \caption{Overtaking and crossing situation on the high seas \cite{ecolreg_overtaking-and-crossing-2}}
+    \label{fig:overtaking-and-crossing-2}
+\end{figure}

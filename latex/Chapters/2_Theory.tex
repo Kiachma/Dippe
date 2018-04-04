@@ -91,18 +91,18 @@ Part C specifies the lights and shapes a vessel shall exhibit, and when they sho
 USVs have been in development since at least 1993 when MIT started its Sea Grant College Program, Autonomous Surface Craft (ASCs) \cite{manley2008unmanned}. Many different approaches and algorithms have since then been tried out. This section will briefly look into some of the COLREGs compliant approaches, before finally presenting the approach which this thesis is based on.
 
 
-\textcite{larson2007advances} uses a two-level two-dimensional obstacle map to create a near-field reactive control technique. One layer for a near field model and the other for a far field model. COLREGs rules are incorporated into the solution by utilizing a rule-based approach in the path planner. The solution is made with computational efficiency in mind and the provided trajectory is, therefore, not optimal. It is also stated that the sensors and processing algorithm need more work. However, the authors have plane for future improvements and the algorithm is regularly tested in San Diego Bay.
+\textcite{larson2007advances} uses a two-level two-dimensional obstacle map to create a near-field reactive control technique. One layer for a near field model and the other for a far field model. COLREGs rules are incorporated into the solution by utilizing a rule-based approach in the path planner. The solution is made with computational efficiency in mind and the provided trajectory is, therefore, not optimal. It is also stated that the sensors and processing algorithm need more work. However, the authors have plans for future improvements and the algorithm is regularly tested in San Diego Bay.
 
 
 Another approach, developed by \textcite{benjamin2004colregs,benjamin2006method} utilizes multi-objective optimization and interval programming, within a behaviour based architecture. The solution has been tested with kayak-based autonomous surface crafts and initial tests show promising results, but the solution cannot yet be called COLREGS compliant.
 
 
 \textcite{naeem2012colregs}
-propose a path-planer that uses line of sight guidance between way-points. Obstacles are avoided by introducing a starboard heading bias to the line of sight heading until clear of conflict. The paper compares the trajectory, produced by the proposed on-the-fly algorithm, to that of a modified off-line DPSS strategy. Multiple simulations show that both algorithms yield COLREGs compliant results. However, a simulation with multiple dynamic targets was not conducted.
+propose a path-planner that uses line of sight guidance between way-points. Obstacles are avoided by introducing a starboard heading bias to the line of sight heading until clear of conflict. The paper compares the trajectory, produced by the proposed on-the-fly algorithm, to that of a modified off-line DPSS strategy. Multiple simulations show that both algorithms yield COLREGs compliant results. However, a simulation with multiple dynamic targets was not conducted.
 
-Spatio temporal reasoning have also been considered as an way to translate the COLREG rules into computer understandable rules. \textcite{spat_temp1,spat_temp2}
+Spatio temporal reasoning have also been considered as a way to translate the COLREG rules into computer understandable rules. \textcite{spat_temp1,spat_temp2}
 suggest the use of Oriented Point Reasoning Algebra (OPRA) with \textit{m}  granularity to represent vessels position and relative moving direction.
-A qualitative spatio-temporal reasoning toolbox is used to convert the geometric scenario consisting of the vessels Cartesian coordinates into a qualitative scene description based of OPRA relations. The same toolbox can then generate all possible scenarios that are spatially or temporally possible. Model checking can then be conducted on the  observations to check whether the behaviour of the involved vessels is  COREGS compliant.
+A qualitative spatio-temporal reasoning toolbox is used to convert the geometric scenario consisting of the vessels Cartesian coordinates into a qualitative scene description based of OPRA relations. The same toolbox can then generate all possible scenarios that are spatially or temporally possible. Model checking can then be conducted on the  observations to check whether the behaviour of the involved vessels is  COLREGS compliant.
 
 
 \textcite{lee2004fuzzy} combine fuzzy logic with modified virtual force fields to  create a COLREGs compliant algorithm. The fuzzy logic rule-set used consists of about two hundred rules, which might be computational challenging. The authors do, however, mention that the rules-set might be streamlined. Fuzzy logic is also used \textcite{perera2012intelligent} which, furthermore uses bayesian networks to solve cases with multiple target vessels. The presented simulations consist of one vessel utilizing the algorithm to avoid three dummy vessels that are keeping their course and speed. The rule-set is in this paper also quite extensive.
@@ -121,7 +121,7 @@ $\fuzzyset{A}=\left \{ a \in \textbf{X} | a \text{ is old} \right \}$
 However, the set requirement 'is old' is still undefined and therefore vague. Defining the threshold of being old at an age of 60 does divide the universal set \textbf{X} into subsets of 'old' and 'not old', but the division does not distinguish between humans aged 1 and 59.
 Fuzzy set theory introduces the concept of membership functions, to solve this problem. A Fuzzy Membership Function (FMF) describes the grade of membership of a  in  $\fuzzyset{A}$. This function is often written as $\mu_{\fuzzyset{A}}(a)$. Figure \ref{fig:FMF_ex} shows a very simple linear FMF for the example $\fuzzyset{A}=\left \{\text{'is old'} \right \}$, where for instance $\mu_{\fuzzyset{A}}(10)=0.1$. Similar FMFs can be defined for young and middle-aged which results in the graph seen in figure \ref{fig:FMF_ex2} \cite{ross2009fuzzy}.
 
-A fuzzy set can then be written as an array of tuples consisting of the objects and its associated membership value: $\fuzzyset{A}=\left \{(x,\mu_{\fuzzyset{A}}(x)|x \in X) \right \}$ \cite{zimmermann2010fuzzy}, which gives \\ $\fuzzyset{A}=\left \{(0,1),(10,0.9),(20,0.8),\dots,(90,0.1),(100,0) \right \}$ for the example $\fuzzyset{A}$=\{'is young'\} in figure \ref{fig:FMF_ex} \cite{ross2009fuzzy}.
+A fuzzy set can then be written as an array of tuples consisting of the objects and its associated membership value: $\fuzzyset{A}=\left \{(x,\mu_{\fuzzyset{A}}(x)|x \in X) \right \}$ \cite{zimmermann2010fuzzy}, which gives  $\fuzzyset{A}=\left \{(0,1),(10,0.9),(20,0.8),\dots,(90,0.1),(100,0) \right \}$ for the example $\fuzzyset{A}$=\{'is young'\} in figure \ref{fig:FMF_ex} \cite{ross2009fuzzy}.
 
 \begin{figure}[H]
     \centering
@@ -166,10 +166,9 @@ Implication
 \end{equation}
 \[ T(\fuzzyset{P}\to \fuzzyset{Q})=T(\fuzzyset{\overline{P}}\lor\fuzzyset{Q})=max(T(\fuzzyset{\overline{P}}),T(\fuzzyset{Q}))  \]
 
-
 \noindent Implication can also be written in rule based form
-\[ \fuzzyset{P} \to \fuzzyset{Q} \text{ is,  IF } x \text{ is } \fuzzyset{A} \text{ , THEN } t \text{ is } \fuzzyset{B}\]
-\[ \Leftrightarrow \]
+\[ \fuzzyset{P} \to \fuzzyset{Q} \text{ is,  IF } x \text{ is } \fuzzyset{A} \text{ , THEN } x \text{ is } \fuzzyset{B}\]
+which is equivalent to the following fuzzy relation
 \[  R=(\fuzzyset{A}\times\fuzzyset{B})\cup (\overline{\fuzzyset{A}}\times \fuzzyset{Y})\]
 \noindent With the membership function:
 \begin{equation}
@@ -200,12 +199,12 @@ Conjunctive antecedents can be rewritten as a new fuzzy set
 
 \[ \fuzzyset{A_s}=\fuzzyset{A_1}\cap \fuzzyset{A_2} \cap \dots \cap \fuzzyset{A_L} \]
 with the membership function
-\[ \mu_{\fuzzyset{A_S}}(x)=min \left [\mu_{\fuzzyset{A_1}}(x),\mu_{\fuzzyset{A_2}}(x),\dots,\mu_{\fuzzyset{A_3}}(x) \right ] \]
+\[ \mu_{\fuzzyset{A_S}}(x)=min \left [\mu_{\fuzzyset{A_1}}(x),\mu_{\fuzzyset{A_2}}(x),\dots,\mu_{\fuzzyset{A_L}}(x) \right ] \]
 Rule \ref{eq:conj-ant} can then be rewritten as
 \[ \text{IF $\fuzzyset{A_S}$ THEN $\fuzzyset{B_S}$} \]
 Disjunctive antecedents can similarly be written as
 \[ \fuzzyset{A_s}=\fuzzyset{A_1}\cup \fuzzyset{A_2} \cup \dots \cup \fuzzyset{A_L} \]
-\[ \mu_{\fuzzyset{A_S}}(x)=max \left [\mu_{\fuzzyset{A_1}}(x),\mu_{\fuzzyset{A_2}}(x),\dots,\mu_{\fuzzyset{A_3}}(x) \right ] \]
+\[ \mu_{\fuzzyset{A_S}}(x)=max \left [\mu_{\fuzzyset{A_1}}(x),\mu_{\fuzzyset{A_2}}(x),\dots,\mu_{\fuzzyset{A_L}}(x) \right ] \]
 The same principle can be applied to find the overall consequent when multiple rules apply. Conjunctive rules where both consequents must be applied can be found by  the fuzzy intersection of all the rule consequents. Whereas disjunctive rules use the fuzzy union of the rule consequents.
 
 
@@ -213,7 +212,7 @@ The same principle can be applied to find the overall consequent when multiple r
 \section{A fuzzy logic model for COLREGs}
 \label{section:model}
 \todo{Move section to Impl?}
-Antecedents consequents and rules are needed in order to make a fuzzy system for a COLREGs compliant auto pilot. The model used in this thesis is created by \textcite{perera2012intelligent} and has four antecedents, two consequents and an extensive rule set of nearly 200 rules. The antecedents used are: relative bearing to the target vessel, relative course of the target vessel, distance between the vessels, and the ratio between the vessels speed. The main vessels relative bearings are divided into ten sets. These resulting sectors represent the different sets in the relative course universe [0, 360]. The relative courses of the target vessel are ,likewise, divided into eight sectors, which represent sets in the relative course universe [0, 360]. The distance universe consist of three sets, representing radii from the main vessel, called $R_A, R_B$ and $R_{VD}$. $R_{VD}$ is the vessel domain into which other vessel shall not enter. $R_A$ and $R_B $depicts the area around the main vessel in which other vessels are detected. $R_A$ when the main vessel is the give way vessel and $R_B$ when it is the stand on vessel. A graphical representation of the bearing, range and course sectors can be seen in figure \ref{fig:model}. The final antecedent, $\text{speed ratio} =\frac{V_{target}}{V{main}}$, consist of three sets: $<1, \approx1 \text{ and } >1$.
+Antecedents consequents and rules are needed in order to make a fuzzy system for a COLREGs compliant auto pilot. The model used in this thesis is created by \textcite{perera2012intelligent} and has four antecedents, two consequents and an extensive rule set of nearly 200 rules. The antecedents used are: relative bearing to the target vessel, relative course of the target vessel, distance between the vessels, and the ratio between the vessels speed. The main vessels relative bearings are divided into ten sets. These resulting sectors represent the different sets in the relative course universe [0, 360]. The relative courses of the target vessel are ,likewise, divided into eight sectors, which represent sets in the relative course universe [0, 360]. The distance universe consist of three sets, representing radii from the main vessel, called $R_A, R_B$ and $R_{VD}$. $R_{VD}$ is the vessel domain into which other vessel shall not enter. $R_A$ and $R_B $depicts the area around the main vessel in which other vessels are detected. $R_A$ is used when the main vessel is the give way vessel and $R_B$ when it is the stand on vessel. A graphical representation of the bearing, range and course sectors can be seen in figure \ref{fig:model}. The final antecedent, $\text{speed ratio} =\frac{V_{target}}{V{main}}$, consist of three sets: $<1, \approx1 \text{ and } >1$.
 Visualizations of the antecedent FMFs, as well as their distribution in their corresponding universes, can be seen in figure \ref{fig:antecedent_fmfs}.
 
 Finally a rules set is needed to connect the antecedents with the consequents. The rule set used for this thesis is based on  the rules, seen in table \ref{tab:rules} developed by \textcite{perera2012intelligent}. A few rules have furthermore been added to handle overtake scenarios. These can be seen in table \ref{tab:rules_own}

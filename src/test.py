@@ -14,6 +14,7 @@ import string
 import fuzzy
 import os, shutil
 import vesselService
+
 # Make sure that we are using QT5
 matplotlib.use('Qt5Agg')
 from PyQt5 import QtCore, QtWidgets
@@ -36,9 +37,6 @@ def createVessel(config, fis):
         config['heading'], config['position'][0], config['position'][1],
         config['speed'], config['max_speed'], config['rate_of_turn']
         , fis, config['ap'])
-
-
-
 
 
 def cart2pol(x, y):
@@ -143,23 +141,35 @@ def animation_manage(ax, i):
                                   xytext=(
                                       shipstate.position.x + shipstate.get_headingXY()[0] * coeff,
                                       shipstate.position.y + shipstate.get_headingXY()[1] * coeff),
-                                  arrowprops=dict(
+                                  aleftrrowprops=dict(
                                       arrowstyle='<-',
                                       facecolor='blue'),
                                   gid=vessel.id,
                                   alpha=0.4))
 
-    def animate_ship(ax, vessel):
-        color = 'green'
-        text_string = str(vessel.id) + "\n" + "Heading: " + str(round(vessel.shipstate.heading)) + "\n" + "Speed: " + str(round(
-            vessel.shipstate.speed))
+    def animate_ship(ax, vessel, i):
+        color = vessel.get_gradient_color()
+        if config.anim:
+            text_string = str(vessel.id) + "\n" + "Heading: " + str(
+                round(vessel.shipstate.heading)) + "\n" + "Speed: " + str(round(
+                vessel.shipstate.speed))
+            text = ax.text(vessel.shipstate.position.x,
+                           vessel.shipstate.position.y, text_string,
+                           verticalalignment='bottom', horizontalalignment='center',
+                           color='black')
+            ships.append(text)
+        elif i % 100 == 0:
+            text_string = str(round(i / 100))
+            weight = "medium"
+            if text_string == "0":
+                text_string = vessel.id
+                weight = "bold"
+            text = ax.text(vessel.shipstate.position.x,
+                           vessel.shipstate.position.y, text_string,
+                           verticalalignment='center', horizontalalignment='center',
+                           color='black', weight=weight)
 
-        text = ax.text(vessel.shipstate.position.x,
-                       vessel.shipstate.position.y, text_string,
-                       verticalalignment='bottom', horizontalalignment='center',
-                       color='black')
-        ships.append(text)
-
+            ships.append(text)
         patch = plt.Circle((vessel.shipstate.position.x,
                             vessel.shipstate.position.y),
                            radius=10,
@@ -199,7 +209,7 @@ def animation_manage(ax, i):
     for idx, tempvessel in enumerate(vesselService.vessels):
         tempvessel.next_position()
         if i % 1 == 0 or config.anim:
-            animate_ship(ax, tempvessel)
+            animate_ship(ax, tempvessel, i)
             if config.show['arrow']:
                 animate_arrow(ax, tempvessel)
 
@@ -439,13 +449,14 @@ def main():
     aw.setWindowTitle("%s" % progname)
     aw.show()
     if not config.anim:
-        for i in range(0, 8000):
+        for i in range(0, 1000):
             aw.dc.update_figure()
-            if i % 1 == 0:
-                aw.dc.print_figure('img/foo_' + str(i) + '.png')
-                aw.dc.axes.cla()
-                aw.dc.axes.set_xlim([config.dimensions[0], config.dimensions[1]])
-                aw.dc.axes.set_ylim([config.dimensions[2], config.dimensions[3]])
+            # if i % 1 == 0:
+            # aw.dc.print_figure('img/foo_' + str(i) + '.png')
+            # aw.dc.axes.cla()
+            # aw.dc.axes.set_xlim([config.dimensions[0], config.dimensions[1]])
+            # aw.dc.axes.set_ylim([config.dimensions[2], config.dimensions[3]])
+        aw.dc.print_figure('img/foo.pdf')
     sys.exit(qApp.exec_())
 
     # plot()

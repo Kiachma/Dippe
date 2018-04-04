@@ -4,11 +4,11 @@ playback = dict(
 
 )
 scale = 10
-anim = True
+anim = False
 # NM *1000
 radius = dict(
     rvd=1000 / scale,
-    rb=4000 / scale,
+    rb=6000 / scale,
     ra=10000 / scale
 )
 
@@ -28,9 +28,9 @@ sectors = [5, 80, 10, 80, 10, 26, 54, 10, 54, 26, 5]
 # bear['1b'] = fuzz.trapmf(bear.universe, generate_trapetzoid(355, 360, 5))
 visibility = radius['ra'] / 1000
 show = dict(
-    visibility=True,
-    sectors=True,
-    arrow=True,
+    visibility=False,
+    sectors=False,
+    arrow=False,
     paths=False,
     lights=False
 )
@@ -100,24 +100,24 @@ show = dict(
 #
 
 # Crossing
-vessels = [
-
-    dict(id='A',
-         heading=0,
-         position=(0, -7200 / scale),
-         speed=10,
-         max_speed=12,
-         rate_of_turn=3,
-         ap=True),
-    dict(id='B',
-         heading=270,
-         position=(7200 / scale, 0),
-         speed=10,
-         max_speed=12,
-         rate_of_turn=3,
-         ap=True),
-
-]
+# vessels = [
+#
+#     dict(id='A',
+#          heading=0,
+#          position=(0, -7200 / scale),
+#          speed=10,
+#          max_speed=12,
+#          rate_of_turn=3,
+#          ap=True),
+#     dict(id='B',
+#          heading=270,
+#          position=(7200 / scale, 0),
+#          speed=10,
+#          max_speed=12,
+#          rate_of_turn=3,
+#          ap=True),
+#
+# ]
 
 # Head on
 # vessels = [
@@ -158,14 +158,14 @@ vessels = [
 # vessels = [
 #     dict(id='A',
 #          heading=0,
-#          position=(0, -4500 / scale),
+#          position=(0, -6000 / scale),
 #          speed=5,
 #          max_speed=7,
 #          rate_of_turn=5,
 #          ap=True),
 #     dict(id='B',
 #          heading=203,
-#          position=(4500 / scale, 4500 / scale),
+#          position=(6000 / scale, 6000 / scale),
 #          speed=10,
 #          max_speed=13,
 #          rate_of_turn=5,
@@ -186,8 +186,8 @@ vessels = [
 #          ap=True),
 #     dict(id='B',
 #          heading=0,
-#          position=(-5900 / scale, -8100 / scale),
-#          speed=4,
+#          position=(-5100 / scale, -8000 / scale),
+#          speed=5.2,
 #          max_speed=15,
 #          rate_of_turn=3,
 #          ap=True),
@@ -203,27 +203,55 @@ vessels = [
 
 # Overtaking and head-on situation on the high seas
 # http://advanced.ecolregs.com/index.php?option=com_k2&view=item&id=370:overtaking-and-head-on-situation-on-the-high-seas&Itemid=359&lang=en
+vessels = [
+
+    dict(id='A',
+         heading=180,
+         position=(-0 / scale, 10000 / scale),
+         speed=12,
+         max_speed=15,
+         rate_of_turn=3,
+         ap=True),
+    dict(id='B',
+         heading=0,
+         position=(0 / scale, -10000 / scale),
+         speed=12,
+         max_speed=15,
+         rate_of_turn=3,
+         ap=True),
+    dict(id='C',
+         heading=00,
+         position=(-2000 / scale, -10000 / scale),
+         speed=10,
+         max_speed=15,
+         rate_of_turn=3,
+         ap=True),
+]
+
+
+# Overtaking and crossin situation on the high seas
+# http://advanced.ecolregs.com/index.php?option=com_k2&view=item&id=367:overtaking-and-crossing-situation-on-the-high-seas&Itemid=359&lang=en
 # vessels = [
 #
 #     dict(id='A',
-#          heading=180,
-#          position=(0 / scale, 4000 / scale),
-#          speed=12,
+#          heading=0,
+#          position=(0 / scale, -10000 / scale),
+#          speed=10,
 #          max_speed=15,
 #          rate_of_turn=3,
-#          ap=True),
+#          ap=False),
 #     dict(id='B',
 #          heading=0,
-#          position=(0 / scale, -4000 / scale),
-#          speed=12,
-#          max_speed=15,
-#          rate_of_turn=3,
-#          ap=True),
-#     dict(id='C',
-#          heading=00,
-#          position=(-2000 / scale, -3000 / scale),
+#          position=(3600 / scale, -5000 / scale),
 #          speed=7,
 #          max_speed=15,
 #          rate_of_turn=3,
-#          ap=True),
+#          ap=False),
+#     dict(id='C',
+#          heading=270,
+#          position=(10000 / scale, -0 / scale),
+#          speed=10,
+#          max_speed=15,
+#          rate_of_turn=3,
+#          ap=False),
 # ]
