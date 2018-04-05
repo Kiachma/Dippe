@@ -117,24 +117,51 @@ The simulation is therefore limited to two dimensions in a Cartesian coordinate 
 The interval between time frames in the simulation is set to correspond to one second in the real world.
 Each iteration of the main simulation loop must, therefore, update the vessels SA by scanning the environment for target vessels. The information gained is then fed into the FIS which generates course and speed corrections which is used to update heading and speed as explained in section \ref{sec:ANS}.
 \chapter{Scenarios}
+\label{sec:overtaking-and-head-on}
+Three scenarios are defined in order to test the ANS in multi vessel situations. Ideas for the scenarios are from \textcite{ecolreg_overtaking-and-crossing-2,ecolreg_overtaking-and-crossing-3,ecolreg_overtaking-and-crossing,ecolreg_overtaking-and-head-on}, with a few minor modifications. All scenarios are set in high visibility on the high sea.
+\section{Overtaking and head-on situation}
+The first scenario defines a three vessel situation, where two vessels are meeting on a reciprocal course. One of the vessels is, furthermore, overtaking a third ,vessel on the stand on vessels starboard side. A visualization of the scenario is shown in figure \ref{fig:overtaking-and-head-on}. Vessels \textit{A} and \textit{B} starts on reciprocal tracks 20 NM from each other, while \textit{B} and \textit{C} starts abreast 2 NM from each other. \textit{A}, \textit{B}, and \textit{C} has an max speed of 15 kts. \textit{A} and \textit{B} starts at 12 kts while \textit{C} is slightly slower at 10 kts. Max rate of turn of all vessels is set to 3\textdegree/second. The numbers on the vessels tracks helps to compare the vessels positions at a given time frame.
 
-\section{Overtaking and head-on situation on the high seas}
+Vessels \textit{A} and \textit{B} are therefore obliged to alter their courses to starboard to prevent a head on collision (\textit{Rule 14}). Moreover vessel \textit{B} shall keep out of the way of \textit{C}  and in no circumstance alter its course so that it becomes a crossing vessel to \textit{C} (\textit{Rule 13}). All corrections shall furthermore be ample, so that it is recognizable by the other vessel, and taken as early as possible (\textit{Rule 16}) \cite{ecolreg_overtaking-and-head-on}.
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{Figures/Scenario/overtaking-and-head-on.pdf}
     \caption{Overtaking and head-on situation on the high seas  \cite{ecolreg_overtaking-and-head-on}}
     \label{fig:overtaking-and-head-on}
 \end{figure}
-\section{Overtaking and crossing situation on the high seas}
+
+
+
+\section{Overtaking and crossing situation}
+The following three scenarios both depict situations where vessels \textit{A} and \textit{B} is in an overtaking condition while \textit{C} crosses both their paths. \textit{C} crosses \textit{A} and \textit{B}s paths with a 45\textdegree  angle in the first scenario (figure \ref{fig:overtaking-and-crossing}). \textit{A} starts at (-6900, -7200), \textit{B} at (5100, -8000) and \textit{C} in origo. \textit{A} and \textit{B} has an initial heading of 0\textdegree  while \textit{C} start with a heading of 235\textdegree. The speeds of the vessels is set to ensure that \textit{C} would collide with both vessels if no corrections are applied. Moreover the speed of \textit{B} must be greater than the speed of \textit{A} since \textit{B} is overtaking \textit{A}. The vessels initial speed are, therefore: \textit{A} = 2kts, \textit{B} = 5.2kts and \textit{C} = 7.6kts. The maximum speeds of the vessels are 10, 15 and 20 kts respectively. Max rate of turn of all vessels is set to 3\textdegree/second.
+
+Rule 13 and 16 applies to this scenario in the same way as the previous one, with the exception that the vessels involved in the overtaking situation is vessel \textit{A} and \textit{B} instead of \textit{B} and \textit{C}. This implies that \textit{B}shall keep out of way of \textit{A} (\textit{Rule 13}), while \textit{A} shall keep its course and speed (\textit{Rule 17}).
+
+Additionally both \textit{A} and \textit{B} are crossing \textit{C} with a risk of collision. This means that \textit{A} and \textit{B} should alter their course to starboard and avoid passing in front of \textit{C} (\textit{Rule 15}). Vessel \textit{C} shall, meanwhile, keep its course and speed. This results in contradictory obligations for vessel  \textit{A}, where it should keep its course and speed for \textit{B} and simultaneously keep out of the way for vessel \textit{C}.
+
+\textcite{ecolreg_overtaking-and-crossing} suggest the following manoeuvres for vessel \textit{A} and \textit{B} in accordance with the ordinary practice of seamen:
+Both vessels might alter course to starboard and, thereby, pass behind vessel \textit{C}. Alternatively vessel \textit{A} may reduce speed or make a 360\textdegree turn to port, while vessel \textit{B} reduces speed, makes a 360\textdegree to starboard or alters its course to starboard.
+
+\label{sec:overtaking-and-crossing}
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{Figures/Scenario/overtaking-and-crossing.pdf}
     \caption{Overtaking and crossing situation on the high seas \cite{ecolreg_overtaking-and-crossing}}
     \label{fig:overtaking-and-crossing}
 \end{figure}
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{Figures/Scenario/overtaking-and-crossing-3.pdf}
+    \caption{Overtaking and crossing situation\cite{ecolreg_overtaking-and-crossing-3}}
+    \label{fig:overtaking-and-crossing-3}
+\end{figure}
+
+
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{Figures/Scenario/overtaking-and-crossing-2.pdf}
-    \caption{Overtaking and crossing situation on the high seas \cite{ecolreg_overtaking-and-crossing-2}}
+    \caption{Overtaking and crossing situation\cite{ecolreg_overtaking-and-crossing-2}}
     \label{fig:overtaking-and-crossing-2}
 \end{figure}

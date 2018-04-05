@@ -174,7 +174,7 @@ show = dict(
 
 
 # Overtaking and crossing situation on the high seas
-# http://advanced.ecolregs.com/index.php?option=com_k2&view=item&id=172:overtaking-and-crossing-situation-on-the-high-seas&Itemid=359&lang=en
+# http://advanced.ecolregs.com/index.php?option=com_k2&view=item&id=368:overtaking-and-crossing-situation-on-the-high-seas&Itemid=359&lang=en
 # vessels = [
 #
 #     dict(id='A',
@@ -203,35 +203,34 @@ show = dict(
 
 # Overtaking and head-on situation on the high seas
 # http://advanced.ecolregs.com/index.php?option=com_k2&view=item&id=370:overtaking-and-head-on-situation-on-the-high-seas&Itemid=359&lang=en
-vessels = [
-
-    dict(id='A',
-         heading=180,
-         position=(-0 / scale, 10000 / scale),
-         speed=12,
-         max_speed=15,
-         rate_of_turn=3,
-         ap=True),
-    dict(id='B',
-         heading=0,
-         position=(0 / scale, -10000 / scale),
-         speed=12,
-         max_speed=15,
-         rate_of_turn=3,
-         ap=True),
-    dict(id='C',
-         heading=00,
-         position=(-2000 / scale, -10000 / scale),
-         speed=10,
-         max_speed=15,
-         rate_of_turn=3,
-         ap=True),
-]
+# vessels = [
+#
+#     dict(id='A',
+#          heading=180,
+#          position=(-0 / scale, 10000 / scale),
+#          speed=12,
+#          max_speed=15,
+#          rate_of_turn=3,
+#          ap=True),
+#     dict(id='B',
+#          heading=0,
+#          position=(0 / scale, -10000 / scale),
+#          speed=12,
+#          max_speed=15,
+#          rate_of_turn=3,
+#          ap=True),
+#     dict(id='C',
+#          heading=00,
+#          position=(-2000 / scale, -10000 / scale),
+#          speed=10,
+#          max_speed=15,
+#          rate_of_turn=3,
+#          ap=True),
+# ]
 
 
 # Overtaking and crossin situation on the high seas
-# http://advanced.ecolregs.com/index.php?option=com_k2&view=item&id=367:overtaking-and-crossing-situation-on-the-high-seas&Itemid=359&lang=en
-# vessels = [
+# http://advanced.ecolregs.com/index.php?option=com_k2&view=item&id=367:overtaking-and-crossing-situation-on-the-high-seas&Itemid=359&lang=en# vessels = [
 #
 #     dict(id='A',
 #          heading=0,
@@ -255,3 +254,30 @@ vessels = [
 #          rate_of_turn=3,
 #          ap=False),
 # ]
+
+# Overtaking and crossing situation on the high seas
+# http://advanced.ecolregs.com/index.php?option=com_k2&view=item&id=172:overtaking-and-crossing-situation-on-the-high-seas&Itemid=359&lang=en
+vessels = [
+
+    dict(id='A',
+         heading=0,
+         position=(-6000 / scale, -6000 / scale),
+         speed=2,
+         max_speed=10,
+         rate_of_turn=3,
+         ap=True),
+    dict(id='B',
+         heading=0,
+         position=(-0 / scale, -9000 / scale),
+         speed=4,
+         max_speed=15,
+         rate_of_turn=3,
+         ap=True),
+    dict(id='C',
+         heading=235,
+         position=(8000 / scale, 8000 / scale),
+         speed=7.6,
+         max_speed=20,
+         rate_of_turn=3,
+         ap=True),
+]
