@@ -17,7 +17,67 @@
    inkscape:version="0.92.2 (5c3e80d, 2017-08-06)"
    sodipodi:docname="lights.svg">
   <defs
-     id="defs2" />
+     id="defs2">
+    <marker
+       inkscape:stockid="Arrow2Lstart"
+       orient="auto"
+       refY="0.0"
+       refX="0.0"
+       id="Arrow2Lstart"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         id="path887"
+         style="fill-rule:evenodd;stroke-width:0.625;stroke-linejoin:round;stroke:#000000;stroke-opacity:1;fill:#000000;fill-opacity:1"
+         d="M 8.7185878,4.0337352 L -2.2072895,0.016013256 L 8.7185884,-4.0017078 C 6.9730900,-1.6296469 6.9831476,1.6157441 8.7185878,4.0337352 z "
+         transform="scale(1.1) translate(1,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow2Lstart"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow2Lstart-5"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         inkscape:connector-curvature="0"
+         id="path887-3"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.625;stroke-linejoin:round;stroke-opacity:1"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         transform="matrix(1.1,0,0,1.1,1.1,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow2Lstart"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow2Lstart-5-6"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         inkscape:connector-curvature="0"
+         id="path887-3-2"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.625;stroke-linejoin:round;stroke-opacity:1"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         transform="matrix(1.1,0,0,1.1,1.1,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow2Lstart"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow2Lstart-5-6-1"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         inkscape:connector-curvature="0"
+         id="path887-3-2-2"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.625;stroke-linejoin:round;stroke-opacity:1"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         transform="matrix(1.1,0,0,1.1,1.1,0)" />
+    </marker>
+  </defs>
   <sodipodi:namedview
      id="base"
      pagecolor="#ffffff"
@@ -25,16 +85,16 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.49497475"
-     inkscape:cx="94.773501"
-     inkscape:cy="537.9942"
+     inkscape:zoom="1.4"
+     inkscape:cx="323.72351"
+     inkscape:cy="407.35712"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
-     inkscape:window-width="959"
-     inkscape:window-height="1050"
-     inkscape:window-x="960"
-     inkscape:window-y="15"
+     inkscape:window-width="1920"
+     inkscape:window-height="1080"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
      inkscape:window-maximized="0" />
   <metadata
      id="metadata5">
@@ -69,8 +129,8 @@
        id="path3822-3"
        inkscape:connector-curvature="0" />
     <path
-       style="fill:none;stroke:#000000;stroke-width:0.1858805px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="M 156.601,154.20745 98.825714,130.27614 Z"
+       style="fill:none;stroke:#000000;stroke-width:0.18581815px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 156.601,154.20745 99.232057,130.1228 Z"
        id="path3822-3-6"
        inkscape:connector-curvature="0" />
     <path
@@ -116,13 +176,104 @@
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:19.49674034px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.48741853"
-       x="77.991928"
+       x="78.521095"
        y="200.58949"
        id="text4703-3-6"><tspan
          sodipodi:role="line"
          id="tspan4701-5-2"
-         x="77.991928"
+         x="78.521095"
          y="200.58949"
          style="font-size:19.40277863px;stroke-width:0.48741853">135°</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="67.74707"
+       y="41.866077"
+       id="text826"><tspan
+         sodipodi:role="line"
+         id="tspan824"
+         x="71.116371"
+         y="41.866077"
+         style="text-align:end;text-anchor:end;stroke-width:0.26458332">Port </tspan><tspan
+         sodipodi:role="line"
+         x="67.74707"
+         y="55.095245"
+         style="text-align:end;text-anchor:end;stroke-width:0.26458332"
+         id="tspan828">sidelight</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="127.74142"
+       y="39.758705"
+       id="text826-3"><tspan
+         sodipodi:role="line"
+         id="tspan824-6"
+         x="127.74142"
+         y="39.758705"
+         style="stroke-width:0.26458332">Starboard </tspan><tspan
+         sodipodi:role="line"
+         x="127.74142"
+         y="52.987873"
+         style="stroke-width:0.26458332"
+         id="tspan828-7">sidelight</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="71.588707"
+       y="245.21719"
+       id="text853"><tspan
+         sodipodi:role="line"
+         id="tspan851"
+         x="71.588707"
+         y="245.21719"
+         style="stroke-width:0.26458332">Stern light</tspan></text>
+    <path
+       style="fill:#ffffff;fill-opacity:0.54708521;stroke:#000000;stroke-width:1.00311255;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="path865"
+       sodipodi:type="arc"
+       sodipodi:cx="-129.90022"
+       sodipodi:cy="100.12547"
+       sodipodi:rx="66.350975"
+       sodipodi:ry="60.258457"
+       sodipodi:start="4.3545965"
+       sodipodi:end="1.9373155"
+       d="m -153.13682,43.683052 a 66.350975,60.258457 0 0 1 76.458254,20.458567 66.350975,60.258457 0 0 1 -0.347792,72.388131 66.350975,60.258457 0 0 1 -76.651932,19.85184 l 23.77807,-56.25612 z"
+       transform="rotate(-90)" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.22419696px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-start:url(#Arrow2Lstart)"
+       d="m 103.11056,60.06224 c 34.41586,-21.44249 34.41586,-20.955159 0,0 z"
+       id="path867"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.22419696px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-start:url(#Arrow2Lstart-5)"
+       d="m 93.851006,59.854434 c -35.777645,-19.083764 -35.355604,-19.32743 0,0 z"
+       id="path867-5"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.41259146px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-start:url(#Arrow2Lstart-5-6)"
+       d="m 42.04609,129.97163 c 78.03279,29.63329 77.1123,30.01166 0,0 z"
+       id="path867-5-9"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.49481773px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-start:url(#Arrow2Lstart-5-6-1)"
+       d="m 155.44934,130.2935 c -74.116887,29.65142 -73.879325,28.45405 0,0 z"
+       id="path867-5-9-7"
+       inkscape:connector-curvature="0" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="99.557396"
+       y="159.79463"
+       id="text10974"><tspan
+         sodipodi:role="line"
+         id="tspan10972"
+         x="99.557396"
+         y="159.79463"
+         style="text-align:center;text-anchor:middle;stroke-width:0.26458332">Masthead</tspan><tspan
+         sodipodi:role="line"
+         x="99.557396"
+         y="173.0238"
+         style="text-align:center;text-anchor:middle;stroke-width:0.26458332"
+         id="tspan10976">Light</tspan></text>
   </g>
 </svg>

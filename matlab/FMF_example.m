@@ -1,13 +1,13 @@
 
 x = [0,10,20,30,40,50,60,70,80,90,100];
-y = [0,.10,.20,.30,.40,.50,.60,.70,.80,.90,1];
+y = fliplr([1,.8,.6,.4,.2,.0,0,0,0,0,0]);
 graph   = line(x  , y   );
 
 hXLabel = xlabel('a');
 hYLabel = ylabel('\mu_{A}');
 
 set(graph                          , ...
-  'Color'           , [0 0 .5]    );
+  'Color'           , [0.5 0 0]    );
 set(graph                          , ...
   'LineWidth'       , 2           );
 
@@ -16,7 +16,7 @@ set( gca                       , ...
 set([ hXLabel, hYLabel], ...
     'FontName'   , 'AvantGarde');
 set([hXLabel, hYLabel]  , ...
-    'FontSize'   , 10          );
+    'FontSize'   , 18          );
 set(gca, ...
   'Box'         , 'off'     , ...
   'TickDir'     , 'out'     , ...
@@ -26,7 +26,8 @@ set(gca, ...
   'LineWidth'   , 1         );
 x0=0;
 y0=0;
-
+xt = get(gca, 'XTick');
+set(gca, 'FontSize', 18)
 set(gcf, 'PaperPositionMode', 'auto');
 print -depsc2 FMF_ex.eps
 close;

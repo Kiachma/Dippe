@@ -7,47 +7,44 @@
 \label{Unmanned_Surface_Vehicles} % For referencing the chapter elsewhere, use \ref{Chapter1}
 %------------------------------------------------------------------------------------
 
-
 Unmanned Surface Vehicles (USV) or Autonomous Surface Crafts (ASC) are vehicles operating the seas without a crew on-board.
 USVs encompass both fully autonomous vehicles, from now on referred to as ASCs, and semi-autonomous vehicles.
 Development of USVs has been ongoing for the last two decades \cite{manley2008unmanned}.
 However, the majority of the USVs developed are of the semi-autonomous type \cite{liu2016unmanned,park2017development}, meaning that they depend on human intervention to some extent usually by a supervisor located on shore.
 Although semi-autonomous USVs greatly increase the safety of the operating personnel \cite{liu2016unmanned}, they do not completely remove the need for human interaction.
-Supervision of several semi-autonomous vehicles can be admittedly be handled by a single person, which significantly decreases the number of person-hours needed to accomplish a specific mission \cite{manley2008unmanned}.
+Supervision of several semi-autonomous vehicles can admittedly be handled by a single person, which significantly decreases the number of person-hours needed to accomplish a specific mission \cite{manley2008unmanned}.
 The person-hours needed for surveillance could, however, be removed completely by a ASC.
 It is, therefore, of great interest to overcome the challenges associated with ASCs.
 
 
 %------------------------------------------------------------------------------------
-\section{Usage}
+% \section{Usage}
 \textcite{Yuh2011} mention that roughly two-thirds of the earth's surface is covered by water, with an average depth of the oceans being 3688 m \cite{depth_ocean}.
 Thereby, adding up to a vast amount of explorable areas of which 95 \% is yet to be seen by human eyes \cite{explored_percentage}. Utilization of autonomous vehicles could notably facilitate the  exploration of these, yet unknown, areas.
 Although ASCs are situated on the surface of the ocean they can greatly increase the efficiency of Unmanned Underwater Vehicles (UUV) by acting as a gateway between UUVs and services, such as GPS, not easily available in underwater environments \cite{liu2016unmanned}.
 
 \textcite{liu2016unmanned} have, furthermore, compiled a list of potential applications of USVs, along with previous research on the topics.
 The list is divided into five major categories: scientific research, environmental missions, ocean resource exploration, military use, and other applications.
+\textcite{jokioinen2016remote} predict semi autonomous remote controlled ships to be in commercial use already before the end of this decade. These systems can be used to guide vessels into harbours and other densely congested locations, while full automation can be used on the high seas.
 
-\section{Advantages}
-\todo{More advantages}
-USVs have, apart from the obvious decrease in man hours, a few advantages over traditional manned vessels. The absence of humans on board means that facilities and resources such as canteens,  manned bridges, showers etc. are no longer needed. The weight saved increases the manoeuvrability and deployability and can also be used to increase the payload the vessel is able to carry. USVs can, furthermore, conduct longer and more hazardous voyages than manned vessels since the personnel is located safely on land. This has the additional benefit of decreasing the operational costs \cite{liu2016unmanned}.
-
-%\subsection{Current state}
-%------------------------------------------------------------------------------------
-\section{Challenges}
-Even though USVs bring many advantages to the maritime industry, there are still quite a few challenges that need to be solved. The following section presents some of these challenges and their relation to the scope of this thesis.
+USVs have, apart from the obvious decrease in man hours, a few other advantages over traditional manned vessels. The absence of humans on board means that facilities and resources such as canteens,  manned bridges, showers etc. are no longer needed . The weight saved increases the manoeuvrability and deployability and can also be used to increase the payload the vessel is able to carry. USVs can, furthermore, conduct longer and more hazardous voyages than manned vessels since the personnel is located safely on land. This has the additional benefit of decreasing the operational costs\cite{liu2016unmanned,jokioinen2016remote}.
 
 
-USVs should be able to operate in a highly variable environment, all over the world, in terms of climate, traffic density and communication channels available.  Algorithms and systems developed should, therefore, ideally be usable in all situations that might arise in this environment. This introduces challenges both hardware and software wise \cite{liu2016unmanned}. The limited scope of this thesis narrows the research to only the software related challenges with a focus on path planning, especially collision avoidance.
+
+Even though USVs bring many advantages to the maritime industry, there are still quite a few challenges that need to be solved. The sensor technology needed exists already, the challenges lies in combining the different sensor outputs. Additionally, algorithms that generate decisions based on the sensor data, need to be developed \cite{jokioinen2016remote}.
+
+USVs should, furthermore, be able to operate in a highly variable environment, all over the world, in terms of climate, traffic density and communication channels available.  Algorithms and systems developed should, therefore, ideally be usable in all situations that might arise in this environment. This introduces new challenges both hardware and software wise \cite{liu2016unmanned}. The limited scope of this thesis narrows the research to only the software related challenges with a focus on path planning, especially collision avoidance. Complete SA is also assumed.
 
 All vessels operating on water are bound to follow the international maritime "Rules of the Road" called the Convention on the International Regulations for Preventing Collisions at Sea, 1972 (COLREGs) explained in section \ref{sec_colreg}. This is also true for USVs, since they should be able to operate in situations that comprise both other USVs and manned vessels that follow the COLREGs rules. Furthermore, they should be able to  act in a safe manner in situations where other vessels, for some reason, are not complying with the COLREGs rules. Hence, it is crucial for the USVs to follow COLREGs to ensure safe operations.
 
 COLREGs were originally introduced in 1972, to reduce the amount of collisions at sea. They are written to be interpreted by humans. Situations where multiple rules apply and contradict each other might therefore arise. These situations are usually solved with the use of good seamanship and human deduction. These aspects pose challenges when translating the COLREGs rules into computer understandable code \cite{benjamin2006method}.
 
+Finally, USVs must be at least as safe as existing vessels. Currently human error  seems to be the most common cause of incidents at sea \cite{chauvin2011human,roberts2014fatal,uugurlu2015analysis} and 56 \% of all major collision include COLREGs violations\cite{statheros2008autonomous}. USVs could greatly reduce errors of this kind , however, new risks will arise and proper risk analysis is therefore crucial. This raises the question whose liable for an accident involving USV:s \cite{jokioinen2016remote}? Parallels can be drawn to a recent fatal accident involving an autonomous car and a pedestrian. The car was in autonomous mode when the accident occurred. However, the safety driver present in the car was not focused on monitoring the car \cite{uber_accident_liab}. Should liability be placed on the safety driver or the car manufacturer?
 
 %------------------------------------------------------------------------------------
 \chapter{COLREG}
 \label{sec_colreg}
-The Convention on the International Regulations for Preventing Collisions at Sea, 1972 (COLREGs) were adopted 1972 and entered into force 1977 in it's original form. COLREGs consist of 38 rules, grouped into five different sections as is designed by the International Maritime Organization (IMO).
+The Convention on the International Regulations for Preventing Collisions at Sea, 1972 (COLREGs) were adopted 1972 and entered into force 1977 in it's original form. COLREGs consist of 38 rules, grouped into five different sections and is developed by the International Maritime Organization (IMO).
 The original objective of COLREGs was to ensure traffic separation between maritime vessels in an increasingly populated environment back in 1972 and it is, therefore, sometimes referred to as the Rules of the Road for maritime vessels. COLREGs have since then been in use and is still mandatory to adhere to on international waters. However, a great deal has changed since the COLREGs initially entered into force and COLREGs has, therefore,
 received amendments several times \cite{colreg_about_imo}.
 
@@ -55,133 +52,158 @@ National regulations might differ from the COLREGs to some extent. However, COLR
 Such special rules shall conform as closely as possible to these Rules.’ \cite{colreg}
 
 %------------------------------------------------------------------------------------
-The following sections will present the different parts of the COLREGs regulations, with emphasis on the parts related to manoeuvring a USV in international waters. Information in this subsection is taken from the official COLREGs regulations  \cite{colreg} if not otherwise specified. Part D and E will not be discussed further, since they are not of interest for the scope of this thesis. Moreover, rules that are not of interest for the scope of this thesis will not be mentioned.
+The following sections will present the different parts of the COLREGs regulations, with emphasis on the parts related to manoeuvring a USV in international waters. Information in this subsection is taken from the official COLREGs regulations  \cite{colreg} if not otherwise specified. Part D and E will not be discussed further, since they are not of interest for the scope of this thesis. Moreover, rules from other section that are not of interest for the scope of this thesis will not be mentioned.
 %------------------------------------------------------------------------------------
-\section{Part A General}
+% \section{Part A General}
 
 Part A consist of three rules and address general conditions when and to which vessels COLREGs apply. This includes all vessels navigating on high seas and all waters connected therewith. Additionally, it specifies that special rules regarding roadsteads, harbours, rivers, lakes or inland waterways connected with the high seas and navigable by seagoing vessels shall conform as closely as possible to these Rules (\textit{Rule1}). Furthermore words, such as vessel, power-driven vessel, sailing vessel, length, breadth, and other words used in the regulations are defined (\textit{Rule3}). Finally, it is stated that the COLREGs rules do not in any way free the vessel, owner, master or crew from responsibility to follow the rules and act according to the ordinary practice of seamen (\textit{Rule2}).
 
 %------------------------------------------------------------------------------------
-\section{Part B Steering and Sailing}
-Part B is split up into three different sections. The first section consists of rules \todo{words or numerals} 4-10 and apply in any condition of visibility. Section II (rules 11-18) apply to vessels in sight of each other, while the last section consist of just one rule that specifies reduced visibility operations. It states that vessels should proceed at speeds appropriate to the circumstances and use radar to determine collision risks. Speed should be reduced to a minimum if a vessel can hear another vessels fog horn apparently forward of her beam (\textit{Rule19}).
+% \section{Part B Steering and Sailing}
+Part B is split up into three different sections. The first section consists of rules 4-10 and apply in any condition of visibility. Section II (rules 11-18) apply to vessels in sight of each other, while the last section consist of just one rule that specifies reduced visibility operations. It states that vessels should proceed at speeds appropriate to the circumstances and use radar to determine collision risks. Speed should be reduced to a minimum if a vessel can hear another vessels fog horn apparently forward of her beam (\textit{Rule19}).
 
-Section I addresses how vessels shall operate in order to ensure proper situational awareness with emphasis on collision risk detection.  It is mandatory for  all vessels to at all times maintain proper look-out by sight and hearing and all other available means to ensure the best possible situational awareness (\textit{Rule5}) and use all means possible to determine if a risk of collision exists. This includes the use of radar equipment although caution should be exercised not to trust insufficient data. A collision is considered to be imminent when two vessel maintain constant compass bearings to each other over a prolonged time.
+Section I addresses how vessels shall operate in order to ensure proper situational awareness with emphasis on collision risk detection.
+It is mandatory for  all vessels to at all times maintain proper look-out by sight and hearing and all other available means to ensure the best possible situational awareness and  to determine if a risk of collision exists (\textit{Rule5}).
+This includes the use of radar equipment although caution should be exercised not to trust insufficient data. A collision is considered to be imminent when two vessel maintain constant compass bearings to each other over a prolonged time.
 However, a constant bearing is only a sufficient condition for a collision risk, not a necessary one. Close range, large vessels or a tow might pose a collision risk without a constant bearing. Moreover, it is stated that any doubt whether a risk of collision exists shall be treated as if a risk exists (\textit{Rule7}).
-Vessels shall, furthermore, maintain a speed so that they can take proper and effective action to avoid a collision and stop within a distance appropriate to the prevailing circumstances and conditions (\textit{Rule 6}). Any actions made in order to to avoid collisions shall, additionally, be taken according to the rules and as far as possible be conducted in ample time and large enough so that they are easily observable by other vessels. Small alterations should, in other words, be avoided. Course alterations might also be accompanied by a lowering of speed, if considered necessary to ensure that the vessels pass each other at safe distance (\textit{Rule 8}).
-
-Section II defines three different scenarios, involving two vessels, and specifies the action to take for both vessel. The scenarios are a head-on, a crossing and an overtake situation. A vessel overtaking another vessel shall keep out of the way of the stand on vessel. A vessel is considered to overtake another vessel when approaching it from a direction more than 22.5 \textdegree abaft the stand on vessels beam, i.e with a relative bearing between 112,5 \textdegree and 247,5 \textdegree from the stand on vessel (\textit{Rule 13}). A head-on situation, on the other hand, is when a vessel sees another vessel ahead or nearly ahead, i.e. it can see the masthead light in line or both sidelights. The give way vessel shall, in this case, alter its course to starboard (\textit{Rule 14}). Finally it is stated that vessel coming from starboard, i.e right, has the right of way in a crossing situation. The give way vessel shall if possible avoid crossing ahead of the other vessel and, therefore, alter its course to starboard  (\textit{Rule 15}). All actions by the give away vessels shall be taken as early as possible  (\textit{Rule 16}), while the stand on vessels shall keep its course and speed, provided that the give way vessel acts according to the regulations. However, the stand on vessel might take action to best avoid a collision if it finds that the actions by the give way vessels are insufficient to prevent a collision  (\textit{Rule 17}). Responsibilities between vessels of different types are also addressed. For instance, a power-driven vessel shall give way for vessels engaged in fishing,  vessels not under command,  vessels restricted in her ability to move, and finally fishing vessels   (\textit{Rule 18}).
-
-%------------------------------------------------------------------------------------
-\section{Part C Lights and Shapes}
-\begin{figure}[H]
+Vessels shall, furthermore, maintain a speed so that they can take proper and effective action to avoid a collision and stop within a distance appropriate to the prevailing circumstances and conditions (\textit{Rule 6}). Any actions made, in order to to avoid collisions, shall be taken according to the rules and large enough so that they are easily observable by other vessels. They shall additionally as far as possible be conducted in ample time. Small alterations should, in other words, be avoided. Course alterations might also be accompanied by a lowering of speed, if considered necessary to ensure that the vessels pass each other at safe distance (\textit{Rule 8}).
+\begin{figure}
     \centering
-    \includegraphics[width=0.5\textwidth]{Figures/lights}
+    \includegraphics[width=0.5\textwidth,height=0.5\textheight,keepaspectratio]{Figures/lights.eps}
     \caption{Mandatory navigation lights}
     \label{fig:nav_lights}
 \end{figure}
+\begin{figure}[h]
+    \begin{tabular}{cc}
 
-Part C specifies the lights and shapes a vessel shall exhibit, and when they should be used. These are therefore not of interest for the scope of this thesis, with the exception of \textit{rule 21} and \textit{rule 22}, which specify the arcs that specific lights should cover as well as the distance the should be visible from. Figure \ref{fig:nav_lights} shows the lights of interest for this thesis.
-\\
-\textbf{Masthead lights} cover a 225 \textdegree arc from 247,5 \textdegree to 112,5 \textdegree and should be visible from at least 2-6 miles, depending on the length of the vessel.\\
-\textbf{Sidelights} are green on the starboard side and red on port. They cover a 112,5 arc from 0 relative bearing to 112,5 and 247,5 respectively. They should be visible from at least 1-3 miles, depending on the length of the vessel.
+        \subfloat[Overtake situations]{
+            \includegraphics[width=0.5\textwidth,height=0.42\textheight,keepaspectratio]{Figures/overtake.eps}
+            \label{fig:overtake}
+        } &
+        \subfloat[Head on situation]{
+            \includegraphics[width=.49\linewidth,height=0.42\textheight,keepaspectratio]{Figures/head_on.eps}
+            \label{fig:head_on}
+        }   \\
+        \multicolumn{2}{c}{\subfloat[Crossing situations]{
+                \includegraphics[width=\linewidth,height=0.42\textheight,keepaspectratio]{Figures/crossing.eps}
+                \label{fig:crossing}
+            }}
+    \end{tabular}
 
--------------------------------------------------------------------------
+    \caption{COLREGs collision scenarios}
 
-\chapter{Alternative COLREG compliant algorithms}
+\end{figure}
+
+
+Section II defines three different scenarios, involving two vessels, and specifies the action to take for both vessel.
+The scenarios are a head-on, a crossing and an overtake situation.
+A vessel overtaking another vessel shall keep out of the way of the stand on vessel.
+A vessel is considered to overtake another vessel when approaching it from a direction more than 22.5 \textdegree abaft the stand on vessels beam, i.e with a relative bearing between 112,5 \textdegree and 247,5 \textdegree from the stand on vessel.
+This sector is the same as the the white stern light in  figure \ref{fig:nav_lights} and{} the light red sector in figure \ref{fig:overtake} (\textit{Rule 13}).
+
+A head-on situation, on the other hand, is when a vessel sees another vessel ahead or nearly ahead, i.e. it can see the masthead lights in line and/or both sidelights, shown in figure \ref{fig:nav_lights}. A rule of thumb commonly used is $\pm5$ \textdegree relative bearing, shown as the light red sector in figure \ref{fig:head_on}.
+The give way vessel shall, in this case, alter its course to starboard (\textit{Rule 14}).
+Finally it is stated that vessel coming from starboard, i.e right, has the right of way in a crossing situation.
+This is usually interpreted as target  vessels in the sector represented by the main vessels starboard light, green light in figure \ref{fig:nav_lights} or the light red sector in figure \ref{fig:crossing}.
+The give way vessel shall if possible avoid crossing ahead of the other vessel and, therefore, alter its course to starboard  (\textit{Rule 15}).
+All actions by the give away vessels shall be taken as early as possible  (\textit{Rule 16}), while the stand on vessels shall keep its course and speed, provided that the give way vessel acts according to the regulations.
+However, the stand on vessel might take action to best avoid a collision if it finds that the actions by the give way vessels are insufficient to prevent a collision  (\textit{Rule 17}).
+Responsibilities between vessels of different types are also addressed.
+For instance, a power-driven vessel shall give way for vessels engaged in fishing,  vessels not under command,  vessels restricted in her ability to move, and finally fishing vessels   (\textit{Rule 18}).
+
+The three situations described above acts as basis for all collision avoidance decisions on the high sea. Some situations might at first seem counter-intuitive, for instance boat 2 in figure \ref{fig:crossing}. COLREG rules states that vessel \textit{m} shall change course to starboard and pass behind vessel 2 even-though vessel 2 is currently behind vessel \textit{m}. However, it is crucial to remember \textit{rule 7} and the conditions needed for a collision risk. A collision is in this case only imminent if vessel 2 has a much higher speed than vessel \textit{m}, so that their relative bearings remains the same over time. It is in that case intuitive for vessel \textit{m} to alter course to starboard and possible decelerate thereby allowing vessel 2 to pass in front of her.
+
+Moreover, many situations include multiple target vessels and regarding every target as an isolated situation might give contradictory decisions. An holistic approach to the situation must therefore be taken. This is called good seamanship and is one of the greater challenges when developing a COLREGs compliant algorithm. Good seamanship is even more important when taking into account vessels of different kind, terrain and economics. A light motorboat might for instance gladly give way for a large tanker on a tight schedule even-though the tanker is obliged to give way. This thesis will concentrate on rules that could be axiomatizable  for the implementation and contemplate others in the discussion in chapter \ref{chap:disc}
+
+\chapter{Automation of COLREGS}
 USVs have been in development since at least 1993 when MIT started its Sea Grant College Program, Autonomous Surface Craft (ASCs) \cite{manley2008unmanned}. Many different approaches and algorithms have since then been tried out. This section will briefly look into some of the COLREGs compliant approaches, before finally presenting the approach which this thesis is based on.
 
+\textcite{larson2007advances} uses a two-level two-dimensional obstacle map to create a near-field reactive control technique. One layer for a near field model and the other for a far field model. COLREGs rules are incorporated into the solution by utilizing a rule-based approach in the path planner. The solution is made with computational efficiency in mind and the provided trajectory is, therefore, not optimal. It is also stated that the sensors and processing algorithm need more work. The paper does not mention why the specific approach was chosen. However, the authors have previously worked on unmanned ground vehicle for 25 years and mention that thay have transitioned some of their work into the USV word.
 
-\textcite{larson2007advances} uses a two-level two-dimensional obstacle map to create a near-field reactive control technique. One layer for a near field model and the other for a far field model. COLREGs rules are incorporated into the solution by utilizing a rule-based approach in the path planner. The solution is made with computational efficiency in mind and the provided trajectory is, therefore, not optimal. It is also stated that the sensors and processing algorithm need more work. However, the authors have plans for future improvements and the algorithm is regularly tested in San Diego Bay.
 
-
-Another approach, developed by \textcite{benjamin2004colregs,benjamin2006method} utilizes multi-objective optimization and interval programming, within a behaviour based architecture. The solution has been tested with kayak-based autonomous surface crafts and initial tests show promising results, but the solution cannot yet be called COLREGS compliant.
+Another approach, developed by \textcite{benjamin2004colregs,benjamin2006method} utilizes multi-objective optimization and interval programming, within a behaviour based architecture. Behaviour based architecture was chosen since  to the model can be split into several independent modules which is easier to maintain and develop, than a single complex world model.  Interval programming helps solve scenarios that involve  multiple rules and situations where rules compete with the mission objective. The solution has been tested with kayak-based autonomous surface crafts and initial tests show promising results, but the solution cannot yet be called COLREGS compliant.
 
 
 \textcite{naeem2012colregs}
-propose a path-planner that uses line of sight guidance between way-points. Obstacles are avoided by introducing a starboard heading bias to the line of sight heading until clear of conflict. The paper compares the trajectory, produced by the proposed on-the-fly algorithm, to that of a modified off-line DPSS strategy. Multiple simulations show that both algorithms yield COLREGs compliant results. However, a simulation with multiple dynamic targets was not conducted.
+propose a path-planner that uses line of sight guidance between way-points. Obstacles are avoided by introducing a starboard heading bias to the line of sight heading until clear of conflict. The solution is supposed to be straight forwards yet effective and  provide an onboard detection and avoidance system. Which is something that, according to the authors, many current solutions lack. The paper compares the trajectory, produced by the proposed on-the-fly algorithm, to that of a modified off-line DPSS strategy. Multiple simulations show that both algorithms yield COLREGs compliant results. However, a simulation with multiple dynamic targets was not conducted.
 
 Spatio temporal reasoning have also been considered as a way to translate the COLREG rules into computer understandable rules. \textcite{spat_temp1,spat_temp2}
 suggest the use of Oriented Point Reasoning Algebra (OPRA) with \textit{m}  granularity to represent vessels position and relative moving direction.
-A qualitative spatio-temporal reasoning toolbox is used to convert the geometric scenario consisting of the vessels Cartesian coordinates into a qualitative scene description based of OPRA relations. The same toolbox can then generate all possible scenarios that are spatially or temporally possible. Model checking can then be conducted on the  observations to check whether the behaviour of the involved vessels is  COLREGS compliant.
+A qualitative spatio-temporal reasoning toolbox is used to convert the geometric scenario consisting of the vessels Cartesian coordinates into a qualitative scene description based of OPRA relations. The same toolbox can then generate all possible scenarios that are spatially or temporally possible. Model checking can then be conducted on the  observations to check whether the behaviour of the involved vessels is  COLREGS compliant. Spatio Temporal was chosen in order to bridge the gap between primitive logic concepts and abstract navigation regulations, thereby facilitating formalization of the navigation rules.
 
 
-\textcite{lee2004fuzzy} combine fuzzy logic with modified virtual force fields to  create a COLREGs compliant algorithm. The fuzzy logic rule-set used consists of about two hundred rules, which might be computational challenging. The authors do, however, mention that the rules-set might be streamlined. Fuzzy logic is also used \textcite{perera2012intelligent} which, furthermore uses bayesian networks to solve cases with multiple target vessels. The presented simulations consist of one vessel utilizing the algorithm to avoid three dummy vessels that are keeping their course and speed. The rule-set is in this paper also quite extensive.
+\textcite{lee2004fuzzy} combine fuzzy logic with modified virtual force fields to  create a COLREGs compliant algorithm. The fuzzy logic rule-set used consists of about two hundred rules, which might be computational challenging. The authors do, however, mention that the rules-set might be streamlined. Fuzzy logic is also used \textcite{perera2012intelligent} which, furthermore uses bayesian networks to solve cases with multiple target vessels. The presented simulations consist of one vessel utilizing the algorithm to avoid three dummy vessels that are keeping their course and speed. The rule-set is in this paper also quite extensive. Fuzzy logic have been used in several decision making systems before, where rules written for human need to be interpreted by computers \cite{perera2012intelligent}.
 
 
 Both fuzzy logic and spatio temporal reasoning with model checking was considered to be used as the foundation for this thesis. However, fuzzy logic was finally chosen due to the fact that the qualitative representation of a scenario in spatio temporal reasoning is limited the definitions of the calculus used, in this case OPRA.
 %------------------------------------------------------------------------------------
-\chapter{Fuzzy set theory and logic}
+\chapter{COLREGs modeling using fuzzy logic}
+
 The concept of fuzzy sets was first mentioned by \textcite{zadeh1996fuzzy} in 1964 as a way of dealing with sets of objects, where an objects membership to a set can be represented by a value in the real interval [0, 1]. Compared to classic set theory where  membership is restricted to the two values of one and zero. Fuzzy logic enables one to define sets such as "old men" or "vessels on reciprocal course" \cite{zadeh1996fuzzy}, which facilitates the process of converting human abstract reasoning into computer understandable logic.
 %------------------------------------------------------------------------------------
 \section{Fuzzy sets}
+\label{sec:fuzzy_sets}
 The fuzzy set "all old men" can be defined in the following way. Let the \textit{universe set} \textbf{X} be the set of ages [0, 100]. The set of old men can then be written as
-$\fuzzyset{A}=\left \{ a \in \textbf{X} | a \text{ is old} \right \}$
+$\fuzzyset{A}=\left \{ a \in \textbf{X} | a \text{ Is old} \right \}$
 \cite{chen2000introduction}
 
-However, the set requirement 'is old' is still undefined and therefore vague. Defining the threshold of being old at an age of 60 does divide the universal set \textbf{X} into subsets of 'old' and 'not old', but the division does not distinguish between humans aged 1 and 59.
-Fuzzy set theory introduces the concept of membership functions, to solve this problem. A Fuzzy Membership Function (FMF) describes the grade of membership of a  in  $\fuzzyset{A}$. This function is often written as $\mu_{\fuzzyset{A}}(a)$. Figure \ref{fig:FMF_ex} shows a very simple linear FMF for the example $\fuzzyset{A}=\left \{\text{'is old'} \right \}$, where for instance $\mu_{\fuzzyset{A}}(10)=0.1$. Similar FMFs can be defined for young and middle-aged which results in the graph seen in figure \ref{fig:FMF_ex2} \cite{ross2009fuzzy}.
+However, the set requirement 'Is old' is still undefined and therefore vague. Defining the threshold of being old at an age of 60 does divide the universal set \textbf{X} into subsets of 'old' and 'not old', but the division does not distinguish between humans aged 1 and 59.
+Fuzzy set theory introduces the concept of membership functions, to solve this problem. A Fuzzy Membership Function (FMF) describes the grade of membership of a  in  $\fuzzyset{A}$. This function is often written as $\mu_{\fuzzyset{A}}(a)$. Figure \ref{fig:FMF_ex} shows a very simple linear FMF for the example $\fuzzyset{A}=\left \{\text{'Is old'} \right \}$, with age on the X axis and membership grade in Y. It can then be read that, for instance, an age of 90 gives a membership value of 0.8 for the fuzzy set $\fuzzyset{A}$ or $\mu_{\fuzzyset{A}}(90)=0.8$. Similar fuzzy sets and  FMFs can then be defined for \textit{'Is young'}: $\fuzzyset{C}=\left \{ c \in \textbf{X} | c \text{ Is young} \right \}$ and   \textit{'Is middle aged'}: $\fuzzyset{B}=\left \{ b \in \textbf{X} | b \text{ Is middle aged} \right \}$. The FMFs can then be plotted into the same graph which results in figure \ref{fig:FMF_ex2} \cite{ross2009fuzzy}. This enables an age to be a member of two fuzzy set simultaneously. For example the age 60 is part of both the \textit{'Is old'} and \textit{'Is middle age'} fuzzy sets, with membership values of 0.2 and 0.8 respectively.
 
-A fuzzy set can then be written as an array of tuples consisting of the objects and its associated membership value: $\fuzzyset{A}=\left \{(x,\mu_{\fuzzyset{A}}(x)|x \in X) \right \}$ \cite{zimmermann2010fuzzy}, which gives  $\fuzzyset{A}=\left \{(0,1),(10,0.9),(20,0.8),\dots,(90,0.1),(100,0) \right \}$ for the example $\fuzzyset{A}$=\{'is young'\} in figure \ref{fig:FMF_ex} \cite{ross2009fuzzy}.
+A fuzzy set can then be written as an array of tuples consisting of the objects and its associated membership value: $\fuzzyset{A}=\left \{(x,\mu_{\fuzzyset{A}}(x)|x \in X) \right \}$ \cite{zimmermann2010fuzzy}, which gives: \\ $\fuzzyset{A}=\left \{(0,0), (10,0), \dots, (50,0), (60,0.2), (70,0.4), (80,0.6), (90,0.8), (100,1) \right \}$ for the  \textit{'Is old'} fuzzy set $\fuzzyset{A}$  in figure \ref{fig:FMF_ex} \cite{ross2009fuzzy}.
+
 
 \begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{FMF_ex}
-    \caption[Graphical representation of a single FMF]{Fuzzy membership function for $\protect\fuzzyset{A}=\left \{ \text{'Is old'} \right \}$}
-    \label{fig:FMF_ex}
+    \begin{tabular}{cc}
+
+        \subfloat[Fuzzy membership function for $\protect\fuzzyset{A}=\left \{ \text{'Is old'} \right \}$]{
+            \includegraphics[width=.49\linewidth]{../matlab/FMF_ex.eps}
+            \label{fig:FMF_ex}
+        } &
+        \subfloat[Fuzzy membership function for $\protect\fuzzyset{C}=\{\text{'Is young'}\}, \protect\fuzzyset{B}=\{\text{'Is middle-aged'\}}\text{ and }\protect\fuzzyset{A}=\{\text{'Is old'}\}$]{
+            \includegraphics[width=.49\linewidth]{../matlab/FMF_ex2.eps}
+            \label{fig:FMF_ex2}
+        }
+    \end{tabular}
+
+    \caption{Graphical representations of a FMFs}
+    \label{fig:antecedent_fmfs}
 \end{figure}
-\todo{Increase graphic font}
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{FMF_ex2}
-    \caption[Graphical representation of multiple FMFs]{Fuzzy membership function for $\protect\fuzzyset{A}=\{\text{'Is young'}\}, \protect\fuzzyset{B}=\{\text{'Is middle-aged'\}}\text{ and }\protect\fuzzyset{C}=\{\text{'Is old'}\}$}
-    \label{fig:FMF_ex2}
-\end{figure}
+
 %------------------------------------------------------------------------------------
 \section{Fuzzy logic}
 \label{section:fuzzy_logic}
-Fuzzy sets and set theory can, in the same manner as classical boolean sets, be used to define logical expressions. Fuzzy logic allows for half-truths, i.e. truth values in the interval [0,1]. Whereas boolean logic is restricted to truth values of one and zero. The truth value T of a fuzzy preposition P is, therefore a mapping from [0,1] to the universe T, as can be seen in \ref{eq:fuzzy-logic-mapping} \cite{ross2009fuzzy}.
+Fuzzy sets and set theory can, in the same manner as classical boolean sets, be used to define logical expressions. Fuzzy logic allows for half-truths, i.e. truth values in the interval [0,1]. Whereas boolean logic is restricted to truth values of one and zero. The truth value T of a fuzzy preposition P is, therefore a mapping from [0,1] to the universe T, as can be seen in equation \ref{eq:fuzzy-logic-mapping} \cite{ross2009fuzzy}.
 \begin{equation}
     T:u\in U\rightarrow (0,1)
     \label{eq:fuzzy-logic-mapping}
 \end{equation}
 The truth value of proposition P is therefore given by the membership grade $\mu_{\fuzzyset{A}}(x)$ of $x$ in $\fuzzyset{A}$
 
-Many of the same operators and connectives used in classical logic, does also apply to fuzzy logic. This thesis will only present the rules necessary for the scope of the thesis, which are the following \cite{ross2009fuzzy}:\\
-\noindent Negation
-\begin{equation}
-    T(\fuzzyset{\overline{P}})=1-T(\fuzzyset{P})) {}\label{eq:negation}
-\end{equation}
-Disjunction
-\begin{equation}
-    \fuzzyset{P}\lor \fuzzyset{Q}:x \text{ is } \fuzzyset{A} \text{ or } \fuzzyset{B}\quad T(\fuzzyset{P} \lor \fuzzyset{Q})=max(T(\fuzzyset{P}),T(\fuzzyset{Q}))\label{eq:disjunction}
-\end{equation}
-Conjunction
-\begin{equation}
-    \fuzzyset{P}\land \fuzzyset{Q}:x \text{ is } \fuzzyset{A} \text{ and } \fuzzyset{B}\quad T(\fuzzyset{P} \land \fuzzyset{Q})=min(T(\fuzzyset{P}),T(\fuzzyset{Q}))\label{eq:conjunction}
-\end{equation}
-Implication
-\begin{equation}
-    \fuzzyset{P}\to \fuzzyset{Q}: x \text{ is } \fuzzyset{A} \text{, then }x \text{ is } \fuzzyset{B}
-    \label{eq:implication}
-\end{equation}
-\[ T(\fuzzyset{P}\to \fuzzyset{Q})=T(\fuzzyset{\overline{P}}\lor\fuzzyset{Q})=max(T(\fuzzyset{\overline{P}}),T(\fuzzyset{Q}))  \]
+Many of the same operators and connectives used in classical logic, does also apply to fuzzy logic \cite{ross2009fuzzy}.
+The following section will present the rules  necessary for the scope of the thesis and examples using the sets \textit{'Is old'} $\fuzzyset{A}$ and \textit{'Is middle aged'} $\fuzzyset{B}$  defined in section \ref{sec:fuzzy_sets}.\\
 
-\noindent Implication can also be written in rule based form
-\[ \fuzzyset{P} \to \fuzzyset{Q} \text{ is,  IF } x \text{ is } \fuzzyset{A} \text{ , THEN } x \text{ is } \fuzzyset{B}\]
-which is equivalent to the following fuzzy relation
-\[  R=(\fuzzyset{A}\times\fuzzyset{B})\cup (\overline{\fuzzyset{A}}\times \fuzzyset{Y})\]
-\noindent With the membership function:
+\textbf{Negation} is in fuzzy logic defined as $ T(\fuzzyset{\overline{P}})=1-T(\fuzzyset{P}))$. This can be used to calculate the membership value of the age 90 in the negation to the \textit{'Is old'}  fuzzy set $\fuzzyset{A}$ in the following way:
+$\mu_{\fuzzyset{\overline{A}}}(90)=1-\mu_{\fuzzyset{A}}(90)=1-0.8=0.2$. With the result that an age of 90 has a membership value of 0.2 in the \textit{'Is not old'} fuzzy set $\fuzzyset{\overline{A}}$
+
+A \textbf{disjunction} ($\fuzzyset{P}\lor \fuzzyset{Q}:x \text{ is } \fuzzyset{A} \text{ or } \fuzzyset{B}$)   can be defined as   $T(\fuzzyset{P} \lor \fuzzyset{Q}) = \\ max(T(\fuzzyset{P}),T(\fuzzyset{Q}))$. An example using the age sets could be \textit{'is old or middle aged'} for the age of 60, which gives $max(\mu_{\fuzzyset{A}}(60),\mu_{\fuzzyset{B}}(60))=max(0.2,0.8)=0.8$.
+
+\textbf{Conjunction} ($\fuzzyset{P}\land \fuzzyset{Q}:x \text{ is } \fuzzyset{A} \text{ and } \fuzzyset{B}$) follows the same pattern as disjunction but with min instead of max: $T(\fuzzyset{P} \land \fuzzyset{Q})=min(T(\fuzzyset{P}),T(\fuzzyset{Q}))$.
+An example using the same values as above will thus be $min(\mu_{\fuzzyset{A}}(60),\mu_{\fuzzyset{B}}(60))=min(0.2,0.8)=0.2$.
+
+Finally \textbf{implication}  ($\fuzzyset{P}\to \fuzzyset{Q}: x \text{ is } \fuzzyset{A} \text{, then }x \text{ is } \fuzzyset{B}$) is slightly more difficult to define in fuzzy logic. This is because implication can be defined in multiple ways in classical logic, all of which are equivalent. However, these are not equivalent in fuzzy logic since the law of absorption of negation does not hold in fuzzy logic. Classical material implication would  defined it as: $T(\fuzzyset{P}\to \fuzzyset{Q})=T(\fuzzyset{\overline{P}}\lor\fuzzyset{Q})=max(T(\fuzzyset{\overline{P}}),T(\fuzzyset{Q}))$ \cite{oh1987properties}.
+However, implication can also be written in rule based form  $\fuzzyset{P} \to \fuzzyset{Q} \text{ is,  IF } x \text{ is } \fuzzyset{A} \text{ , THEN } y \text{ is } \fuzzyset{B}$ which is equivalent to the fuzzy relation $R=(\fuzzyset{A}\times\fuzzyset{B})\cup (\overline{\fuzzyset{A}}\times \fuzzyset{Y})$ in the same way as in classical logic.
+To which Zadeh has defined the following membership function \cite{oh1987properties}:
+
 \begin{equation}
     \mu_{\fuzzyset{R}}(x,y)=max[\mu_{\fuzzyset{A}}(x)\land\mu_{\fuzzyset{B}}(y),(1-\mu_{\fuzzyset{A}}(x))]
     \label{eq:implication-orig}
 \end{equation}
-Equation \ref{eq:implication-orig} is the fuzzy equivalent to the material implication  $\neg A \lor B$ used in traditional boolean logic\cite{ying2002implication}, where $\neg A = 1-\mu_{\fuzzyset{A}}(x)  $ and $B = \mu_{\fuzzyset{A}}(x)\land\mu_{\fuzzyset{B}}(y)$. However, fuzzy logic has multiple implication operators \cite{ross2009fuzzy}. The work in this thesis will use Mamdani's implication, see equation \ref{eq:mamdani}, since it is the most commonly used one.
+Although, fuzzy logic has multiple other implication operators and choosing the right one is often context dependent. This thesis uses Mamdani's implication (equation \ref{eq:mamdani}), since it is one of the most common ones used in control systems  due to its simplicity \cite{ross2009fuzzy}. However Mamdani's implication does not strictly extend the material implication since $0 \to 0$, though it is still useful in rule based systems where rules with a false antecedent should be disregarded.
 \begin{equation}
     \mu_{\fuzzyset{R}}(x,y)=min[\mu_{\fuzzyset{A}}(x),\mu_{\fuzzyset{B}}(x))]
     \label{eq:mamdani}
 \end{equation}
-
-
 
 
 %------------------------------------------------------------------------------------
@@ -211,14 +233,14 @@ The same principle can be applied to find the overall consequent when multiple r
 
 \section{A fuzzy logic model for COLREGs}
 \label{section:model}
-\todo{Move section to Impl?}
-Antecedents consequents and rules are needed in order to make a fuzzy system for a COLREGs compliant auto pilot. The model used in this thesis is created by \textcite{perera2012intelligent} and has four antecedents, two consequents and an extensive rule set of nearly 200 rules. The antecedents used are: relative bearing to the target vessel, relative course of the target vessel, distance between the vessels, and the ratio between the vessels speed. The main vessels relative bearings are divided into ten sets. These resulting sectors represent the different sets in the relative course universe [0, 360]. The relative courses of the target vessel are ,likewise, divided into eight sectors, which represent sets in the relative course universe [0, 360]. The distance universe consist of three sets, representing radii from the main vessel, called $R_A, R_B$ and $R_{VD}$. $R_{VD}$ is the vessel domain into which other vessel shall not enter. $R_A$ and $R_B $depicts the area around the main vessel in which other vessels are detected. $R_A$ is used when the main vessel is the give way vessel and $R_B$ when it is the stand on vessel. A graphical representation of the bearing, range and course sectors can be seen in figure \ref{fig:model}. The final antecedent, $\text{speed ratio} =\frac{V_{target}}{V{main}}$, consist of three sets: $<1, \approx1 \text{ and } >1$.
-Visualizations of the antecedent FMFs, as well as their distribution in their corresponding universes, can be seen in figure \ref{fig:antecedent_fmfs}.
+Antecedents consequents and rules are needed in order to make a fuzzy system for a COLREGs compliant auto pilot. The model used in this thesis is created by \textcite{perera2012intelligent} and has four antecedents, two consequents and an extensive rule set of nearly 200 rules. The antecedents used are: relative bearing to the target vessel, relative course of the target vessel, distance between the vessels, and the ratio between the vessels speed. The main vessels relative bearings are divided into ten sets. These resulting sectors represent the different sets in the relative course universe [0, 360]. The relative courses of the target vessel are ,likewise, divided into eight sectors, which represent sets in the relative course universe [0, 360]. The distance universe consist of three sets, representing radii from the main vessel, called $R_A, R_B$ and $R_{VD}$. $R_{VD}$ is the vessel domain into which other vessel shall not enter. $R_A$ and $R_B$ depicts the area around the main vessel in which other vessels are detected. $R_A$ is used when the main vessel is the give way vessel and $R_B$ when it is the stand on vessel. A graphical representation of the bearing, range and course sectors can be seen in figure \ref{fig:model}. The bearing sets are marked as sectors (I-X) around the main vessel, course set as sectors a-h around the target vessel and finally range as circles around the main vessel. The final antecedent, $\text{speed ratio} =\frac{V_{target}}{V{main}}$, consist of three sets: $<1, \approx1 \text{ and } >1$.
+Visualizations of the antecedent FMFs, as well as their distribution in their corresponding universes, can be seen in figure \ref{fig:antecedent_fmfs} and consequent FMS in figure \ref{fig:consequent_fmfs}.
 
-Finally a rules set is needed to connect the antecedents with the consequents. The rule set used for this thesis is based on  the rules, seen in table \ref{tab:rules} developed by \textcite{perera2012intelligent}. A few rules have furthermore been added to handle overtake scenarios. These can be seen in table \ref{tab:rules_own}
-\todo{Explain tables?}
+Finally a rules set is needed to connect the antecedents with the consequents. The rule set used for this thesis is based on the rules, seen in table \ref{tab:rules} developed by \textcite{perera2012intelligent}. A few rules have furthermore been added to handle overtake scenarios. These can be seen in table \ref{tab:rules_own}
+Each row in the tables depict a rule in the FIS system.
+The table consist of four columns. The first column represents the main vessels relative bearing to the target vessel. The columns values go from I-X which, represent the ten sectors around the main vessel in figure \ref{fig:model} and the FMFs seen in figure \ref{fig:FMF_bear}. Column number represents the target vessels relative course given in values from a-h which correspond to the eight sectors around the target vessel in figure \ref{fig:model} and the FMF in figure \ref{fig:FMF_rel_course}. Columns three and four are both split up into two sub columns. The main column represents range intervals. Ranges are defined from the fuzzy sets $R_A, R_B$ and $R_{VD}$ mentioned earlier. The third column represents ranges $R_{VD}- R_A$ and the fourth $R_A-R_B$. The first sub column displays the rules speed ratio and the second consequents of the rule.
 
-An analysis and optimization of the values used to specify the FMFs and the rules in the rule set are unfortunately outside of the scope for this thesis. The values are therefore used as specified in previous research \cite{perera2012intelligent}, with the exception of a few added rules to ensure collisions avoidance when one vessel is overtaking another.
+An analysis and optimization of the values used to specify the FMFs and the rules in the rule set are unfortunately outside of the scope for this thesis. The values are therefore used as specified in previous research \cite{perera2012intelligent}, with the exception of a few added rules to ensure collisions avoidance when one vessel is overtaking another. It can therefore be seen as a modelling of the COLREG rules an not an axiomatic solution.
 
 
 \begin{figure}[H]
@@ -233,9 +255,11 @@ An analysis and optimization of the values used to specify the FMFs and the rule
 
         \subfloat[Relative bearing of the target vessel from the main vessel]{
             \includegraphics[width=.49\linewidth]{Figures/FMF_bearing}
+            \label{fig:FMF_bear}
         } &
         \subfloat[Relative course of the target vessel to the main vessel]{
             \includegraphics[width=.49\linewidth]{Figures/FMF_rel_course}
+            \label{fig:FMF_rel_course}
         }   \\
         \subfloat[Speed ratio target vessel/main vessel]{
             \includegraphics[width=.49\linewidth]{Figures/FMF_speed_ratio}
@@ -300,13 +324,13 @@ A FIS can be said to consist of six steps \cite{fis_princeston}:
 This example will use a subset of the rules used in the real system.
 The rules used are:
 \begin{enumerate}[label=\textbf{Rule \arabic*},ref=Rule \arabic*]
-    \item \label{rule:1} IF target in sector II AND relative course is in sector f  AND speed ratio is greater than 1  AND range is $R_vd$ OR $R_b$ OR $R_a$ \\THEN change course to starboard  AND  reduce speed.
-    \item IF target in sector II AND relative course is in sector e AND  speed ratio is greater than 1  AND  range is $R_vd$ OR $R_b$ OR $R_a$ \\THEN change course to starboard  AND  reduce speed.
+    \item \label{rule:1} IF target in sector II AND relative course is in sector f  AND speed ratio is greater than 1  AND range is $R_vd$ OR $R_b$ OR $R_a$ \\THEN change course to starboard  AND  decrease speed.
+    \item IF target in sector II AND relative course is in sector e AND  speed ratio is greater than 1  AND  range is $R_vd$ OR $R_b$ OR $R_a$ \\THEN keep course   AND  increase speed.
 \end{enumerate}
 
-Next the crisp values, gained when applying the model presented in section \ref{section:model} on the scenario in figure \ref{fig:scenario_1a}, are fuzzified. The target vessel is located in sector II with a relative bearing of 26,7\textdegree, which results in a membership value of 1 in sector 2 as shown by the red line in figure \ref{fig:FMF_bearing_fuzzified}
+Next the crisp values, gained when applying the model presented in section \ref{section:model} on the scenario in figure \ref{fig:scenario_1a}, are fuzzified. The target vessel is located in sector II with a relative bearing of 26,7\textdegree, which results in a membership value of 1 in sector 2. This is visualized in figure \ref{fig:FMF_bearing_fuzzified} by the red line starting from the x value 26,7 meeting the orange curve representing sector II at a y value of 1.
 
-The same principle is applied to the three other inputs: relativist course, distance, and speed ratio. Distance and speed ratio will also, in this case, yield membership values of 1, for the fuzzy sets distance $R_a$ and speed ratio>1 . However, the relative course of 203 is located in the fuzzy area between sector 2-e and 2-f which results in membership values of 0,4 and 0,6 respectively, as shown in figure \ref{fig:FMF_rel_course_fuzzified}.
+The same principle is applied to the three other inputs: relative course, distance, and speed ratio. Distance and speed ratio will also, in this case, yield membership values of 1, for the fuzzy sets distance $R_a$ and speed ratio>1 . However, the relative course of 203 is located in the fuzzy area between sector 2-e and 2-f which results in membership values of 0,4 and 0,6 respectively, as shown in figure \ref{fig:FMF_rel_course_fuzzified} by the red arrows. The horizontal line meets the purple e curve at Y value 0,4 and the brown curve at Y value 0,6.
 \begin{figure}[H]
 
     \begin{tabular}{cc}
@@ -333,22 +357,24 @@ The membership values gained for the individual antecedents can then be combined
     \label{eq:ant_comb_rule_2}
 \end{equation}
 
-Mamdani's inference method is then used on each rule to obtain the consequent value. This is done by taking the minimum of the antecedent value from the previous step and the consequent. The result is a clipped consequent FMF, as seen in figures \ref{fig:ex_cons_1} and \ref{fig:ex_cons_2}
+These values represent the grade to which the given scenario satisfy the antecedents of the rules.
+Mamdani's inference method can then be used on each rule to obtain the consequent value by taking the minimum of the antecedent value, from the previous step, and the consequent. The result is the original consequent FMF with its top cut of at the antecedent value for the rule, calculated in the previous step. The result can be seen in figure \ref{fig:ex_cons_1_course} as the green area under the starboard curve and in figure \ref{fig:ex_cons_1_speed} as the blue area under the decrease curve since rule 1 has change course to starboard and decrease speed as consequents. The same procedure applies to rule two which has keep course and increase speed as consequents. The coloured areas are therefore under the orange keep curve in figure \ref{fig:ex_cons_2_course} and the green increase curve in figure \ref{fig:ex_cons_2_speed}
 
-
-\begin{figure}[H]
+\begin{figure}[H]{}
 
     \begin{tabular}{cc}
 
         \subfloat[Course change of the main vessel]{
             \includegraphics[width=.45\linewidth]{Figures/FMF_course_change_conseq_ex_06}
+            \label{fig:ex_cons_1_course}
         } &
         \subfloat[Speed change of the main vessel]{
             \includegraphics[width=.45\linewidth]{Figures/FMF_speed_change_conseq_ex_06}
+            \label{fig:ex_cons_1_speed}
         }
     \end{tabular}
     \caption{Consequent FMFs for rule 1 after applying Mamdani's inference method }
-    \label{fig:ex_cons_1}
+
 \end{figure}
 
 
@@ -358,9 +384,11 @@ Mamdani's inference method is then used on each rule to obtain the consequent va
 
         \subfloat[Course change of the main vessel]{
             \includegraphics[width=.45\linewidth]{Figures/FMF_course_change_conseq_ex_04}
+            \label{fig:ex_cons_2_course}
         } &
         \subfloat[Speed change of the main vessel]{
             \includegraphics[width=.45\linewidth]{Figures/FMF_speed_change_conseq_ex_04}
+            \label{fig:ex_cons_2_speed}
         }
     \end{tabular}
 
@@ -368,7 +396,7 @@ Mamdani's inference method is then used on each rule to obtain the consequent va
     \label{fig:ex_cons_2}
 \end{figure}
 
-The clipped consequents, one for each rule, must then be combined. This is achieved by taking the maximum of each consequent, to create a combined FMF. The result is presented in figure \ref{fig:ex_cons_tot}
+The result is two consequent curves for each rule, one for course change and one for speed change. These need to be combined into two final curves to be able to calculate the final course and speed corrections. This is achieved by combining each rule consequent by their maximum values. In this case the green and orange areas in figures \ref{fig:ex_cons_1_course} and \ref{fig:ex_cons_2_course}  and the blue and green areas in figures \ref{fig:ex_cons_1_speed} and \ref{fig:ex_cons_2_speed}. The two resulting areas are presented in figure \ref{fig:ex_cons_tot} in red.
 
 \begin{figure}[H]
 
@@ -386,4 +414,4 @@ The clipped consequents, one for each rule, must then be combined. This is achie
     \label{fig:ex_cons_tot}
 \end{figure}
 
-Finally the fuzzy sets gained from the previous step need to be converted into a crisp numerical value that can be used by the auto pilot. This process is called defuzzification and is in this case achieved by calculating the centroid value of FMFs in figure \ref{fig:ex_cons_tot}. The results are a +15.5\textdegree course change and a -1,7 knot speed change.
+Finally the fuzzy sets gained from the previous step need to be converted into a crisp numerical value that can be used by the auto pilot. This process is called defuzzification and is in this case achieved by calculating the geometrical center value along the x axis for the FMFs in figure \ref{fig:ex_cons_tot}.   The results are a +15.5\textdegree course change and a -1,7 knot speed change.

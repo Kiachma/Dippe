@@ -158,8 +158,8 @@ def animation_manage(ax, i):
                            verticalalignment='bottom', horizontalalignment='center',
                            color='black')
             ships.append(text)
-        elif i % 100 == 0:
-            text_string = str(round(i / 100))
+        elif i % 1000/config.scale == 0:
+            text_string = str(round(i / 1000/config.scale))
             weight = "medium"
             if text_string == "0":
                 text_string = vessel.id
@@ -234,8 +234,17 @@ class MyMplCanvas(FigureCanvas):
         self.compute_initial_figure()
         self.axes.set_xlim([config.dimensions[0], config.dimensions[1]])
         self.axes.set_ylim([config.dimensions[2], config.dimensions[3]])
-        self.axes.set_xlabel('NM* ' + str(1000 / config.scale))
-        self.axes.set_ylabel('NM* ' + str(1000 / config.scale))
+        self.axes.set_xlabel('NM')
+        self.axes.set_ylabel('NM')
+
+        def numfmt(x, pos):  # your custom formatter function: divide by 100.0
+            s = '{}'.format(x / (1000 / config.scale))
+            return s
+
+        import matplotlib.ticker as tkr  # has classes for tick-locating and -formatting
+        yfmt = tkr.FuncFormatter(numfmt)
+        self.axes.xaxis.set_major_formatter(yfmt)
+        self.axes.yaxis.set_major_formatter(yfmt)
         FigureCanvas.__init__(self, fig)
         self.setParent(parent)
         FigureCanvas.setSizePolicy(self,
@@ -449,7 +458,7 @@ def main():
     aw.setWindowTitle("%s" % progname)
     aw.show()
     if not config.anim:
-        for i in range(0, 1000):
+        for i in range(0, int(10000 / config.scale)):
             aw.dc.update_figure()
             # if i % 1 == 0:
             # aw.dc.print_figure('img/foo_' + str(i) + '.png')

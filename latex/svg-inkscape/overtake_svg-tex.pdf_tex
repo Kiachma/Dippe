@@ -1,0 +1,71 @@
+%% Creator: Inkscape inkscape 0.92.2, www.inkscape.org
+%% PDF/EPS/PS + LaTeX output extension by Johan Engelen, 2010
+%% Accompanies image file 'overtake_svg-tex.pdf' (pdf, eps, ps)
+%%
+%% To include the image in your LaTeX document, write
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics{<filename>.pdf}
+%% To scale the image, write
+%%   \def\svgwidth{<desired width>}
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics[width=<desired width>]{<filename>.pdf}
+%%
+%% Images with a different path to the parent latex file can
+%% be accessed with the `import' package (which may need to be
+%% installed) using
+%%   \usepackage{import}
+%% in the preamble, and then including the image with
+%%   \import{<path to file>}{<filename>.pdf_tex}
+%% Alternatively, one can specify
+%%   \graphicspath{{<path to file>/}}
+%% 
+%% For more information, please see info/svg-inkscape on CTAN:
+%%   http://tug.ctan.org/tex-archive/info/svg-inkscape
+%%
+\begingroup%
+  \makeatletter%
+  \providecommand\color[2][]{%
+    \errmessage{(Inkscape) Color is used for the text in Inkscape, but the package 'color.sty' is not loaded}%
+    \renewcommand\color[2][]{}%
+  }%
+  \providecommand\transparent[1]{%
+    \errmessage{(Inkscape) Transparency is used (non-zero) for the text in Inkscape, but the package 'transparent.sty' is not loaded}%
+    \renewcommand\transparent[1]{}%
+  }%
+  \providecommand\rotatebox[2]{#2}%
+  \ifx\svgwidth\undefined%
+    \setlength{\unitlength}{325.66788303bp}%
+    \ifx\svgscale\undefined%
+      \relax%
+    \else%
+      \setlength{\unitlength}{\unitlength * \real{\svgscale}}%
+    \fi%
+  \else%
+    \setlength{\unitlength}{\svgwidth}%
+  \fi%
+  \global\let\svgwidth\undefined%
+  \global\let\svgscale\undefined%
+  \makeatother%
+  \begin{picture}(1,1.57071682)%
+    \put(0,0){\includegraphics[width=\unitlength,page=1]{overtake_svg-tex.pdf}}%
+    \put(0.46310045,1.31493422){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=2]{overtake_svg-tex.pdf}}%
+    \put(0.44500538,1.38211592){\color[rgb]{0,0,0}\rotatebox{54.427984}{\makebox(0,0)[lb]{\smash{112,5°}}}}%
+    \put(0.48984703,1.44336647){\color[rgb]{0,0,0}\rotatebox{-54.924383}{\makebox(0,0)[lb]{\smash{112,5°}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=3]{overtake_svg-tex.pdf}}%
+    \put(0.47477892,1.31977409){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{m}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=4]{overtake_svg-tex.pdf}}%
+    \put(0.09311197,0.51551685){\color[rgb]{0,0,0}\rotatebox{46.1081586}{\makebox(0,0)[lb]{\smash{112,5°}}}}%
+    \put(0.14634456,0.56963426){\color[rgb]{0,0,0}\rotatebox{-63.2442084}{\makebox(0,0)[lb]{\smash{112,5°}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=5]{overtake_svg-tex.pdf}}%
+    \put(0.11355139,0.44952293){\color[rgb]{0,0,0}\rotatebox{-8.3198254}{\makebox(0,0)[lb]{\smash{1}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=6]{overtake_svg-tex.pdf}}%
+    \put(0.79694306,0.68924584){\color[rgb]{0,0,0}\rotatebox{62.0410019}{\makebox(0,0)[lb]{\smash{112,5°}}}}%
+    \put(0.83327488,0.75589719){\color[rgb]{0,0,0}\rotatebox{-47.3113651}{\makebox(0,0)[lb]{\smash{112,5°}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=7]{overtake_svg-tex.pdf}}%
+    \put(0.8347133,0.63139797){\color[rgb]{0,0,0}\rotatebox{7.6130179}{\makebox(0,0)[lb]{\smash{2}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=8]{overtake_svg-tex.pdf}}%
+  \end{picture}%
+\endgroup%
