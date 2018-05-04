@@ -1,9 +1,10 @@
 from __future__ import division
-from autonomous_vessel import position
+
 import math
+
 import config
-import copy
 import helpers
+from autonomous_vessel import position
 
 
 class ShipState:
@@ -32,11 +33,11 @@ class ShipState:
         elif direction == 'right':
             self.heading = (self.heading + correction) % 360
             return correction
-
+    # https://www.ebdg.com/wp-ebdg-content/uploads/2017/04/SNAME-Paper-Using-Big-Data-to-Determine-New-Vessel-Design-Speed.pdf
     def slow_down(self):
-        correction = - 1 * config.playback[
+        correction = - 0.07 * config.playback[
             'rate']
-        if self.speed + correction > 1:
+        if self.speed + correction >= 1:
 
             self.speed = self.speed + correction
 
@@ -45,7 +46,7 @@ class ShipState:
             return 0
 
     def speed_up(self):
-        correction = 1 * config.playback[
+        correction = 0.2 * config.playback[
             'rate']
         if correction + self.speed < self.max_speed:
             self.speed = self.speed + correction

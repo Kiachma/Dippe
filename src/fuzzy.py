@@ -1,8 +1,8 @@
-import config
-
 import numpy as np
 import skfuzzy as fuzz
 from skfuzzy import control as ctrl
+
+import config
 
 
 def generate_trapetzoid(start, end, buffer):
@@ -40,16 +40,16 @@ def init_fuzzy():
 
     range['rvd'] = fuzz.trapmf(range.universe, [0,
                                                 0,
-                                                config.radius['rvd'] / 1000 - 0.05 / config.scale,
-                                                config.radius['rvd'] / 1000 + 0.05 / config.scale
+                                                config.radius['rvd'] / 1000 - 0.3 / config.scale,
+                                                config.radius['rvd'] / 1000 + 0.3 / config.scale
                                                 ])
-    range['rb'] = fuzz.trapmf(range.universe, [config.radius['rvd'] / 1000 - 0.05 / config.scale,
-                                               config.radius['rvd'] / 1000 + 0.05 / config.scale,
-                                               config.radius['rb'] / 1000 - 0.05 / config.scale,
-                                               config.radius['rb'] / 1000 + 0.05 / config.scale
+    range['rb'] = fuzz.trapmf(range.universe, [config.radius['rvd'] / 1000 - 0.3 / config.scale,
+                                               config.radius['rvd'] / 1000 + 0.3 / config.scale,
+                                               config.radius['rb'] / 1000 - 0.3 / config.scale,
+                                               config.radius['rb'] / 1000 + 0.3 / config.scale
                                                ])
-    range['ra'] = fuzz.trapmf(range.universe, [config.radius['rb'] / 1000 - 0.05 / config.scale,
-                                               config.radius['rb'] / 1000 + 0.05 / config.scale,
+    range['ra'] = fuzz.trapmf(range.universe, [config.radius['rb'] / 1000 - 0.3 / config.scale,
+                                               config.radius['rb'] / 1000 + 0.3 / config.scale,
                                                config.radius['ra'] / 1000,
                                                config.radius['ra'] / 1000
                                                ])
@@ -111,6 +111,12 @@ def init_fuzzy():
                                                                    10,
                                                                    10
                                                                    ])
+    bear.view()
+    rel_course.view()
+    range.view()
+    speed_ratio.view()
+    course_change.view()
+    speed_change.view()
     rules = []
 
     # bear.view()
@@ -128,7 +134,7 @@ def init_fuzzy():
         elif course_chg:
             consequents = (course_change[course_chg],speed_change['keep'])
         else:
-            return
+            consequents = (course_change['keep'], speed_change['keep'])
 
         if include_rvd:
             rules.append(ctrl.Rule(

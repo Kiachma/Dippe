@@ -1,10 +1,11 @@
-from autonomous_vessel.autonomous_navigation_system import ans
-from autonomous_vessel import shipstate
 import matplotlib
-from matplotlib.colors import Normalize
 import matplotlib.cm as cm
-from numpy import ma
 from matplotlib import cbook
+from matplotlib.colors import Normalize
+from numpy import ma
+
+from autonomous_vessel import shipstate
+from autonomous_vessel.autonomous_navigation_system import ans
 
 
 class MidPointNorm(Normalize):
@@ -85,5 +86,5 @@ class Vessel:
     def get_gradient_color(self, ):
         return matplotlib.colors.to_hex(self.cmap(self.cnorm(self.shipstate.speed)))
 
-    def next_position(self):
-        return self.ans.next_position(self.shipstate)
+    def next_position(self,i):
+        return self.ans.next_position(self.shipstate,i)

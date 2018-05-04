@@ -62,6 +62,10 @@ chapterinoneline, % Uncomment to place the chapter title next to the number on o
 \usepackage{enumitem}
 \usepackage{svg}
 \usepackage{blkarray}
+\usepackage{booktabs} 
+\usepackage{colortbl} 
+\usepackage{xcolor} 
+\usepackage{xfrac}
 \setcounter{MaxMatrixCols}{20}
 \setcounter{tocdepth}{2}
 \reversemarginpar
@@ -87,7 +91,7 @@ chapterinoneline, % Uncomment to place the chapter title next to the number on o
 %----------------------------------------------------------------------------------------
 
 \thesistitle{Fuzzy logic and unmanned Surface Vehicles} % Your thesis title, this is used in the title and abstract, print it elsewhere with \ttitle
-\thesissubtitle{Implementing collission avoidance in Python}
+\thesissubtitle{Implementing collision avoidance in Python}
 
 \supervisor{Prof. Johan \textsc{Lilius} \\ Adj. Prof. Marina \textsc{Waldén} } % Your supervisor's name, this is used in the title page, print it elsewhere with \supname
 \examiner{} % Your examiner's name, this is not currently used anywhere in the template, print it elsewhere with \examname
@@ -226,10 +230,17 @@ chapterinoneline, % Uncomment to place the chapter title next to the number on o
 %----------------------------------------------------------------------------------------
 
 \begin{acknowledgements}
-    \addchaptertocentry{\acknowledgementname} % Add the acknowledgements to the table of contents
-    The acknowledgments and the people to thank go here, don't forget to include your project advisor\ldots
-\end{acknowledgements}
 
+
+    \addchaptertocentry{\acknowledgementname} % Add the acknowledgements to the table of contents
+    I would like to thank my advisors Professor Johan Lilius for giving me the opportunity to write this thesis and for helping me to come back to course when my thesis was drifting on the oceans of academia. I'd also like to thank Adjunct Professor Marina Waldén for all the feedback during the writing process. Thanks also go to Annamari Soini for starting the process and putting me in contact with the right people.
+
+    \vspace{2cm}
+
+    \noindent Emil Aura\\
+    Turku, \today
+
+\end{acknowledgements}
 %----------------------------------------------------------------------------------------
 %   LIST OF CONTENTS/FIGURES/TABLES PAGES
 %----------------------------------------------------------------------------------------

@@ -1,0 +1,191 @@
+overtaking_head_on
+i: 1500
+Main: A
+TOT:
+Course change: 24.0
+Speed change: -0.0
+Target: B
+Relative speed: 24.0
+bearing : 0.0
+relative_course : 180
+speed_ratio : 1.0
+range : 9.9
+
+{
+    "course_change": 24.35632183908046,
+    "speed_change": -8.326672684688674e-17
+}
+__________________________________________________________________________________________________
+i: 1500
+Main: B
+TOT:
+Course change: 22.0
+Speed change: -0.0
+Target: A
+Relative speed: 23.991775799413375
+bearing : 359.0
+relative_course : 183
+speed_ratio : 1.0
+range : 9.9
+
+{
+    "course_change": 21.93491562414747,
+    "speed_change": -8.326672684688674e-17
+}
+__________________________________________________________________________________________________
+i: 1501
+Main: A
+TOT:
+Course change: 18.0
+Speed change: 0.0
+Target: B
+Relative speed: 24.0
+bearing : 356.9979995819434
+relative_course : 180
+speed_ratio : 1.0
+range : 9.9
+
+{
+    "course_change": 17.846940412330774,
+    "speed_change": 0.0
+}
+__________________________________________________________________________________________________
+i: 1501
+Main: B
+TOT:
+Course change: 18.0
+Speed change: 0.0
+Target: A
+Relative speed: 23.991775799413375
+bearing : 356.9960005786745
+relative_course : 183
+speed_ratio : 1.0
+range : 9.9
+
+{
+    "course_change": 17.841496175938957,
+    "speed_change": 0.0
+}
+__________________________________________________________________________________________________
+i: 1502
+Main: A
+TOT:
+Course change: 8.0
+Speed change: -0.0
+Target: B
+Relative speed: 24.0
+bearing : 353.99400024828356
+relative_course : 180
+speed_ratio : 1.0
+range : 9.9
+
+{
+    "course_change": 7.922553759862433,
+    "speed_change": -6.304076140579158e-17
+}
+__________________________________________________________________________________________________
+i: 1502
+Main: B
+TOT:
+Course change: 8.0
+Speed change: 0.0
+Target: A
+Relative speed: 23.991775799413375
+bearing : 353.99100562976605
+relative_course : 183
+speed_ratio : 1.0
+range : 9.9
+
+{
+    "course_change": 7.90958159282889,
+    "speed_change": 9.453117989093663e-17
+}
+__________________________________________________________________________________________________
+i: 1836
+Main: C
+TOT:
+Course change: -0.0
+Speed change: 5.0
+Target: A
+Relative speed: 21.83916762318431
+bearing : 28.238476627304806
+relative_course : 193.92255375986244
+speed_ratio : 1.2
+range : 9.9
+
+{
+    "course_change": -1.776356839400252e-16,
+    "speed_change": 5.4761904761904745
+}
+__________________________________________________________________________________________________
+i: 1837
+Main: A
+TOT:
+Course change: -0.0
+Speed change: 5.0
+Target: C
+Relative speed: 22.037427874482372
+bearing : 14.32360607677711
+relative_course : 166.07744624013756
+speed_ratio : 0.85
+range : 9.9
+
+{
+    "course_change": -1.7763568394002506e-16,
+    "speed_change": 4.67312661498708
+}
+__________________________________________________________________________________________________
+i: 1854
+Main: C
+TOT:
+Course change: -3.0
+Speed change: -0.0
+Target: B
+Relative speed: 3.482995470394425
+bearing : 79.39264002367077
+relative_course : 13.909581592828886
+speed_ratio : 0.8823529411764715
+range : 5.374840937270188
+
+{
+    "course_change": -2.7554527428947937,
+    "speed_change": -8.326672684688674e-17
+}
+__________________________________________________________________________________________________
+i: 2369
+Main: A
+TOT:
+Course change: 0.0
+Speed change: 1.0
+Target: B
+Relative speed: 26.999999829132864
+bearing : 325.3462387959047
+relative_course : 179.98702783296645
+speed_ratio : 0.8
+range : 4.225120876034789
+
+{
+    "course_change": 1.9104444550049076e-16,
+    "speed_change": 1.0284081229875373
+}
+__________________________________________________________________________________________________
+i: 2369
+Main: B
+TOT:
+Course change: -0.0
+Speed change: 1.0
+Target: A
+Relative speed: 27.999999824250946
+bearing : 325.32491082657214
+relative_course : 180.01297216703355
+speed_ratio : 1.3333333333333333
+range : 4.221465618293693
+
+{
+    "course_change": -1.9183357400528912e-16,
+    "speed_change": 1.0728560523597273
+}
+__________________________________________________________________________________________________
+2800:A---->B2.402121108073473NM
+2800:B---->A2.4021184598648277NM
+2995:C---->A3.757989867655694NM

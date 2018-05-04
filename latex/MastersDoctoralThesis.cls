@@ -251,7 +251,7 @@
 }
 \newcommand{\starboard}{\textcolor{green}{SB}}
 \newcommand{\port}{\textcolor{red}{P}}
-
+\newcommand{\ra}[1]{renewcommand{arraystretch}{#1}}
 %----------------------------------------------------------------------------------------
 %	COLOURS
 %----------------------------------------------------------------------------------------

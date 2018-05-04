@@ -17,8 +17,14 @@
 \newcommand{\option}[1]{\texttt{\itshape#1}}
 
 %----------------------------------------------------------------------------------------
-\cite{marine_casualities_incidents_2016}
-\cite{luinframework}
-\cite{jokioinen2016remote}
-\section{Problem statement}
-\section{Thesis structure}
+
+Maritime shipping can be considered as one of the pillars of modern economy. In fact \textcite{percent_trade} state that 90\% of the worlds total trade is handled by maritime shipping. This sums up to roughly 1 600 000 seafarers serving on international trading merchant ships worldwide. However, the recent rapid development of sensor technology and artificial intelligence could potentially reduce the operational costs of such vessels, by developing Unmanned Surface Vehicles (USV). The number of persons needed to operate vessels could thereby be reduced significantly. Furthermore, a majority of the accidents reported between 2011 and 2016 can be linked to human erroneous action \cite{marine_casualities_incidents_2017}. USVs could, thus potentially decrease both the operational cost and number of accidents.
+
+It is therefore of utmost interest to overcome the challenges faced when developing USVs. One such challenge is to develop algorithms that handle collision avoidance between vessels according to the rules of navigation. Various approaches have already been tried to some extent. This thesis will further examine the use of  fuzzy logic in a collision avoidance for USVs.
+\section{Purpose of this thesis}
+The basis for this thesis lies in research done by \textcite{perera2012intelligent}. However, this implementation tries to further test previous findings by recreating the previous implementation in python instead of MatLab and testing the algorithm in more challenging simulation scenarios than before.
+
+\section{Disposition}
+This first chapter will provide some general information about the thesis along with background information of the topic as well as
+the purpose of the thesis. Additional background information of USVs as well as their advantages and challenges are presented in Chapter \ref{Unmanned_Surface_Vehicles}. Chapter \ref{sec_colreg} explains the International Regulations for Preventing Collisions
+at Sea (COLREGs) and describes a few examples of collision situations.  Previous approaches to automation of COLREGs rules are presented in chapter \ref{chap:aut_colregs} before the theory for the fuzzy logic approach used in this thesis is thoroughly explained in chapter \ref{chap:fuzzy}. The implementation of the fuzzy logic based Autonomous Navigation System and the simulation framework is described in Chapter \ref{chap_impl}. Chapter \ref{sec:evaluation} presents the simulation scenarios as well as results and evaluations of the simulations. The results from chapter \ref{sec:evaluation} are discussed in chapter \ref{chap:disc}. Finally, a conclusion is provided in chapter \ref{chap:conc}.

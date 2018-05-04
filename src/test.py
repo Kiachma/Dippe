@@ -1,19 +1,22 @@
 from __future__ import unicode_literals
-from autonomous_vessel import vessel
-import matplotlib.patches as patches
-from matplotlib import pyplot as plt
+
 import math
-import numpy as np
-import config
-import helpers
-import sys
 import os
-import matplotlib
-import design
 import string
+import sys
+
+import matplotlib
+import matplotlib.patches as patches
+import numpy as np
+import progressbar
+from matplotlib import pyplot as plt
+
+import config
+import design
 import fuzzy
-import os, shutil
+import helpers
 import vesselService
+from autonomous_vessel import vessel
 
 # Make sure that we are using QT5
 matplotlib.use('Qt5Agg')
@@ -29,6 +32,7 @@ progversion = "0.1"
 paths = []
 timer = None
 fis = None
+distances = dict()
 
 
 def createVessel(config, fis):
@@ -141,7 +145,7 @@ def animation_manage(ax, i):
                                   xytext=(
                                       shipstate.position.x + shipstate.get_headingXY()[0] * coeff,
                                       shipstate.position.y + shipstate.get_headingXY()[1] * coeff),
-                                  aleftrrowprops=dict(
+                                  arrowprops=dict(
                                       arrowstyle='<-',
                                       facecolor='blue'),
                                   gid=vessel.id,
@@ -158,8 +162,8 @@ def animation_manage(ax, i):
                            verticalalignment='bottom', horizontalalignment='center',
                            color='black')
             ships.append(text)
-        elif i % 1000/config.scale == 0:
-            text_string = str(round(i / 1000/config.scale))
+        elif i % (1000 / config.scale) == 0:
+            text_string = str(round(i / 1000 / config.scale))
             weight = "medium"
             if text_string == "0":
                 text_string = vessel.id
@@ -207,8 +211,8 @@ def animation_manage(ax, i):
         reset_artists()
 
     for idx, tempvessel in enumerate(vesselService.vessels):
-        tempvessel.next_position()
-        if i % 1 == 0 or config.anim:
+        tempvessel.next_position(i)
+        if i % (10 * config.scale) == 0:
             animate_ship(ax, tempvessel, i)
             if config.show['arrow']:
                 animate_arrow(ax, tempvessel)
@@ -274,13 +278,13 @@ class MyDynamicMplCanvas(MyMplCanvas):
 
     def update_figure(self):
         # Build a list of 4 random integers between 0 and 10 (both inclusive)
-        print(self.index)
-        if config.anim:
+        # print(self.index)
+        if config.anim and self.index % (10 * config.scale) == 0:
             self.axes.cla()
             self.axes.set_xlim([config.dimensions[0], config.dimensions[1]])
             self.axes.set_ylim([config.dimensions[2], config.dimensions[3]])
         animation_manage(self.axes, self.index)
-        if config.anim:
+        if config.anim and self.index % (10 * config.scale) == 0:
             self.draw()
         self.index = self.index + 1
 
@@ -449,23 +453,41 @@ def main():
     folder = '/home/eaura/Google Drive/Skola/Dippe/git/src/img'
     if not os.path.exists(folder):
         os.makedirs(folder)
-    clear_folder(folder)
+    # clear_folder(folder)
     fis = fuzzy.init_fuzzy()
-    init()
     qApp = QtWidgets.QApplication(sys.argv)
+    for name, scenario in config.scenarios.items():
+        config.name = name
+        try:
+            os.remove("Logs/" + config.name)
+        except OSError:
+            pass
 
-    aw = ApplicationWindow()
-    aw.setWindowTitle("%s" % progname)
-    aw.show()
-    if not config.anim:
-        for i in range(0, int(10000 / config.scale)):
-            aw.dc.update_figure()
-            # if i % 1 == 0:
-            # aw.dc.print_figure('img/foo_' + str(i) + '.png')
-            # aw.dc.axes.cla()
-            # aw.dc.axes.set_xlim([config.dimensions[0], config.dimensions[1]])
-            # aw.dc.axes.set_ylim([config.dimensions[2], config.dimensions[3]])
-        aw.dc.print_figure('img/foo.pdf')
+        print(name, file=open("Logs/" + config.name, "a"))
+        config.vessels = scenario
+        init()
+        aw = ApplicationWindow()
+        aw.setWindowTitle("%s" % progname)
+        aw.show()
+        if not config.anim:
+            aw.hide()
+            for i in progressbar.progressbar(range(0, int(10000 / config.scale))):
+                aw.dc.update_figure()
+                # if i % 1 == 0:
+                # aw.dc.print_figure('img/foo_' + str(i) + '.png')
+                # aw.dc.axes.cla()
+                # aw.dc.axes.set_xlim([config.dimensions[0], config.dimensions[1]])
+                # aw.dc.axes.set_ylim([config.dimensions[2], config.dimensions[3]])
+            if config.AP:
+                aw.dc.print_figure('img/' + name + '_res.png')
+            else:
+                aw.dc.print_figure('img/' + name + '.png')
+            aw.close()
+            for idx, vx in enumerate(vesselService.vessels):
+                print(str(vx.ans.min_dist['time']) + ":" + vx.ans.min_dist['main'] + "---->" + vx.ans.min_dist[
+                    'target'] + str(
+                    vx.ans.min_dist['dist']) + "NM",
+                      file=open("Logs/" + config.name, "a"))
     sys.exit(qApp.exec_())
 
     # plot()

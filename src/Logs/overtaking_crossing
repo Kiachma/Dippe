@@ -1,0 +1,123 @@
+overtaking_crossing
+i: 2568
+Main: B
+TOT:
+Course change: 24.0
+Speed change: -6.0
+Target: C
+Relative speed: 12.953321304891318
+bearing : 27.131727173289846
+relative_course : 235
+speed_ratio : 1.0857142857142856
+range : 9.9
+
+{
+    "course_change": 24.35632183908046,
+    "speed_change": -5.979166666666666
+}
+__________________________________________________________________________________________________
+i: 2575
+Main: B
+TOT:
+Course change: 18.0
+Speed change: -5.0
+Target: C
+Relative speed: 13.497222895079803
+bearing : 6.111685148552851
+relative_course : 214
+speed_ratio : 1.1674347158218128
+range : 9.9
+
+{
+    "course_change": 17.84944651305453,
+    "speed_change": -4.716896735276847
+}
+__________________________________________________________________________________________________
+i: 2576
+Main: B
+TOT:
+Course change: 10.0
+Speed change: -3.0
+Target: C
+Relative speed: 13.532922549513403
+bearing : 3.106567326168147
+relative_course : 211
+speed_ratio : 1.180124223602485
+range : 9.9
+
+{
+    "course_change": 9.856875964812932,
+    "speed_change": -2.9258918142722043
+}
+__________________________________________________________________________________________________
+i: 2579
+Main: B
+TOT:
+Course change: 9.0
+Speed change: 0.0
+Target: C
+Relative speed: 13.578420463811554
+bearing : 354.0880061122467
+relative_course : 202
+speed_ratio : 1.2199036918138046
+range : 9.9
+
+{
+    "course_change": 9.44886827940074,
+    "speed_change": 0.0
+}
+__________________________________________________________________________________________________
+i: 3965
+Main: A
+TOT:
+Course change: 24.0
+Speed change: -6.0
+Target: C
+Relative speed: 8.899254107231224
+bearing : 45.5963597743156
+relative_course : 235
+speed_ratio : 3.8
+range : 9.9
+
+{
+    "course_change": 24.35632183908046,
+    "speed_change": -5.979166666666666
+}
+__________________________________________________________________________________________________
+i: 4492
+Main: C
+TOT:
+Course change: -0.0
+Speed change: 1.0
+Target: B
+Relative speed: 13.747941625294276
+bearing : 291.1820091753
+relative_course : 167.44886827940076
+speed_ratio : 0.8197368421052628
+range : 4.226533869526463
+
+{
+    "course_change": -1.9074317065362425e-16,
+    "speed_change": 1.0111069763754243
+}
+__________________________________________________________________________________________________
+i: 4493
+Main: B
+TOT:
+Course change: 0.0
+Speed change: 1.0
+Target: C
+Relative speed: 14.743409905247281
+bearing : 303.7029384208477
+relative_course : 192.55113172059924
+speed_ratio : 1.3804173354735159
+range : 4.2256712750872305
+
+{
+    "course_change": 1.9092684242137522e-16,
+    "speed_change": 1.0216768378252068
+}
+__________________________________________________________________________________________________
+8337:A---->C0.8667913592346902NM
+4950:B---->C3.7642400459728336NM
+8336:C---->A0.8663935655816668NM

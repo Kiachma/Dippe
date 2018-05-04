@@ -1,0 +1,72 @@
+overtaking_crossing_3
+i: 3265
+Main: B
+TOT:
+Course change: 24.0
+Speed change: -6.0
+Target: C
+Relative speed: 10.422737036409563
+bearing : 19.599585941288808
+relative_course : 235
+speed_ratio : 1.9
+range : 9.9
+
+{
+    "course_change": 24.35632183908046,
+    "speed_change": -5.979166666666666
+}
+__________________________________________________________________________________________________
+i: 3270
+Main: B
+TOT:
+Course change: 14.0
+Speed change: -4.0
+Target: C
+Relative speed: 10.657515925591712
+bearing : 4.570094526166827
+relative_course : 220
+speed_ratio : 2.0821917808219172
+range : 9.9
+
+{
+    "course_change": 13.693188651821368,
+    "speed_change": -3.8485192152340804
+}
+__________________________________________________________________________________________________
+i: 3271
+Main: B
+TOT:
+Course change: 5.0
+Speed change: -2.0
+Target: C
+Relative speed: 10.678714806320727
+bearing : 1.5632259337786536
+relative_course : 217
+speed_ratio : 2.12290502793296
+range : 9.9
+
+{
+    "course_change": 5.47978587101519,
+    "speed_change": -1.7546433694749124
+}
+__________________________________________________________________________________________________
+i: 3965
+Main: A
+TOT:
+Course change: 24.0
+Speed change: -6.0
+Target: C
+Relative speed: 8.899254107231224
+bearing : 45.5963597743156
+relative_course : 235
+speed_ratio : 3.8
+range : 9.9
+
+{
+    "course_change": 24.35632183908046,
+    "speed_change": -5.979166666666666
+}
+__________________________________________________________________________________________________
+8196:A---->C0.8900327362706939NM
+6646:B---->C3.6969156820636044NM
+8195:C---->A0.8896589615338087NM
