@@ -17,7 +17,7 @@ def init_fuzzy():
     # Generate universe variables
 
     bear = ctrl.Antecedent(np.arange(0, 360, 1), 'bearing')
-    range = ctrl.Antecedent(np.arange(0, config.radius['ra'] / 1000, 0.1 / config.scale), 'range')
+    range = ctrl.Antecedent(np.arange(0, config.radius['ra'] / 1000+10, 0.1 / config.scale), 'range')
     rel_course = ctrl.Antecedent(np.arange(0, 360, 1), 'relative_course')
     speed_ratio = ctrl.Antecedent(np.arange(0, 10, 0.1), 'speed_ratio')
     course_change = ctrl.Consequent(np.arange(-40, 40, 1), 'course_change')
@@ -51,7 +51,7 @@ def init_fuzzy():
     range['ra'] = fuzz.trapmf(range.universe, [config.radius['rb'] / 1000 - 0.3 / config.scale,
                                                config.radius['rb'] / 1000 + 0.3 / config.scale,
                                                config.radius['ra'] / 1000,
-                                               config.radius['ra'] / 1000
+                                               config.radius['ra'] / 1000+10
                                                ])
 
     rel_course['a'] = fuzz.trapmf(rel_course.universe, generate_trapetzoid(0, 22.5, 5))

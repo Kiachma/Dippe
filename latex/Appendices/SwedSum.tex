@@ -1,7 +1,26 @@
 %!TEX root = ../main.tex
-% !TeX spellcheck = en_GB 
+% !TeX spellcheck = sv_fi 
 % Appendix Template
+\addtocontents{toc}{\protect\setcounter{tocdepth}{0}}
 \renewcommand{\thesection}{\arabic{section}}
-\addchap{Swedish summary} % Main appendix title
+\addchap{Svensk sammanfattning} % Main appendix title
 \label{app:swed_sum} % Change X to a consecutive letter; for referencing this appendix elsewhere, use \ref{AppendixX}
 
+\addsec{Introduktion}
+Maritim frakt kan ses som en av grundpelarna i den moderna ekonomin, eftersom upp till 90\% av dagens frakt går sjövägen \cite{percent_trade}. Den senaste tidens stora framsteg inom sensor teknologi och artificiell intelligens har väckt intresset för utveckling av obemannade fartyg. Dylika fartyg skulle  potentiellt kunna minska de operationella kostnaderna för maritima operationer och samtidigt minska antalet olyckor \cite{manley2008unmanned,marine_casualities_incidents_2017}. Det är därför av yttersta intresse för den maritima industrin att överkomma de utmaningar som obemannade fartyg för med sig. En av dessa utmaningarna är att få fartygen att följa nuvarande sjöfartsregler. Denna avhandling  evaluerar användningen av suddig logik som bas till en algoritm för kollisionsundvikande till sjöss enligt Konvention om de internationella reglerna till förhindrande av sammanstötning till sjöss, 1972 (COLREGs) \cite{colreg}.
+\addsec{Obemannade fartyg}
+Utvecklingen av autonoma fartyg har redan pågått i flera decennier och flera olika metoder samt algoritmer har utvecklats och evaluerats. Majoriteten av projekt har dock resulterat i semi-autonoma fartyg. Semi-autonoma skepp innebär att en person kan övervaka ett flertal autonoma båtar från land och fjärrstyra dem vid behov. Det betyder att fartyg kan byggas utan en bemannad brygga, duschar, kantin och andra dylika faciliteter som krävs om människor skall vistas ombord under längre tider. Operationella kostnaderna kunde emellertid minskas ännu mer ifall skeppen kunde göras totalt autonoma och inte kräva en övervakare. För att klara detta krävs algoritmer med samma beslutsfattningsförmåga som de mänskliga operatörerna. Denna avhandling koncentrerar sig på beslut angående kollisionsundvikande och antar därför att det autonoma skeppet har full situationsmedvetenhet.
+\addsec{COLREGs}
+Alla fartyg som navigerar på öppna havet och alla vatten kopplade därtill är tvungna att följa COLREGs reglerna. Detta gäller också autonoma fartyg. Reglerna är dock skrivna 1972 och för att tolkas av människor, vilket medför utmaningar när dessa skall tolkas av maskiner.
+
+COLREGS är uppdelat i fem delar, varav delarna ett till tre är av intresse för denna avhandling. Längden på detta sammandrag tillåter dessvärre mer än en genomgång av de regler som är essentiella för kollisionsundvikande, nämligen reglerna 7-17. Dessa definierar kriterierna för vad som klassas som kollisionsrisk, hastighets och kursändringar vid kollisionsrisk. Vidare specificeras tre scenarion och fartygs roller och obligationer i scenariot i fråga. Scenarierna är upphinnande, stäv emot stäv och skärande kurser. Vid upphinnande skall fartyget med högre fart ändra sin kurs och passera det andra fartyget på endera babord eller styrbord sida. I ett stäv mot stäv scenario skall bägge fartyg korrigera sin kurs till styrbord. Slutligen skall i ett scenario med skärande kurser fartyget med det andra fartyget på styrbord sida korrigera sin kurs styrbord. I samtliga scenarier är det andra fartyget ålagt att hålla sin kurs och hastighet \cite{colreg}. I verkligheten är oftast flera fartyg inblandade i dessa situationer och fler regler kan därför vara aktiva samtidigt. I sådana situationer krävs ett helhetsbeslut baserat på gott sjömanskap, vilket är en utmaning för autonoma fartyg.
+
+
+\addsec{Suddig logik}
+
+
+\addsec{Implementering}
+
+\addsec{Evaluering}
+
+\addsec{Slutsats}

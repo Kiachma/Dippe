@@ -463,7 +463,7 @@ def main():
         except OSError:
             pass
 
-        print(name, file=open("Logs/" + config.name, "a"))
+        print(name, file=open("Logs/test" + config.name, "a"))
         config.vessels = scenario
         init()
         aw = ApplicationWindow()

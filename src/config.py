@@ -35,7 +35,7 @@ show = dict(
     lights=False
 )
 vessels = []
-AP = False
+AP = True
 scenarios = dict(
     # vessels = [
     #     dict(id='A',
@@ -203,56 +203,56 @@ scenarios = dict(
     # #
     # # #     # Overtaking and head-on situation on the high seas
     # # #     # http://advanced.ecolregs.com/index.php?option=com_k2&view=item&id=370:overtaking-and-head-on-situation-on-the-high-seas&Itemid=359&lang=en
-    overtaking_head_on=[
-
-        dict(id='A',
-             heading=180,
-             position=(2500 / scale, 10000 / scale),
-             speed=12,
-             max_speed=15,
-             rate_of_turn=3,
-             ap=AP),
-        dict(id='B',
-             heading=0,
-             position=(2500 / scale, -10000 / scale),
-             speed=12,
-             max_speed=15,
-             rate_of_turn=3,
-             ap=AP),
-        dict(id='C',
-             heading=00,
-             position=(-2500 / scale, -10000 / scale),
-             speed=10,
-             max_speed=15,
-             rate_of_turn=3,
-             ap=AP),
-    ],
-    # #
-    # #     # Overtaking and crossin situation on the high seas
-    # #     # http://advanced.ecolregs.com/index.php?option=com_k2&view=item&id=367:overtaking-and-crossing-situation-on-the-high-seas&Itemid=359&lang=en# vessels = [
-    # overtaking_crossing_2=[
+    # overtaking_head_on=[
+    #
     #     dict(id='A',
-    #          heading=0,
-    #          position=(0 / scale, -10000 / scale),
-    #          speed=10,
+    #          heading=180,
+    #          position=(2500 / scale, 10000 / scale),
+    #          speed=12,
     #          max_speed=15,
     #          rate_of_turn=3,
     #          ap=AP),
     #     dict(id='B',
     #          heading=0,
-    #          position=(3600 / scale, -5000 / scale),
-    #          speed=7,
+    #          position=(2500 / scale, -10000 / scale),
+    #          speed=12,
     #          max_speed=15,
     #          rate_of_turn=3,
     #          ap=AP),
     #     dict(id='C',
-    #          heading=270,
-    #          position=(10000 / scale, -0 / scale),
+    #          heading=00,
+    #          position=(-2500 / scale, -10000 / scale),
     #          speed=10,
     #          max_speed=15,
     #          rate_of_turn=3,
     #          ap=AP),
     # ],
+    # #
+    # #     # Overtaking and crossin situation on the high seas
+    # #     # http://advanced.ecolregs.com/index.php?option=com_k2&view=item&id=367:overtaking-and-crossing-situation-on-the-high-seas&Itemid=359&lang=en# vessels = [
+    overtaking_crossing_2=[
+        dict(id='A',
+             heading=0,
+             position=(0 / scale, -10000 / scale),
+             speed=10,
+             max_speed=15,
+             rate_of_turn=3,
+             ap=AP),
+        dict(id='B',
+             heading=0,
+             position=(3600 / scale, -5000 / scale),
+             speed=7,
+             max_speed=15,
+             rate_of_turn=3,
+             ap=AP),
+        dict(id='C',
+             heading=270,
+             position=(10000 / scale, -0 / scale),
+             speed=10,
+             max_speed=15,
+             rate_of_turn=3,
+             ap=AP),
+    ],
 
     # Overtaking and crossing situation on the high seas
     # http://advanced.ecolregs.com/index.php?option=com_k2&view=item&id=172:overtaking-and-crossing-situation-on-the-high-seas&Itemid=359&lang=en

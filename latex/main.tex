@@ -66,6 +66,8 @@ chapterinoneline, % Uncomment to place the chapter title next to the number on o
 \usepackage{colortbl} 
 \usepackage{xcolor} 
 \usepackage{xfrac}
+\usepackage{siunitx}
+\usepackage{caption}
 \setcounter{MaxMatrixCols}{20}
 \setcounter{tocdepth}{2}
 \reversemarginpar
@@ -220,7 +222,11 @@ chapterinoneline, % Uncomment to place the chapter title next to the number on o
 
 \begin{abstract}
     \addchaptertocentry{\abstractname} % Add the abstract to the table of contents
-    The Thesis Abstract is written here (and usually kept to just this page). The page is kept centered vertically so can expand into the blank space above the title too\ldots
+    One of the greater challenges in the pursuit of completely autonomous and unmanned vessels is the development of algorithms capable of making decisions as safe and efficient as human operators.
+
+    The purpose of this thesis is to evaluate the use of fuzzy logic in a COLREGS compliant collision avoidance algorithm for unmanned surface vessels. A python implementation utilizing a fuzzy logic inference system is developed and tested on maritime scenarios involving multiple vessels.
+
+    Results show the algorithm capable of avoiding collisions, although further work is needed to make the algorithm truly COLREGS compliant and the decisions more holistic.
     \\\\
     \textit{Keywords:} \textit{\keywordnames}
 \end{abstract}
@@ -233,7 +239,7 @@ chapterinoneline, % Uncomment to place the chapter title next to the number on o
 
 
     \addchaptertocentry{\acknowledgementname} % Add the acknowledgements to the table of contents
-    I would like to thank my advisors Professor Johan Lilius for giving me the opportunity to write this thesis and for helping me to come back to course when my thesis was drifting on the oceans of academia. I'd also like to thank Adjunct Professor Marina Waldén for all the feedback during the writing process. Thanks also go to Annamari Soini for starting the process and putting me in contact with the right people.
+    I would like to thank my advisors Professor Johan Lilius for giving me the opportunity to write this thesis and for helping me to steer back to course when my thesis was drifting on the oceans of academia. I'd also like to thank Adjunct Professor Marina Waldén for all the feedback during the writing process. Thanks also go to Annamari Soini for starting the process by putting me in contact with the right people.
 
     \vspace{2cm}
 

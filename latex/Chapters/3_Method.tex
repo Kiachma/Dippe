@@ -4,11 +4,11 @@
 
 \chapter{Implementation}
 \label{chap_impl}
-The objective of this thesis was to implement and evaluate a  collision avoidance  algorithm for USVs. Several related approaches where analysed before the fuzzy logic approach presented by \textcite{perera2012intelligent}, was chosen to be implemented.
+The objective of this thesis has been to implement and evaluate a  collision avoidance  algorithm for USVs. Several related approaches were analysed before the fuzzy logic approach presented by \textcite{perera2012intelligent}, was chosen.
 The solution presented in the original paper is implemented in MATLAB, while the solution presented here is implemented in Python. Python was chosen due to the writer's previous knowledge of the language as well as the availability of fuzzy logic python libraries. The library used in this implementation is called SciKit-Fuzzy \cite{josh_warner_2017_1002946}.
 
 \section{The fuzzy inference system}
-Scikit fuzzy provides a simple application programming interface to setup a FIS. This section will describe the process setting up a simple FIS that calculates salary based on age and the number of previous jobs. Fuzzy sets for age are set up int the same way as in \ref{sec:fuzzy_sets}, but with age ranges more appropriate for the example. The sets are therefore young = 18 - 35, middle aged = 30 - 50, and old 45-65.  Additionally, job and salary sets are introduced. Line 4-6 in listing \ref{listing:fis} initializes the universes for the different fuzzy sets. These are 18-100 for age and 0-10 for jobs, both with a step of 1. Age and jobs act as antecedents in the FIS and the initialization call is therefore to  \texttt{ctrl.Antecedent} Salary goes from 1500-10000 with steps of 500 and acts as consequent and is therefore initialized with  \textit{ctrl.Consequent}. The numbers used are made up for the sake of the example.
+SciKit-Fuzzy provides a simple application programming interface to setup a FIS. This section will describe the process setting up a simple FIS that calculates salary based on age and the number of previous jobs, instead of the complicated navigation model. Fuzzy sets for age are set up in the same way as in \ref{sec:fuzzy_sets}, but with age ranges more appropriate for the example. The sets are therefore young = 18 - 35 years, middle aged = 30 - 50 years, and old 45-65 years.  Additionally, job and salary sets are introduced. Line 4-6 in listing \ref{listing:fis} initializes the universes for the different fuzzy sets. These are 18-100 for age and 0-10 for jobs, both with a step of 1. Age and jobs act as antecedents in the FIS and the initialization call is therefore to  \texttt{ctrl.Antecedent} Salary goes from 1500-10000 with steps of 500 and acts as consequent and is therefore initialized with  \textit{ctrl.Consequent}. The numbers used are made up for the sake of the example.
 
 Next, the membership functions are initialized in lines 7-15. The age sets are defined  on lines 7-9 as described above.
 Three different job sets are defined: \textit{few} (<3),  \textit{medium} (2-6), and \textit{many} (>5). The salary sets are \textit{low} (1500 - 2500),  \textit{medium} (2000-7000), and \textit{high} (<6000). All sets are initialized using \texttt{fuzz.trimf} which produces a triangular membership function. The resulting FMFs are visualized in figure \ref{fig:fmf_ex3}
@@ -86,7 +86,7 @@ Furthermore, limits such as maximum allowed speed and standard rate of turn are 
 \label{sec:ANS}
 The AutonomousNavigationSystem class from now on referred to as ANS is what separates an autonomous vessel from an ordinary vessel. The ANS combines the information from the ShipState class with situational awareness information provided by a separate Situational Awareness (SA) module, in order to calculate needed corrections to speed and course.
 
-The SA is in this simulation case represented by a service that holds all information regarding the current scenario. A real system would have a SA module that reads and processes information from different sensors, such as LiDAR, cameras, on board the vessel. Information needed about a target vessel is its heading, speed, and position. These are used to calculate the four different inputs to the FIS system. Listing \ref{listing:rel_bear_calc} shows the method used to calculate the relative bearing fed into the FIS system. Compass bearing is first calculated from the two provided coordinate pairs after which the result is converted into a relative bearing. Relative course is then calculated as the observed vessels heading - the own vessels heading, as shown in listing \ref{listing:rel_course_calc}. Distance can be obtained by using the Pythagorean theorem on the differences between the vessels in the X and Y axis. Finally, speed ratio is defined as $\frac{\text{Speed of the observed vessel}}{\text{Speed of the own vessel}}$.
+The SA is in this simulation case represented by a service that holds all information regarding the current scenario. A real system would have a SA module that reads and processes information from different sensors, such as LiDAR, cameras, on board the vessel. Information needed about a target vessel is its heading, speed, and position. These are used to calculate the four different inputs to the FIS system. Listing \ref{listing:rel_bear_calc} shows the method used to calculate the relative bearing passed into the FIS system. Compass bearing is first calculated from the two provided coordinate pairs after which the result is converted into a relative bearing. Relative course is then calculated as the target vessels heading - the own vessels heading, as shown in listing \ref{listing:rel_course_calc}. Distance can be obtained by using the Pythagorean theorem on the differences between the vessels in the X and Y axis. Finally, speed ratio is defined as $\frac{\text{Speed of the target vessel}}{\text{Speed of the main vessel}}$.
 \begin{listing}
 
     \begin{minted}[linenos, breaklines=true,fontsize=\scriptsize, numberblanklines=false]{python}
@@ -98,16 +98,16 @@ if rel_course < 0:
     \label{listing:rel_course_calc}
 \end{listing}
 
-These inputs are fed into the FIS system, for each target vessels, and the recommended corrections presented by FIS are stored in an array. The expected time until collision for each target vessel is also calculated. Knowing the distance between the vessels, their relative velocity is needed to calculate the time. Equation \ref{eq:rel_vel_calc} shows the relative velocity calculation, based on the law of Cosines. \textit{V} stands for velocity, $\theta$ for heading, the subscript \textit{m} for own vessel and \textit{t} for target vessel.
+These inputs are passed into the FIS system, for each target vessels, and the recommended corrections presented by FIS are stored in an array. The expected time until collision for each target vessel is also calculated. Knowing the distance between the vessels, their relative velocity is needed to calculate the time. Equation \ref{eq:rel_vel_calc} shows the relative velocity calculation, based on the law of Cosines. \textit{V} stands for velocity, $\theta$ for heading, the subscript \textit{m} for own vessel and \textit{t} for target vessel.
 
 \begin{equation}
     V_r=\sqrt{V_m^2 + V_t^2-2  V_mV_tcos(\theta_m-\theta_t)}
     \label{eq:rel_vel_calc}
 \end{equation}
 
-The previous calculations result in speed and heading correction suggestions, as well as an expected time until collision, for each target vessel. However, these recommendations might contradict each other and a way to prioritize the corrections in order of urgency is therefore needed. This is in this implementation solved in a simple matter by calculating the weighted arithmetic mean of the corrections using the expected time until collision as weight. The resulting corrections are then stored in ShipState as target heading.
+The previous calculations result in speed and heading correction suggestions, as well as an expected time until collision, for each target vessel. However, these recommendations might contradict each other and a way to prioritize the corrections in order of urgency is therefore needed. This is in this implementation solved in a simple matter by calculating the weighted arithmetic mean of the corrections using the expected time until collision as weight. The resulting correction is then stored in ShipState as target heading.
 
-Finally the heading and speed of the vessel is updated in the following manner. The vessels is steered towards the proposed heading change by a maximum of the vessels defined maximum rate of turn. The speed is similarly changed towards the proposed speed by a maximum of one knot. No proposed correction by the FIS means that the vessel is currently not in a scenario that satisfies a rule in the rule set. However, a previous correction suggestion might still not be completed due to the vessels limited rate of turn, acceleration or deceleration.  The vessel will ,therefore, continue to change its heading and speed towards the saved target speed until they are the same.  The target heading is then gradually changed towards the original heading until the vessel is back on its original heading. The process is visualized in Figure \ref{fig:flow_chart}.
+Finally the heading and speed of the vessel is updated in the following manner. The vessels is steered towards the proposed heading change by a maximum of the vessels defined maximum rate of turn. The speed is similarly changed towards the proposed speed by a maximum of one knot. No proposed correction by the FIS means that the vessel is currently not in a scenario that satisfies a rule in the rule set. However, a previous correction suggestion might still not be completed due to the vessels limited rate of turn, acceleration or deceleration.  The vessel will ,therefore, continue to change its current heading and speed towards the saved target until current and target are the same. The target is then gradually changed towards the original until they are the same. The vessel should ultimately steer back to its original track instead of course. However, this is out of the scope for this thesis. The process is visualized in Figure \ref{fig:flow_chart}.
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{Figures/flow.png}
@@ -119,15 +119,15 @@ Finally the heading and speed of the vessel is updated in the following manner. 
 The goal of the implementation is to  simulate a real-world situation with respect to time, speed, acceleration, and rate of turn while neglecting  environmental factors such as weather.
 The simulation is therefore limited to two dimensions in a Cartesian coordinate system.
 The interval between time frames in the simulation is set to correspond to one second in the real world.
-Each iteration of the main simulation loop must, therefore, update the vessels SA by scanning the environment for target vessels. The information gained is then passed to the FIS which generates the course and speed corrections used to update heading and speed as explained in section \ref{sec:ANS}.
+Each iteration of the main simulation loop must, therefore, update the vessels SA by scanning the environment for target vessels. The information gained is then passed to the FIS which calculates the course and speed corrections used to update heading and speed as explained in section \ref{sec:ANS}.
 
-The efficiency and quality of the output of the FIS system, is to a large degree dependent on the FMFs. Designing correct FMF and rules to use in a FIS is an extensive mathematical project on its own. The FMFs used in this thesis are, therefore, based on parameters  previously developed by \textcite{perera2010smooth_param}. All FMFs are in the form of isosceles trapezoids, i.e. trapezoids with legs of equal length. The values used is represented in the tables in \ref{tab:fmfs}. The values in the tables from and to columns represent the x values for the midpoint of the trapezoid legs. The fuzziness of the FMF is then defined as the range of the projection of the leg on the x axis. The fuzziness for the FMFs are 5\textdegree for relative bearing and course as well as course change; 0.3NM for range ; 0.5 kts for speed ratio and 1 kts for speed change.
+The efficiency and quality of the output of the FIS system, is to a large degree dependent on the FMFs. Designing correct FMF and rules to use in a FIS is an extensive mathematical project on its own. The FMFs used in this thesis are, therefore, based on parameters  previously developed by \textcite{perera2010smooth_param}. All FMFs are in the form of isosceles trapezoids, i.e. trapezoids with legs of equal length. The values used is represented in the tables in \ref{tab:fmfs}. The values in the tables from and to columns represent the x values for the midpoint of the trapezoid legs. The fuzziness of the FMF is then defined as the range of the projection of the leg on the x axis. The fuzziness for the FMFs are \ang{5} for relative bearing and course as well as course change; 0.3 NM for range ; 0.5 kts for speed ratio and 1 kts for speed change.
 
 \begin{table}[h!]
     \caption{Parameters for the FMFs used}
     \label{tab:fmfs}
     \begin{minipage}{.5\linewidth}
-        \caption{Relative bearing FMF intervals}
+        \caption*{Relative bearing FMF intervals}
         \centering
         \begin{tabular}{ccc}
             \toprule
@@ -145,10 +145,9 @@ The efficiency and quality of the output of the FIS system, is to a large degree
             X                        & 329                & 355              \\
             \bottomrule
         \end{tabular}
-
     \end{minipage}%
     \begin{minipage}{.5\linewidth}
-        \caption{Relative course FMF intervals}
+        \caption*{Relative course FMF intervals}
         \centering
         \begin{tabular}{ccc}
             \toprule
@@ -170,7 +169,7 @@ The efficiency and quality of the output of the FIS system, is to a large degree
     \vspace{1em}
 
     \begin{minipage}{.5\linewidth}
-        \caption{Range FMF intervals}
+        \caption*{Range FMF intervals}
         \centering
         \begin{tabular}{ccc}
             \toprule
@@ -184,7 +183,7 @@ The efficiency and quality of the output of the FIS system, is to a large degree
 
     \end{minipage}%
     \begin{minipage}{.5\linewidth}
-        \caption{Speed factor FMF intervals}
+        \caption*{Speed factor FMF intervals}
         \centering
         \begin{tabular}{ccc}
             \toprule
@@ -201,7 +200,7 @@ The efficiency and quality of the output of the FIS system, is to a large degree
     \vspace{1em}
 
     \begin{minipage}{.5\linewidth}
-        \caption{Course change FMF intervals}
+        \caption*{Course change FMF intervals}
         \centering
         \begin{tabular}{ccc}
             \toprule
@@ -215,7 +214,7 @@ The efficiency and quality of the output of the FIS system, is to a large degree
 
     \end{minipage}%
     \begin{minipage}{.5\linewidth}
-        \caption{Speed change  FMF intervals}
+        \caption*{Speed change  FMF intervals}
         \centering
         \begin{tabular}{ccc}
             \toprule
