@@ -127,7 +127,20 @@
 		}%
 	}%
 }%
-
+\ProvideDocumentCommand{\addsubsec}{ s o m }{%
+	\subsection*{#3}%
+	\markright{}%
+	\IfBooleanTF{#1}{%
+	}{%
+		\IfNoValueTF{#2}{%
+			\addcontentsline{toc}{subsection}{#3}%
+			\markright{\MakeMarkcase{#3}}%%
+		}{%
+			\addcontentsline{toc}{subsection}{#2}%
+			\markright{\MakeMarkcase{#2}}%
+		}%
+	}%
+}%
 %----------------------------------------------------------------------------------------
 %	CLASS OPTIONS
 %----------------------------------------------------------------------------------------
@@ -184,7 +197,8 @@
 %	REQUIRED PACKAGES
 %----------------------------------------------------------------------------------------
 
-\RequirePackage{babel} % Required for automatically changing names of document elements to languages besides english
+%\RequirePackage{babel} % Required for automatically changing names of document elements to languages besides english
+\usepackage[swedish,british]{babel}
 
 \RequirePackage{scrbase} % Required for handling language-dependent names of sections/document elements
 

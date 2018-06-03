@@ -68,6 +68,11 @@ chapterinoneline, % Uncomment to place the chapter title next to the number on o
 \usepackage{xfrac}
 \usepackage{siunitx}
 \usepackage{caption}
+\setminted{
+    linenos=true,
+    autogobble,
+}
+\newenvironment{longlisting}{\captionsetup{type=listing}}{}
 \setcounter{MaxMatrixCols}{20}
 \setcounter{tocdepth}{2}
 \reversemarginpar
@@ -336,7 +341,9 @@ chapterinoneline, % Uncomment to place the chapter title next to the number on o
 \include{Appendices/AppendixA}
 \include{Appendices/AppendixB}
 %\include{Appendices/AppendixC}
+\begin{otherlanguage}{swedish}
 \include{Appendices/SwedSum}
+\end{otherlanguage}
 %----------------------------------------------------------------------------------------
 %   BIBLIOGRAPHY
 %----------------------------------------------------------------------------------------
