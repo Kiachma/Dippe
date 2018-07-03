@@ -234,6 +234,7 @@ chapterinoneline, % Uncomment to place the chapter title next to the number on o
     Autonomous vessels could potentially greatly reduce the costs of maritime shipping, by reducing the operating costs and increasing the safety.
     However, one of the greater challenges in the pursuit of completely autonomous and unmanned vessels lays in  the development of algorithms capable of making decisions as safe and efficient as human operators.
     The purpose of this thesis is to evaluate the use of fuzzy logic in a COLREGS compliant collision avoidance algorithm for unmanned surface vessels. A python implementation utilizing a fuzzy logic inference system is developed and tested on maritime scenarios involving multiple vessels.
+
     Results show the algorithm capable of avoiding collisions, although further work is needed to make the algorithm truly COLREGS compliant and the decisions more holistic.
     \\\\
     \textit{Keywords:} \textit{\keywordnames}
@@ -260,12 +261,11 @@ chapterinoneline, % Uncomment to place the chapter title next to the number on o
 %----------------------------------------------------------------------------------------
 
 \tableofcontents % Prints the main table of contents
-
+\setcounter{tocdepth}{1}
 \listoffigures % Prints the list of figures
 
 \listoftables % Prints the list of tables
 
-%\listoftodos
 
 %----------------------------------------------------------------------------------------
 %   ABBREVIATIONS
@@ -345,7 +345,7 @@ chapterinoneline, % Uncomment to place the chapter title next to the number on o
 \include{Appendices/AppendixB}
 %\include{Appendices/AppendixC}
 \begin{otherlanguage}{swedish}
-\include{Appendices/SwedSum}
+    \include{Appendices/SwedSum}
 \end{otherlanguage}
 %----------------------------------------------------------------------------------------
 %   BIBLIOGRAPHY
