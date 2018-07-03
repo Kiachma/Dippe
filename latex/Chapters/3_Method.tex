@@ -13,20 +13,21 @@ SciKit-Fuzzy provides a simple application programming interface to setup a FIS.
 Next, the membership functions are initialized in lines 7-15. The age sets are defined  on lines 7-9 as described above.
 Three different job sets are defined: \textit{few} (<3),  \textit{medium} (2-6), and \textit{many} (>5). The salary sets are \textit{low} (1500 - 2500),  \textit{medium} (2000-7000), and \textit{high} (<6000). All sets are initialized using \texttt{fuzz.trimf} which produces a triangular membership function. The resulting FMFs are visualized in figure \ref{fig:fmf_ex3}
 \begin{figure}[H]
-    \begin{tabular}{cc}
+	\centering
+    \begin{tabular}{c}
 
         \subfloat[Age antecedent]{
-            \includegraphics[width=0.5\textwidth,height=0.42\textheight,keepaspectratio]{Figures/age_ex}
+            \includegraphics[width=\textwidth,height=0.30\textheight,keepaspectratio]{Figures/age_ex}
             \label{fig:age_ex}
-        } &
+        } \\
         \subfloat[Jobs antecedent]{
-            \includegraphics[width=.49\linewidth,height=0.42\textheight,keepaspectratio]{Figures/jobs_ex}
+            \includegraphics[width=\linewidth,height=0.30\textheight,keepaspectratio]{Figures/jobs_ex}
             \label{fig:jobs_ex}
         }   \\
-        \multicolumn{2}{c}{\subfloat[Salary consequent]{
-                \includegraphics[width=\linewidth,height=0.42\textheight,keepaspectratio]{Figures/salary_ex}
+        \subfloat[Salary consequent]{
+                \includegraphics[width=\linewidth,height=0.30\textheight,keepaspectratio]{Figures/salary_ex}
                 \label{fig:salary_ex}
-            }}
+            }
     \end{tabular}
 
     \caption{FMSs used in example FIS}
@@ -57,7 +58,7 @@ The system is now ready to take input and calculate output based on the rule set
 \end{listing}
 
 \section{Architecture}
-This section will present the high-level structure of the implementation with the help of the class diagram seen in figure \ref{fig:class_diagram}. Each class and their interactions will be briefly presented.
+This section  presents the high-level structure of the implementation with help of the class diagram seen in figure \ref{fig:class_diagram}. Each class and their interactions will be briefly presented.
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{../src/classes_Pyreverse}
@@ -65,7 +66,7 @@ This section will present the high-level structure of the implementation with th
     \label{fig:class_diagram}
 \end{figure}
 \subsection{Classes}
-Each simulation scenario consists of at least one vessel. These vessels are represented by the \textit{Vessel} class. The current state of the vessel is represented by the \textit{ShipState} class which also contains the \textit{Position} class. Furthermore, each vessel needs a navigation system, which is represented by the \textit{AutonomousNavigationSystem} class. The classes will be more thoroughly presented in the following subsections.
+Each simulation scenario consists of at least one vessel. The vessels are represented by the \textit{Vessel} class. The current state of the vessel is represented by the \textit{ShipState} class which also contains the \textit{Position} class. Furthermore, each vessel needs a navigation system, which is represented by the \textit{AutonomousNavigationSystem} class. The classes are  more thoroughly presented in the following subsections.
 \subsubsection{Vessel}
 \textit{Vessel} is the main class and the class with which the simulation script interacts.
 It contains, apart from the previously mentioned \textit{AutonomousNavigationSystem} and \textit{ShipState} an id and a method to calculate its position in the next time frame.
@@ -79,14 +80,14 @@ This constructor call specifies the ID for the vessel as well as its initial pos
 The position class simply holds the vessels current coordinates in the Cartesian coordinate system used.
 \subsubsection{ShipState}
 ShipState holds information about the state of the vessel in the current time frame. This includes the vessels current position, heading and speed. The simulation does not distinguish between course and heading since no drift is simulated.
-Furthermore, limits such as maximum allowed speed and standard rate of turn are specified in this class. Finally, the class holds methods to change the ships heading by the specified standard rate of turn or speed by 1 kt, for the next time frame.
+Furthermore, limits such as maximum allowed speed and standard rate of turn are specified in this class. Finally, the class holds methods to change the ships heading by the specified standard rate of turn or speed by 0.2 kt for acceleration and 0.7 for deceleration, until the next time frame.
 
 
 \subsubsection{AutonomousNavigationSystem}
 \label{sec:ANS}
 The AutonomousNavigationSystem class from now on referred to as ANS is what separates an autonomous vessel from an ordinary vessel. The ANS combines the information from the ShipState class with situational awareness information provided by a separate Situational Awareness (SA) module, in order to calculate needed corrections to speed and course.
 
-The SA is in this simulation case represented by a service that holds all information regarding the current scenario. A real system would have a SA module that reads and processes information from different sensors, such as LiDAR, cameras, on board the vessel. Information needed about a target vessel is its heading, speed, and position. These are used to calculate the four different inputs to the FIS system. Listing \ref{listing:rel_bear_calc} shows the method used to calculate the relative bearing passed into the FIS system. Compass bearing is first calculated from the two provided coordinate pairs after which the result is converted into a relative bearing. Relative course is then calculated as the target vessels heading - the own vessels heading, as shown in listing \ref{listing:rel_course_calc}. Distance can be obtained by using the Pythagorean theorem on the differences between the vessels in the X and Y axis. Finally, speed ratio is defined as $\frac{\text{Speed of the target vessel}}{\text{Speed of the main vessel}}$.
+The SA is in this simulation case represented by a service that holds all information regarding the current scenario. A real system would have a SA module that reads and processes information from different sensors, such as LiDAR and  cameras, on board the vessel. Information needed about a target vessel is its heading, speed, and position. These are used to calculate the four different inputs to the FIS system. Listing \ref{listing:rel_bear_calc} shows the method used to calculate the relative bearing passed into the FIS system. Compass bearing is first calculated from the two provided coordinate pairs after which the result is converted into a relative bearing. Relative course is then calculated as the target vessels heading - the own vessels heading, as shown in listing \ref{listing:rel_course_calc}. Distance can be obtained by using the Pythagorean theorem on the differences between the vessels in the X and Y axis. Finally, speed ratio is defined as $\frac{\text{Speed of the target vessel}}{\text{Speed of the main vessel}}$.
 \begin{listing}
 
     \begin{minted}[linenos, breaklines=true,fontsize=\scriptsize, numberblanklines=false]{python}
@@ -105,9 +106,9 @@ These inputs are passed into the FIS system, for each target vessels, and the re
     \label{eq:rel_vel_calc}
 \end{equation}
 
-The previous calculations result in speed and heading correction suggestions, as well as an expected time until collision, for each target vessel. However, these recommendations might contradict each other and a way to prioritize the corrections in order of urgency is therefore needed. This is in this implementation solved in a simple matter by calculating the weighted arithmetic mean of the corrections using the expected time until collision as weight. The resulting correction is then stored in ShipState as target heading.
+The previous calculations result in speed and course correction suggestions, as well as an expected time until collision, for each target vessel. However, these recommendations might contradict each other and a way to prioritize the corrections in order of urgency is therefore needed. This is solved in a simple manner by calculating the weighted arithmetic mean of the corrections using the expected time until collision as weight. The resulting correction is then stored in ShipState as target heading.
 
-Finally the heading and speed of the vessel is updated in the following manner. The vessels is steered towards the proposed heading change by a maximum of the vessels defined maximum rate of turn. The speed is similarly changed towards the proposed speed by a maximum of one knot. No proposed correction by the FIS means that the vessel is currently not in a scenario that satisfies a rule in the rule set. However, a previous correction suggestion might still not be completed due to the vessels limited rate of turn, acceleration or deceleration.  The vessel will ,therefore, continue to change its current heading and speed towards the saved target until current and target are the same. The target is then gradually changed towards the original until they are the same. The vessel should ultimately steer back to its original track instead of course. However, this is out of the scope for this thesis. The process is visualized in Figure \ref{fig:flow_chart}.
+Finally the heading and speed of the vessel is updated in the following manner. The vessels is steered towards the proposed heading change by a maximum of the vessels defined maximum rate of turn. The speed is similarly changed towards the proposed speed by a maximum of one knot. No proposed correction by the FIS means that the vessel is currently not in a scenario that satisfies a rule in the rule set. However, a previous correction suggestion might still not be completed due to the vessels limited rate of turn, acceleration or deceleration.  The vessel will, therefore, continue to change its current heading and speed towards the saved target until current and target are the same. The target is then gradually changed towards the original until they are the same. The vessel should ultimately steer back to its original track instead of course. However, this is out of the scope for this thesis. The process is visualized in figure \ref{fig:flow_chart}.
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{Figures/flow.png}
