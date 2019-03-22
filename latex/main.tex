@@ -34,7 +34,7 @@ nolistspacing, % If the document is onehalfspacing or doublespacing, uncomment t
 %toctotoc, % Uncomment to add the main table of contents to the table of contents
 %parskip, % Uncomment to add space between paragraphs
 %nohyperref, % Uncomment to not load the hyperref package
-headsepline, % Uncomment to get a line under the header
+%headsepline, % Uncomment to get a line under the header
 chapterinoneline, % Uncomment to place the chapter title next to the number on one line
 %consistentlayout, % Uncomment to change the layout of the declaration, abstract and acknowledgements pages to match the default layout
 ]{MastersDoctoralThesis} % The class file specifying the document structure
@@ -43,7 +43,7 @@ chapterinoneline, % Uncomment to place the chapter title next to the number on o
 \usepackage[T1]{fontenc} % Output font encoding for international characters
 \usepackage{changepage}
 \usepackage{textcomp}
-
+\usepackage[a-1b]{pdfx}
 \usepackage{mathpazo} % Use the Palatino font by default
 
 \usepackage[backend=bibtex,style=ieee ]{biblatex} % Use the bibtex backend with the authoryear citation style (which resembles APA)
@@ -70,6 +70,8 @@ chapterinoneline, % Uncomment to place the chapter title next to the number on o
 \usepackage{caption}
 
 \usepackage{subfig}
+
+
 \captionsetup[figure]{width=.85\textwidth}
 \captionsetup[subfigure]{margin=0pt}
 \setminted{
@@ -123,7 +125,10 @@ chapterinoneline, % Uncomment to place the chapter title next to the number on o
 \hypersetup{pdfkeywords=\keywordnames} % Set the PDF's keywords to your keywords
 }
 
+\hypersetup{pdfencoding=unicode}
+
 \begin{document}
+
 
 \frontmatter % Use roman page numbering style (i, ii, iii, iv...) for the pre-content pages
 
@@ -138,6 +143,7 @@ chapterinoneline, % Uncomment to place the chapter title next to the number on o
     bottom=2cm, % Bottom margin} 
 }
 \begin{titlepage}
+    \thispagestyle{author}
     % \begin{adjustwidth}{-2.0cm}{-2.0cm}
     \includegraphics[width=40mm]{Figures/Logo_eng_pos.pdf}
     %   \end{adjustwidth} 
@@ -170,7 +176,7 @@ chapterinoneline, % Uncomment to place the chapter title next to the number on o
                 %�vervakare: \thesisexaminer
                 %\fi
             \else
-                Masters's thesis (30 ECTS)  \\
+                Master's thesis (30 ECTS)  \\
                 Supervisors: \supname \\
             \fi
             \deptname \\
@@ -231,9 +237,9 @@ chapterinoneline, % Uncomment to place the chapter title next to the number on o
 
 \begin{abstract}
     \addchaptertocentry{\abstractname} % Add the abstract to the table of contents
-    Autonomous vessels could potentially greatly reduce the costs of maritime shipping, by reducing the operating costs and increasing the safety.
-    However, one of the greater challenges in the pursuit of completely autonomous and unmanned vessels lays in  the development of algorithms capable of making decisions as safe and efficient as human operators.
-    The purpose of this thesis is to evaluate the use of fuzzy logic in a COLREGS compliant collision avoidance algorithm for unmanned surface vessels. A python implementation utilizing a fuzzy logic inference system is developed and tested on maritime scenarios involving multiple vessels.
+    Autonomous vessels could potentially  lower the costs of maritime shipping, by reducing the operating costs and increasing the safety.
+    However, one of the greater challenges in the pursuit of completely autonomous and unmanned vessels lies in  the development of algorithms capable of making decisions as safe and efficient as human operators.
+    The purpose of this thesis is to evaluate the use of fuzzy logic in a COLREGS compliant collision avoidance algorithm, for unmanned surface vessels. A python implementation utilizing a fuzzy logic inference system is developed and tested in simultations of maritime scenarios involving multiple vessels.
 
     Results show the algorithm capable of avoiding collisions, although further work is needed to make the algorithm truly COLREGS compliant and the decisions more holistic.
     \\\\
@@ -321,7 +327,7 @@ chapterinoneline, % Uncomment to place the chapter title next to the number on o
 
 \mainmatter % Begin numeric (1,2,3...) page numbering
 
-\pagestyle{thesis} % Return the page headers back to the "thesis" style
+\pagestyle{thesisSimple} % Return the page headers back to the "thesis" style
 
 % Include the chapters of the thesis as separate files from the Chapters folder
 % Uncomment the lines as you write the chapters

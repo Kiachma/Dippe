@@ -310,8 +310,12 @@
 \providepairofpagestyles{thesisSimple}{%
 	\clearpairofpagestyles%
 	\automark[chapter]{chapter}
-	\ihead{\headmark}% Inner header
-	\ohead[\pagemark]{\pagemark}% Outer header
+    \ihead[Emil Aura]{Emil Aura}
+	\ohead[\pagemark ]{\pagemark }% Outer header
+}
+\providepairofpagestyles{author}{%
+    \clearpairofpagestyles%
+    \ihead[Emil Aura]{Emil Aura}
 }
 \ifoot{}% Inner footer
 \ofoot{}% Outer footer

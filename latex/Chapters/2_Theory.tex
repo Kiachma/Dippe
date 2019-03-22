@@ -7,7 +7,7 @@
 \label{Unmanned_Surface_Vehicles} % For referencing the chapter elsewhere, use \ref{Chapter1}
 %------------------------------------------------------------------------------------
 
-Unmanned surface vehicles (USV) or autonomous surface crafts (ASC) are vehicles operating the seas without a crew onboard.
+Unmanned surface vehicles (USVs) or autonomous surface crafts (ASCs) are vehicles operating the seas without a crew onboard.
 USVs encompass both fully autonomous vehicles, from now on referred to as ASCs, and semi-autonomous vehicles.
 Development of USVs has been ongoing for the last two decades \cite{manley2008unmanned}.
 However, the majority of them has been of the semi-autonomous type \cite{liu2016unmanned,park2017development}, meaning that they depend on human intervention to some extent usually by a supervisor located on shore.
@@ -51,7 +51,7 @@ National regulations might differ from COLREGs to some extent. However, COLREGs 
 Such special rules shall conform as closely as possible to these Rules.’ \cite{colreg}
 
 %------------------------------------------------------------------------------------
-The following chapter will present the different parts of COLREGs, with an emphasis on the parts related to manoeuvring a USV in international waters. Information is taken from the official COLREGs \cite{colreg} if not otherwise specified. Part D and E will not be discussed further since they are not of interest for the scope of this thesis. Neither will rules not of interest for the scope of this thesis, from other sections, be mentioned.
+This chapter will present the different parts of COLREGs, with an emphasis on the parts related to manoeuvring a USV in international waters. Information is taken from the official COLREGs \cite{colreg} if not otherwise specified. Part D and E will not be discussed further since they are not of interest for the scope of this thesis. Neither will rules not of interest for the scope of this thesis, from other sections, be mentioned.
 %------------------------------------------------------------------------------------
 % \section{Part A General}
 
@@ -172,7 +172,7 @@ A fuzzy set can then be written as an array of tuples consisting of the objects 
         }
     \end{tabular}
 
-    \caption{Graphical representations of two FMFs}
+    \caption{Graphical representations of FMFs}
     \label{fig:example_fmfs}
 \end{figure}
 
@@ -242,7 +242,7 @@ The same principle can be applied to find the overall consequent when multiple r
 Antecedents consequents and rules are needed in order to make a fuzzy system for a COLREGs compliant autopilot. The model used in this thesis is created by \textcite{perera2012intelligent} and has four antecedents, two consequents and an extensive rule set of nearly 200 rules. The antecedents used are the relative bearing to the target vessel, the relative course of the target vessel, the distance between the vessels, and the ratio between the vessels speeds. The main vessels relative bearing is divided into ten sets. These resulting sectors represent the different sets in the relative bearing universe [\ang{0}, \ang{360}]. The relative course of the target vessel is, likewise, divided into eight sectors, which represent sets in the relative course universe [\ang{0}, \ang{360}]. The distance universe consists of three sets, representing radii from the main vessel, called $R_A, R_B$ and $R_{VD}$. $R_{VD}$ is the vessel domain into which other vessel shall not enter. $R_A$ and $R_B$ depict the area around the main vessel in which other vessels are detected. $R_A$ is used when the main vessel is the give way vessel and $R_B$ when it is the stand on vessel. A graphical representation of the bearing, range and course sectors can be seen in figure \ref{fig:model}. The bearing sets are marked as sectors (I-X) around the main vessel, course set as sectors a-h around the target vessel and finally range as circles around the main vessel. The final antecedent, $\text{speed ratio} =\frac{V_{target}}{V{main}}$, consists of three sets: $<1, \approx1 \text{ and } >1$.
 Visualizations of the antecedent FMFs, as well as their distribution in their corresponding universes, can be seen in figure \ref{fig:antecedent_fmfs} and consequent FMS in figure \ref{fig:consequent_fmfs}.
 
-Finally, a rules set is needed to connect the antecedents with the consequents. The rule set used for this thesis is based on the rules, seen in table \ref{tab:rules} developed by \textcite{perera2012intelligent}. A few rules have furthermore been added to handle overtake scenarios. These can be seen in table \ref{tab:rules_own}.
+Finally, a rule set is needed to connect the antecedents with the consequents. The rule set used for this thesis is based on the rules, seen in table \ref{tab:rules} developed by \textcite{perera2012intelligent}. A few rules have furthermore been added to handle overtake scenarios. These can be seen in table \ref{tab:rules_own}.
 Each row in the tables depicts a rule in the FIS system.
 The table consists of four columns. The first column represents the main vessels relative bearing to the target vessel. The columns values go from I-X which, represent the ten sectors around the main vessel in figure \ref{fig:model} and the FMFs seen in figure \ref{fig:FMF_bear}. Column number two represents the target vessels relative course given in values from a-h which correspond to the eight sectors around the target vessel in figure \ref{fig:model} and the FMF in figure \ref{fig:FMF_rel_course}. Columns three and four are both split up into two sub-columns. The main column represents the range intervals. Ranges are defined from the fuzzy sets $R_A, R_B$ and $R_{VD}$ mentioned earlier. The third column represents ranges $R_{VD}- R_A$ and the fourth $R_A-R_B$. The first sub-column displays the rules speed ratio and the second sub-column consequents of the rule.
 
